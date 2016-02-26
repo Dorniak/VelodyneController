@@ -1,4 +1,15 @@
 #pragma once
+#include "Controller.h"
+//Vector de flags
+#define FlagTratamiento 0
+#define FlagTratamiento 1
+#define FlagTratamiento 2
+#define FlagTratamiento 3
+#define FlagWarning 4
+#define FlagPausa 5
+#define FlagAnalisysOn 6
+#define FlagOpenGlOn 7
+#define FlagLogOn 8
 
 namespace FinalAppLidar {
 
@@ -18,6 +29,7 @@ namespace FinalAppLidar {
 		Main(void)
 		{
 			InitializeComponent();
+			Controlador = gcnew Controller();
 			//
 			//TODO: Add the constructor code here
 			//
@@ -48,7 +60,7 @@ namespace FinalAppLidar {
 
 
 
-
+	private: Controller^ Controlador;
 	private: System::Windows::Forms::ToolStrip^  toolStrip1;
 	private: System::Windows::Forms::ToolStripButton^  toolStripButton1;
 	private: System::Windows::Forms::TabControl^  tabControl1;
@@ -515,10 +527,17 @@ private: System::Void checkBox4_CheckedChanged(System::Object^  sender, System::
 }
 private: System::Void checkBox3_CheckedChanged(System::Object^  sender, System::EventArgs^  e) {
 	if (checkBox3->Checked)
+	{
 		checkBox3->BackColor = System::Drawing::Color::PaleGreen;
-	else
+		Controlador->Flags[FlagAnalisysOn] = true;
+	}
+	else 
+	{
 		checkBox3->BackColor = System::Drawing::Color::IndianRed;
+		Controlador->Flags[FlagAnalisysOn] = false;
+	}
 	//TODO: MANDAR A CONTROL 
+
 }
 private: System::Void checkBox5_CheckedChanged(System::Object^  sender, System::EventArgs^  e) {
 	if (checkBox5->Checked)

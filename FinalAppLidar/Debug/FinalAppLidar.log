@@ -1,4 +1,72 @@
-﻿  Main.cpp
+﻿  Controller.cpp
+D:\Documentos\GitHub\FinalAppLidar\FinalAppLidar\DataReader\reader.h(11): warning C4005: 'FlagTratamiento': macro redefinition
+  D:\Documentos\GitHub\FinalAppLidar\FinalAppLidar\DataReader\reader.h(10): note: see previous definition of 'FlagTratamiento'
+D:\Documentos\GitHub\FinalAppLidar\FinalAppLidar\DataReader\reader.h(12): warning C4005: 'FlagTratamiento': macro redefinition
+  D:\Documentos\GitHub\FinalAppLidar\FinalAppLidar\DataReader\reader.h(11): note: see previous definition of 'FlagTratamiento'
+D:\Documentos\GitHub\FinalAppLidar\FinalAppLidar\DataReader\reader.h(13): warning C4005: 'FlagTratamiento': macro redefinition
+  D:\Documentos\GitHub\FinalAppLidar\FinalAppLidar\DataReader\reader.h(12): note: see previous definition of 'FlagTratamiento'
+D:\Documentos\GitHub\FinalAppLidar\FinalAppLidar\DataAnalisys\DataAnalisys.h(15): warning C4005: 'FlagTratamiento': macro redefinition
+  D:\Documentos\GitHub\FinalAppLidar\FinalAppLidar\DataReader\reader.h(13): note: see previous definition of 'FlagTratamiento'
+D:\Documentos\GitHub\FinalAppLidar\FinalAppLidar\DataAnalisys\DataAnalisys.h(16): warning C4005: 'FlagTratamiento': macro redefinition
+  D:\Documentos\GitHub\FinalAppLidar\FinalAppLidar\DataAnalisys\DataAnalisys.h(15): note: see previous definition of 'FlagTratamiento'
+D:\Documentos\GitHub\FinalAppLidar\FinalAppLidar\DataAnalisys\DataAnalisys.h(17): warning C4005: 'FlagTratamiento': macro redefinition
+  D:\Documentos\GitHub\FinalAppLidar\FinalAppLidar\DataAnalisys\DataAnalisys.h(16): note: see previous definition of 'FlagTratamiento'
+D:\Documentos\GitHub\FinalAppLidar\FinalAppLidar\DataAnalisys\DataAnalisys.h(18): warning C4005: 'FlagTratamiento': macro redefinition
+  D:\Documentos\GitHub\FinalAppLidar\FinalAppLidar\DataAnalisys\DataAnalisys.h(17): note: see previous definition of 'FlagTratamiento'
+d:\documentos\github\finalapplidar\finalapplidar\Controller.h(15): warning C4005: 'FlagTratamiento': macro redefinition
+  D:\Documentos\GitHub\FinalAppLidar\FinalAppLidar\DataAnalisys\DataAnalisys.h(18): note: see previous definition of 'FlagTratamiento'
+d:\documentos\github\finalapplidar\finalapplidar\Controller.h(16): warning C4005: 'FlagLogOn': macro redefinition
+  D:\Documentos\GitHub\FinalAppLidar\FinalAppLidar\DataReader\reader.h(18): note: see previous definition of 'FlagLogOn'
+  DataAnalisys.cpp
+d:\documentos\github\finalapplidar\finalapplidar\dataanalisys\DataAnalisys.h(16): warning C4005: 'FlagTratamiento': macro redefinition
+  d:\documentos\github\finalapplidar\finalapplidar\dataanalisys\DataAnalisys.h(15): note: see previous definition of 'FlagTratamiento'
+d:\documentos\github\finalapplidar\finalapplidar\dataanalisys\DataAnalisys.h(17): warning C4005: 'FlagTratamiento': macro redefinition
+  d:\documentos\github\finalapplidar\finalapplidar\dataanalisys\DataAnalisys.h(16): note: see previous definition of 'FlagTratamiento'
+d:\documentos\github\finalapplidar\finalapplidar\dataanalisys\DataAnalisys.h(18): warning C4005: 'FlagTratamiento': macro redefinition
+  d:\documentos\github\finalapplidar\finalapplidar\dataanalisys\DataAnalisys.h(17): note: see previous definition of 'FlagTratamiento'
+DataAnalisys\DataAnalisys.cpp(74): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
+DataAnalisys\DataAnalisys.cpp(75): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
+DataAnalisys\DataAnalisys.cpp(78): warning C4101: 'e': unreferenced local variable
+DataAnalisys\DataAnalisys.cpp(106): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
+DataAnalisys\DataAnalisys.cpp(242): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
+  reader.cpp
+d:\documentos\github\finalapplidar\finalapplidar\datareader\reader.h(11): warning C4005: 'FlagTratamiento': macro redefinition
+  d:\documentos\github\finalapplidar\finalapplidar\datareader\reader.h(10): note: see previous definition of 'FlagTratamiento'
+d:\documentos\github\finalapplidar\finalapplidar\datareader\reader.h(12): warning C4005: 'FlagTratamiento': macro redefinition
+  d:\documentos\github\finalapplidar\finalapplidar\datareader\reader.h(11): note: see previous definition of 'FlagTratamiento'
+d:\documentos\github\finalapplidar\finalapplidar\datareader\reader.h(13): warning C4005: 'FlagTratamiento': macro redefinition
+  d:\documentos\github\finalapplidar\finalapplidar\datareader\reader.h(12): note: see previous definition of 'FlagTratamiento'
+DataReader\reader.cpp(62): warning C4101: 'CALIBRATE_W': unreferenced local variable
+DataReader\reader.cpp(121): warning C4101: 'e': unreferenced local variable
+  Main.cpp
+D:\Documentos\GitHub\FinalAppLidar\FinalAppLidar\DataReader\reader.h(11): warning C4005: 'FlagTratamiento': macro redefinition
+  D:\Documentos\GitHub\FinalAppLidar\FinalAppLidar\DataReader\reader.h(10): note: see previous definition of 'FlagTratamiento'
+D:\Documentos\GitHub\FinalAppLidar\FinalAppLidar\DataReader\reader.h(12): warning C4005: 'FlagTratamiento': macro redefinition
+  D:\Documentos\GitHub\FinalAppLidar\FinalAppLidar\DataReader\reader.h(11): note: see previous definition of 'FlagTratamiento'
+D:\Documentos\GitHub\FinalAppLidar\FinalAppLidar\DataReader\reader.h(13): warning C4005: 'FlagTratamiento': macro redefinition
+  D:\Documentos\GitHub\FinalAppLidar\FinalAppLidar\DataReader\reader.h(12): note: see previous definition of 'FlagTratamiento'
+D:\Documentos\GitHub\FinalAppLidar\FinalAppLidar\DataAnalisys\DataAnalisys.h(15): warning C4005: 'FlagTratamiento': macro redefinition
+  D:\Documentos\GitHub\FinalAppLidar\FinalAppLidar\DataReader\reader.h(13): note: see previous definition of 'FlagTratamiento'
+D:\Documentos\GitHub\FinalAppLidar\FinalAppLidar\DataAnalisys\DataAnalisys.h(16): warning C4005: 'FlagTratamiento': macro redefinition
+  D:\Documentos\GitHub\FinalAppLidar\FinalAppLidar\DataAnalisys\DataAnalisys.h(15): note: see previous definition of 'FlagTratamiento'
+D:\Documentos\GitHub\FinalAppLidar\FinalAppLidar\DataAnalisys\DataAnalisys.h(17): warning C4005: 'FlagTratamiento': macro redefinition
+  D:\Documentos\GitHub\FinalAppLidar\FinalAppLidar\DataAnalisys\DataAnalisys.h(16): note: see previous definition of 'FlagTratamiento'
+D:\Documentos\GitHub\FinalAppLidar\FinalAppLidar\DataAnalisys\DataAnalisys.h(18): warning C4005: 'FlagTratamiento': macro redefinition
+  D:\Documentos\GitHub\FinalAppLidar\FinalAppLidar\DataAnalisys\DataAnalisys.h(17): note: see previous definition of 'FlagTratamiento'
+d:\documentos\github\finalapplidar\finalapplidar\Controller.h(15): warning C4005: 'FlagTratamiento': macro redefinition
+  D:\Documentos\GitHub\FinalAppLidar\FinalAppLidar\DataAnalisys\DataAnalisys.h(18): note: see previous definition of 'FlagTratamiento'
+d:\documentos\github\finalapplidar\finalapplidar\Controller.h(16): warning C4005: 'FlagLogOn': macro redefinition
+  D:\Documentos\GitHub\FinalAppLidar\FinalAppLidar\DataReader\reader.h(18): note: see previous definition of 'FlagLogOn'
+d:\documentos\github\finalapplidar\finalapplidar\Main.h(5): warning C4005: 'FlagTratamiento': macro redefinition
+  d:\documentos\github\finalapplidar\finalapplidar\Controller.h(15): note: see previous definition of 'FlagTratamiento'
+d:\documentos\github\finalapplidar\finalapplidar\Main.h(6): warning C4005: 'FlagTratamiento': macro redefinition
+  d:\documentos\github\finalapplidar\finalapplidar\Main.h(5): note: see previous definition of 'FlagTratamiento'
+d:\documentos\github\finalapplidar\finalapplidar\Main.h(7): warning C4005: 'FlagTratamiento': macro redefinition
+  d:\documentos\github\finalapplidar\finalapplidar\Main.h(6): note: see previous definition of 'FlagTratamiento'
+d:\documentos\github\finalapplidar\finalapplidar\Main.h(12): warning C4005: 'FlagLogOn': macro redefinition
+  d:\documentos\github\finalapplidar\finalapplidar\Controller.h(16): note: see previous definition of 'FlagLogOn'
+  Generating Code...
+d:\documentos\github\finalapplidar\finalapplidar\datareader\reader.cpp(297): warning C4715: 'DataReader::getAngle': not all control paths return a value
   Controller.obj : /DEBUG:FASTLINK is not supported when managed code is present; restarting link with /DEBUG:FULL
-  FinalAppLidar.vcxproj -> D:\Visual Studio\Projects\FinalAppLidar\Debug\FinalAppLidar.exe
-  FinalAppLidar.vcxproj -> D:\Visual Studio\Projects\FinalAppLidar\Debug\FinalAppLidar.pdb (Partial PDB)
+  FinalAppLidar.vcxproj -> D:\Documentos\GitHub\FinalAppLidar\Debug\FinalAppLidar.exe
+  FinalAppLidar.vcxproj -> D:\Documentos\GitHub\FinalAppLidar\Debug\FinalAppLidar.pdb (Partial PDB)
