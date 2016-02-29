@@ -2,7 +2,7 @@
 #include "Obstaculo.h"
 #include <math.h>
 #include "OpenGl.h"
-//#include <timeApi.h>
+#include <timeApi.h>
 
 //#include <cliext/vector> para clases referenciadas
 #define NUMERO_FILAS 16 //Coincide con el numero de canales
@@ -13,14 +13,11 @@
 
 //Vector de flags
 #define FlagTratamiento 0
-#define FlagTratamiento 1
-#define FlagTratamiento 2
-#define FlagTratamiento 3
-#define FlagWarning 4
-#define FlagPausa 5
-#define FlagAnalisysOn 6
-#define FlagOpenGlOn 7
-#define FlagLogOn 8
+#define FlagLogOn 1
+#define FlagWarning 2
+#define FlagPausa 3
+#define FlagAnalisysOn 4
+#define FlagOpenGlOn 5
 
 //Vector Analisys
 

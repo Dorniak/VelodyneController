@@ -5,7 +5,11 @@ Controller::Controller()
 	Obstaculos = gcnew List<Obstaculo^>();
 	Puntos = gcnew List<Punto3D^>();
 	Conclusiones = gcnew List<int>();
-	Flags = gcnew cli::array<bool>(10);
+	Flags = gcnew cli::array<bool>(ARRAYFlags_SIZE);
+	for (int a = 0; a < ARRAYFlags_SIZE; a++) {
+		Flags[a] = false;
+	}
+	Flags[FlagPausa] = true;
 	ArrayDataAnalisys = gcnew cli::array<double>(numParametrosAnalisys);
 	ArrayDataReader = gcnew cli::array<Object^>(numParametrosReader);
 }
@@ -19,7 +23,11 @@ void Controller::setFlagTratamiento()
 
 void Controller::interpretarConclusiones()
 {
-	throw gcnew System::NotImplementedException();
+	if (!thread_Conclusiones) {
+		thread_Conclusiones = gcnew Thread(gcnew ThreadStart(this, &Controller::ThreadInterpretarConclusiones));
+	}
+	thread_Conclusiones->Start();
+	Threads[2] = thread_Conclusiones;
 }
 
 void Controller::Iniciar()
@@ -40,14 +48,18 @@ void Controller::Iniciar()
 void Controller::IniciarThreads()
 {
 	Reader->ReadData(Puntos,ArrayDataReader, Flags, Threads, Dibujador);
-	Analisys->Analisys(Puntos, Obstaculos, ArrayDataAnalisys, Conclusiones, Flags, Threads, Dibujador);
+	if (FlagAnalisysOn) {
+		Analisys->Analisys(Puntos, Obstaculos, ArrayDataAnalisys, Conclusiones, Flags, Threads, Dibujador);
+	}
 }
 
 void Controller::reActivar()
 {
 	Flags[FlagPausa] = false;
 	Reader->ReadData(Puntos, ArrayDataReader, Flags, Threads, Dibujador);
-	Analisys->Analisys(Puntos,Obstaculos,ArrayDataAnalisys,Conclusiones,Flags,Threads,Dibujador);
+	if (FlagAnalisysOn) {
+		Analisys->Analisys(Puntos, Obstaculos, ArrayDataAnalisys, Conclusiones, Flags, Threads, Dibujador);
+	}
 }
 void Controller::Parar()
 {
@@ -64,27 +76,10 @@ void Controller::DibujarObstaculos()
 	Dibujador->modificarObstaculos(Obstaculos);
 }
 
-void Controller::guardarPuntos(List<Punto3D^>^ Punt)
+void Controller::ThreadInterpretarConclusiones()
 {
-	Puntos = Punt;
-	DibujarPuntos();
-	//Controller de colision
-	if (Flags[FlagTratamiento] == 0) {
-		Flags[FlagWarning] = 1;
-		//mensaje pantalla
+	while (true)
+	{
+		Sleep(50);
 	}
-	Flags[FlagTratamiento] = 0;
 }
-
-void Controller::guardarObstaculos(List<Obstaculo^>^ Obst)
-{
-	Obstaculos = Obst;
-	DibujarObstaculos();
-	//Controller de collision
-	if (Flags[FlagTratamiento] == 1) {
-		Flags[FlagWarning] = 1;
-		//mensaje pantalla
-	}
-	Flags[FlagTratamiento] = 1;
-}
-

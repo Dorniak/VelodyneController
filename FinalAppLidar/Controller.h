@@ -2,6 +2,7 @@
 #include "reader.h"
 #include "DataAnalisys.h"
 #include "OpenGl.h"
+#include "stdlib.h"
 
 //Numero de parametros de los arrays
 #define numParametrosReader 10
@@ -9,15 +10,18 @@
 //Posicion parametros array Reader
 #define Ip 1
 
+
 //Posicion parametros array Analisys
 
 //Posicion parametros array Flags
+#define ARRAYFlags_SIZE 6
+
 #define FlagTratamiento 0
-#define FlagLogOn 3
-#define FlagWarning 4
-#define FlagPausa 5
-#define FlagAnalisysOn 6
-#define FlagOpenGlOn 7
+#define FlagLogOn 1
+#define FlagWarning 2
+#define FlagPausa 3
+#define FlagAnalisysOn 4
+#define FlagOpenGlOn 5
 
 
 using namespace std;
@@ -51,10 +55,10 @@ public:
 	void DibujarObstaculos();
 	//Array de threads para apagarlos y encenderlos
 	cli::array<Thread^>^ Threads = gcnew cli::array<Thread^>(3);
-	//Funcion encargada de dibujar los puntos
-	void guardarPuntos(List<Punto3D^>^ Punt);
-	void guardarObstaculos(List<Obstaculo^>^ Obst);
+	//Thread de interpretar conclusiones
+	void ThreadInterpretarConclusiones();
 private:
+	Thread^ thread_Conclusiones;
 	//Objeto DataAnalisys
 	DataAnalisys^ Analisys;
 	//Objeto OpenGl

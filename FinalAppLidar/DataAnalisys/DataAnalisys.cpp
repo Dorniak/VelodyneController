@@ -1,7 +1,7 @@
 #include "DataAnalisys.h"
 DataAnalisys::DataAnalisys()
 {
-	//timeBeginPeriod(1);
+	timeBeginPeriod(1);
 	indice = -1;
 	menor = -1;
 	for (int k = 0; k < 4; k++)
@@ -80,6 +80,7 @@ void DataAnalisys::AnalisysThread() {
 			Flags[FlagWarning] = true;
 			//	System::Windows::Forms::MessageBox::Show(e->ToString());
 		}
+		Sleep(10);
 	}
 }
 
@@ -92,7 +93,9 @@ void DataAnalisys::copiarObstaculos()
 {
 	ObstaculosvAnt->Clear();
 	ObstaculosvAnt->AddRange(Obstaculos);
-	Dibujador->modificarObstaculos(ObstaculosvAnt);
+	if (Flags[FlagOpenGlOn]) {
+		Dibujador->modificarObstaculos(ObstaculosvAnt);
+	}
 	//Controller de collision
 	if (Flags[FlagTratamiento] == 1) {
 		Flags[FlagWarning] = 1;

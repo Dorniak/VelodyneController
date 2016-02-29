@@ -257,9 +257,11 @@ cli::array<Double>^ DataReader::ExtractIntensities(cli::array<Byte>^ &ReceiveByt
 
 void DataReader::copiarPuntos()
 {
-	Dibujador->modificarPuntos(puntosController);
 	puntosController->Clear();
 	puntosController->AddRange(Puntos);
+	if (Flags[FlagOpenGlOn]) {
+		Dibujador->modificarPuntos(puntosController);
+	}
 	//Controller de colision
 	if (Flags[FlagTratamiento] == 0) {
 		Flags[FlagWarning] = 1;
