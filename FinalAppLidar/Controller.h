@@ -4,31 +4,6 @@
 #include "OpenGl.h"
 #include "stdlib.h"
 
-//Numero de parametros de los arrays
-#define numParametrosReader 10
-#define numParametrosAnalisys 10
-//Posicion parametros array Reader
-#define Ip 1
-
-
-//Posicion parametros array Analisys
-
-//Posicion parametros array Flags
-#define ARRAYFlags_SIZE 6
-
-#define FlagTratamiento 0
-#define FlagLogOn 1
-#define FlagWarning 2
-#define FlagPausa 3
-#define FlagAnalisysOn 4
-#define FlagOpenGlOn 5
-
-
-using namespace std;
-using namespace System;
-using namespace System::Collections::Generic;
-using namespace System::Threading;
-
 ref class Controller {
 public:
 	//Constructor

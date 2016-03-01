@@ -1,29 +1,10 @@
 #pragma once
-#pragma once
 #pragma warning( disable : 4244 ) //Life is not perfect
 #include "Punto3D.h"
 #include <cliext/vector>
 #include "OpenGl.h"
+#include "Parametros.h"
 
-//Vector de flags
-#define FlagTratamiento 0
-#define FlagLogOn 1
-#define FlagWarning 2
-#define FlagPausa 3
-#define FlagAnalisysOn 4
-#define FlagOpenGlOn 5
-
-
-using namespace std;
-using namespace System;
-using namespace System::Net;
-using namespace System::Text;
-using namespace System::Net::Sockets;
-using namespace System::IO;
-using namespace System::Text;
-using namespace System::Threading;
-
-using namespace System::Collections::Generic;
 ref class DataReader
 {
 

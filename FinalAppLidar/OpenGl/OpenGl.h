@@ -4,12 +4,7 @@
 #include <stdio.h>
 #include "Punto3D.h"
 #include "Obstaculo.h"
-
-
-using namespace System;
-using namespace System::Collections::Generic;
-using namespace System::Threading;
-using namespace System::IO;
+#include "Parametros.h"
 ref class OpenGl {
 public:
 	void constructor();

@@ -89,7 +89,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>D:\Documentos\GitHub\FinalAppLidar\FinalAppLidar\Punto3D;D:\Documentos\GitHub\FinalAppLidar\FinalAppLidar\OpenGl;D:\Documentos\GitHub\FinalAppLidar\FinalAppLidar\Obstaculo;D:\Documentos\GitHub\FinalAppLidar\FinalAppLidar\DataReader;D:\Documentos\GitHub\FinalAppLidar\FinalAppLidar\DataAnalisys;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>D:\Documentos\GitHub\FinalAppLidar\FinalAppLidar\Flags;D:\Documentos\GitHub\FinalAppLidar\FinalAppLidar\Punto3D;D:\Documentos\GitHub\FinalAppLidar\FinalAppLidar\OpenGl;D:\Documentos\GitHub\FinalAppLidar\FinalAppLidar\Obstaculo;D:\Documentos\GitHub\FinalAppLidar\FinalAppLidar\DataReader;D:\Documentos\GitHub\FinalAppLidar\FinalAppLidar\DataAnalisys;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <AdditionalDependencies />
@@ -145,6 +145,7 @@
     <ClInclude Include="Controller.h" />
     <ClInclude Include="DataAnalisys\DataAnalisys.h" />
     <ClInclude Include="DataReader\reader.h" />
+    <ClInclude Include="Flags\Parametros.h" />
     <ClInclude Include="Main.h">
       <FileType>CppForm</FileType>
     </ClInclude>
