@@ -10,8 +10,6 @@ void init();
 void display(void);
 void keyboard(unsigned char, int , int );
 void centerOnScreen();
-void drawObject();
-void drawObject2();
 void trabajo();
 void specialKeys(int key, int x, int y);
 void timerFunc(int time);
@@ -73,11 +71,6 @@ void OpenGl::modificarObstaculos(List<Obstaculo^>^ listEntradaObstaculos)
 		obstaculos[recorridoO]->setCoordinatesZ(listEntradaObstaculos[recorridoO]->getCoordinatesZ());
 	}*/
 }
-void OpenGl::dibujar()
-{
-	glutDisplayFunc(display);
-	glFlush();
-}
 void OpenGl::iniciarPuntos()
 {
 	Punto3D^ a;
@@ -134,43 +127,6 @@ void init()
 	//  Set the frame buffer clear color to black. 
 	glClearColor(0.0, 0.0, 0.0, 0.0);
 }
-
-//-------------------------------------------------------------------------
-//  Draws our object.
-//-------------------------------------------------------------------------
-void drawObject()
-{
-	//  Draw Icosahedron
-	//glutWireIcosahedron();
-	//glutWireRhombicDodecahedron();
-	//glutWireOctahedron();
-	glPointSize(2);
-	glBegin(GL_POINTS);
-	GLdouble x = 0.1;
-	GLdouble y = 1;
-	for (double i=-1.0; i < y; i=(i + x)) {
-		for (double j = -1.0; j < y; j = (j + x)) {
-			for (double k = -1.0; k < y; k = (k + x)) {
-				glVertex3d(i, j, k);
-			}
-		}
-	}
-	glEnd();
-}
-void drawObject2()
-{
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-	//  Draw Icosahedron
-	//glutWireIcosahedron();
-	//glutWireRhombicDodecahedron();
-//	glutWireOctahedron();
-	glPointSize(5);
-	glBegin(GL_POINTS);
-	//glVertex3d(Punto1.x, Punto1.y, Punto1.z);
-	//glVertex3d(Punto2.x, Punto2.y, Punto2.z);
-	glEnd();
-	glutSwapBuffers();
-}
 //-------------------------------------------------------------------------
 //  Funcion que se encarga de meter en el buffer de pintura las dos listas
 //-------------------------------------------------------------------------
@@ -196,6 +152,69 @@ void display() {
 	glVertex3f(0.0f, 0.0f, 0.0f);
 	glVertex3f(0.0f, 0.0f, -1000.0f);
 	glEnd();
+
+	glColor3f(1.0f, 1.0f, 1.0f);      // activamos el color blanco
+	//Dibuja circunferencia 3m de diametro
+	glBegin(GL_LINE_STRIP);
+	glColor3f(1.0f, 0.0f, 0.0f);      // activamos el color rojo
+	for (int i = 0; i<360; i++) {
+		float x = (float)cos(i * 2 * PI / 360);
+		float y = (float)sin(i * 2 * PI / 360);
+		glVertex3f(x * 3, y * 3, 0);
+	}
+	glEnd();
+	//Dibuja circunferencia 7m de diametro
+	glBegin(GL_LINE_STRIP);
+	glColor3f(1.0f, 0.5f, 0.0f);      // activamos el color naranja
+	for (int i = 0; i<360; i++) {
+		float x = (float)cos(i * 2 * PI / 360);
+		float y = (float)sin(i * 2 * PI / 360);
+		glVertex3f(x * 7, y * 7, 0);
+	}
+	glEnd();
+	//Dibuja circunferencia 10m de diametro
+	glBegin(GL_LINE_STRIP);
+	glColor3f(0.0f, 1.0f, 0.0f);      // activamos el color verde
+	for (int i = 0; i<360; i++) {
+		float x = (float)cos(i * 2 * PI / 360);
+		float y = (float)sin(i * 2 * PI / 360);
+		glVertex3f(x * 10, y * 10, 0);
+	}
+	glEnd();
+	//Dibuja cono de accion 3 m
+	glBegin(GL_LINE_STRIP);
+	glColor3f(1.0f, 0.0f, 0.0f);      // activamos el color rojo
+	glVertex3f(0, 0, 0);
+	for (int i = 75; i<105; i++) {
+		float x = (float)cos(i * 2 * PI / 360);
+		float y = (float)sin(i * 2 * PI / 360);
+		glVertex3f(x * 3, y * 3, 0);
+	}
+	glVertex3f(0, 0, 0);
+	glEnd();
+	//Dibuja cono de accion 3 m
+	glBegin(GL_LINE_STRIP);
+	glColor3f(1.0f, 0.5f, 0.0f);      // activamos el color naranja
+	glVertex3f(0, 0, 0);
+	for (int i = 75; i<105; i++) {
+		float x = (float)cos(i * 2 * PI / 360);
+		float y = (float)sin(i * 2 * PI / 360);
+		glVertex3f(x * 7, y * 7, 0);
+	}
+	glVertex3f(0, 0, 0);
+	glEnd();
+	//Dibuja cono de accion 10 m
+	glBegin(GL_LINE_STRIP);
+	glColor3f(0.0f, 1.0f, 0.0f);      // activamos el color verde
+	glVertex3f(0, 0, 0);
+	for (int i = 75; i<105; i++) {
+		float x = (float)cos(i * 2 * PI / 360);
+		float y = (float)sin(i * 2 * PI / 360);
+		glVertex3f(x * 10, y * 10, 0);
+	}
+	glVertex3f(0, 0, 0);
+	glEnd();
+
 
 	glColor3f(1.0f, 1.0f, 1.0f);      // activamos el color blanco
 	//-------------------------------------------------------------------------

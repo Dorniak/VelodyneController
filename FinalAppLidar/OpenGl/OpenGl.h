@@ -10,7 +10,6 @@ public:
 	void constructor();
 	void modificarPuntos(List<Punto3D^>^ listEntradaPuntos);
 	void modificarObstaculos(List<Obstaculo^>^ listEntradaObstaculos);
-	void dibujar();
 	static List<Punto3D^>^ puntos = gcnew List<Punto3D^>();
 	static List<Punto3D^>^ obstaculos = gcnew List<Punto3D^>();
 	static bool listo = false;
