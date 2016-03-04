@@ -77,15 +77,15 @@ namespace FinalAppLidar {
 	private: System::Windows::Forms::TextBox^  textBox2;
 	private: System::Windows::Forms::Button^  button1;
 	private: System::Windows::Forms::TabPage^  tabPage2;
-	private: System::Windows::Forms::CheckBox^  checkBox1;
-	private: System::Windows::Forms::CheckBox^  checkBox2;
+	private: System::Windows::Forms::CheckBox^  ActivarLector;
+	private: System::Windows::Forms::CheckBox^  ActivarLogs;
 	private: System::Windows::Forms::GroupBox^  groupBox5;
 	private: System::Windows::Forms::FlowLayoutPanel^  flowLayoutPanel5;
-	private: System::Windows::Forms::CheckBox^  checkBox5;
+	private: System::Windows::Forms::CheckBox^  ActivarOpenGl;
 	private: System::Windows::Forms::FlowLayoutPanel^  flowLayoutPanel4;
-	private: System::Windows::Forms::CheckBox^  checkBox4;
+	private: System::Windows::Forms::CheckBox^  ActivarGPS;
 	private: System::Windows::Forms::FlowLayoutPanel^  flowLayoutPanel3;
-	private: System::Windows::Forms::CheckBox^  checkBox3;
+	private: System::Windows::Forms::CheckBox^  ActivarAnalisys;
 	private: System::Windows::Forms::Button^  button2;
 	private: System::Windows::Forms::FolderBrowserDialog^  folderBrowserDialog1;
 	private: System::Windows::Forms::TextBox^  textBox3;
@@ -116,17 +116,19 @@ namespace FinalAppLidar {
 			this->tabPage1 = (gcnew System::Windows::Forms::TabPage());
 			this->groupBox5 = (gcnew System::Windows::Forms::GroupBox());
 			this->flowLayoutPanel5 = (gcnew System::Windows::Forms::FlowLayoutPanel());
-			this->checkBox5 = (gcnew System::Windows::Forms::CheckBox());
+			this->ActivarOpenGl = (gcnew System::Windows::Forms::CheckBox());
 			this->groupBox4 = (gcnew System::Windows::Forms::GroupBox());
 			this->flowLayoutPanel4 = (gcnew System::Windows::Forms::FlowLayoutPanel());
-			this->checkBox4 = (gcnew System::Windows::Forms::CheckBox());
+			this->ActivarGPS = (gcnew System::Windows::Forms::CheckBox());
 			this->groupBox3 = (gcnew System::Windows::Forms::GroupBox());
 			this->flowLayoutPanel3 = (gcnew System::Windows::Forms::FlowLayoutPanel());
-			this->checkBox3 = (gcnew System::Windows::Forms::CheckBox());
+			this->ActivarAnalisys = (gcnew System::Windows::Forms::CheckBox());
+			this->label4 = (gcnew System::Windows::Forms::Label());
+			this->textBox4 = (gcnew System::Windows::Forms::TextBox());
 			this->groupBox2 = (gcnew System::Windows::Forms::GroupBox());
 			this->flowLayoutPanel2 = (gcnew System::Windows::Forms::FlowLayoutPanel());
-			this->checkBox1 = (gcnew System::Windows::Forms::CheckBox());
-			this->checkBox2 = (gcnew System::Windows::Forms::CheckBox());
+			this->ActivarLector = (gcnew System::Windows::Forms::CheckBox());
+			this->ActivarLogs = (gcnew System::Windows::Forms::CheckBox());
 			this->button2 = (gcnew System::Windows::Forms::Button());
 			this->groupBox1 = (gcnew System::Windows::Forms::GroupBox());
 			this->flowLayoutPanel1 = (gcnew System::Windows::Forms::FlowLayoutPanel());
@@ -138,8 +140,6 @@ namespace FinalAppLidar {
 			this->tabPage2 = (gcnew System::Windows::Forms::TabPage());
 			this->folderBrowserDialog1 = (gcnew System::Windows::Forms::FolderBrowserDialog());
 			this->textBox3 = (gcnew System::Windows::Forms::TextBox());
-			this->label4 = (gcnew System::Windows::Forms::Label());
-			this->textBox4 = (gcnew System::Windows::Forms::TextBox());
 			this->toolStrip1->SuspendLayout();
 			this->tabControl1->SuspendLayout();
 			this->tabPage1->SuspendLayout();
@@ -213,26 +213,26 @@ namespace FinalAppLidar {
 			// 
 			// flowLayoutPanel5
 			// 
-			this->flowLayoutPanel5->Controls->Add(this->checkBox5);
+			this->flowLayoutPanel5->Controls->Add(this->ActivarOpenGl);
 			this->flowLayoutPanel5->Dock = System::Windows::Forms::DockStyle::Fill;
 			this->flowLayoutPanel5->Location = System::Drawing::Point(3, 16);
 			this->flowLayoutPanel5->Name = L"flowLayoutPanel5";
 			this->flowLayoutPanel5->Size = System::Drawing::Size(180, 81);
 			this->flowLayoutPanel5->TabIndex = 0;
 			// 
-			// checkBox5
+			// ActivarOpenGl
 			// 
-			this->checkBox5->Appearance = System::Windows::Forms::Appearance::Button;
-			this->checkBox5->AutoSize = true;
-			this->checkBox5->BackColor = System::Drawing::Color::IndianRed;
-			this->checkBox5->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
-			this->checkBox5->Location = System::Drawing::Point(3, 3);
-			this->checkBox5->Name = L"checkBox5";
-			this->checkBox5->Size = System::Drawing::Size(50, 23);
-			this->checkBox5->TabIndex = 1;
-			this->checkBox5->Text = L"Activar";
-			this->checkBox5->UseVisualStyleBackColor = false;
-			this->checkBox5->CheckedChanged += gcnew System::EventHandler(this, &Main::checkBox5_CheckedChanged);
+			this->ActivarOpenGl->Appearance = System::Windows::Forms::Appearance::Button;
+			this->ActivarOpenGl->AutoSize = true;
+			this->ActivarOpenGl->BackColor = System::Drawing::Color::IndianRed;
+			this->ActivarOpenGl->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
+			this->ActivarOpenGl->Location = System::Drawing::Point(3, 3);
+			this->ActivarOpenGl->Name = L"ActivarOpenGl";
+			this->ActivarOpenGl->Size = System::Drawing::Size(50, 23);
+			this->ActivarOpenGl->TabIndex = 1;
+			this->ActivarOpenGl->Text = L"Activar";
+			this->ActivarOpenGl->UseVisualStyleBackColor = false;
+			this->ActivarOpenGl->CheckedChanged += gcnew System::EventHandler(this, &Main::ActivarOpenGl_CheckedChanged);
 			// 
 			// groupBox4
 			// 
@@ -247,26 +247,26 @@ namespace FinalAppLidar {
 			// 
 			// flowLayoutPanel4
 			// 
-			this->flowLayoutPanel4->Controls->Add(this->checkBox4);
+			this->flowLayoutPanel4->Controls->Add(this->ActivarGPS);
 			this->flowLayoutPanel4->Dock = System::Windows::Forms::DockStyle::Fill;
 			this->flowLayoutPanel4->Location = System::Drawing::Point(3, 16);
 			this->flowLayoutPanel4->Name = L"flowLayoutPanel4";
 			this->flowLayoutPanel4->Size = System::Drawing::Size(180, 81);
 			this->flowLayoutPanel4->TabIndex = 0;
 			// 
-			// checkBox4
+			// ActivarGPS
 			// 
-			this->checkBox4->Appearance = System::Windows::Forms::Appearance::Button;
-			this->checkBox4->AutoSize = true;
-			this->checkBox4->BackColor = System::Drawing::Color::IndianRed;
-			this->checkBox4->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
-			this->checkBox4->Location = System::Drawing::Point(3, 3);
-			this->checkBox4->Name = L"checkBox4";
-			this->checkBox4->Size = System::Drawing::Size(50, 23);
-			this->checkBox4->TabIndex = 1;
-			this->checkBox4->Text = L"Activar";
-			this->checkBox4->UseVisualStyleBackColor = false;
-			this->checkBox4->CheckedChanged += gcnew System::EventHandler(this, &Main::checkBox4_CheckedChanged);
+			this->ActivarGPS->Appearance = System::Windows::Forms::Appearance::Button;
+			this->ActivarGPS->AutoSize = true;
+			this->ActivarGPS->BackColor = System::Drawing::Color::IndianRed;
+			this->ActivarGPS->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
+			this->ActivarGPS->Location = System::Drawing::Point(3, 3);
+			this->ActivarGPS->Name = L"ActivarGPS";
+			this->ActivarGPS->Size = System::Drawing::Size(50, 23);
+			this->ActivarGPS->TabIndex = 1;
+			this->ActivarGPS->Text = L"Activar";
+			this->ActivarGPS->UseVisualStyleBackColor = false;
+			this->ActivarGPS->CheckedChanged += gcnew System::EventHandler(this, &Main::ActivarGPS_CheckedChanged);
 			// 
 			// groupBox3
 			// 
@@ -281,7 +281,7 @@ namespace FinalAppLidar {
 			// 
 			// flowLayoutPanel3
 			// 
-			this->flowLayoutPanel3->Controls->Add(this->checkBox3);
+			this->flowLayoutPanel3->Controls->Add(this->ActivarAnalisys);
 			this->flowLayoutPanel3->Controls->Add(this->label4);
 			this->flowLayoutPanel3->Controls->Add(this->textBox4);
 			this->flowLayoutPanel3->Dock = System::Windows::Forms::DockStyle::Fill;
@@ -290,19 +290,36 @@ namespace FinalAppLidar {
 			this->flowLayoutPanel3->Size = System::Drawing::Size(180, 81);
 			this->flowLayoutPanel3->TabIndex = 0;
 			// 
-			// checkBox3
+			// ActivarAnalisys
 			// 
-			this->checkBox3->Appearance = System::Windows::Forms::Appearance::Button;
-			this->checkBox3->AutoSize = true;
-			this->checkBox3->BackColor = System::Drawing::Color::IndianRed;
-			this->checkBox3->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
-			this->checkBox3->Location = System::Drawing::Point(3, 3);
-			this->checkBox3->Name = L"checkBox3";
-			this->checkBox3->Size = System::Drawing::Size(50, 23);
-			this->checkBox3->TabIndex = 1;
-			this->checkBox3->Text = L"Activar";
-			this->checkBox3->UseVisualStyleBackColor = false;
-			this->checkBox3->CheckedChanged += gcnew System::EventHandler(this, &Main::checkBox3_CheckedChanged);
+			this->ActivarAnalisys->Appearance = System::Windows::Forms::Appearance::Button;
+			this->ActivarAnalisys->AutoSize = true;
+			this->ActivarAnalisys->BackColor = System::Drawing::Color::IndianRed;
+			this->ActivarAnalisys->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
+			this->ActivarAnalisys->Location = System::Drawing::Point(3, 3);
+			this->ActivarAnalisys->Name = L"ActivarAnalisys";
+			this->ActivarAnalisys->Size = System::Drawing::Size(50, 23);
+			this->ActivarAnalisys->TabIndex = 1;
+			this->ActivarAnalisys->Text = L"Activar";
+			this->ActivarAnalisys->UseVisualStyleBackColor = false;
+			this->ActivarAnalisys->CheckedChanged += gcnew System::EventHandler(this, &Main::ActivarAnalisys_CheckedChanged);
+			// 
+			// label4
+			// 
+			this->label4->AutoSize = true;
+			this->label4->Location = System::Drawing::Point(59, 0);
+			this->label4->Name = L"label4";
+			this->label4->Padding = System::Windows::Forms::Padding(0, 8, 0, 0);
+			this->label4->Size = System::Drawing::Size(63, 21);
+			this->label4->TabIndex = 3;
+			this->label4->Text = L"Frecuencia:";
+			// 
+			// textBox4
+			// 
+			this->textBox4->Location = System::Drawing::Point(128, 3);
+			this->textBox4->Name = L"textBox4";
+			this->textBox4->Size = System::Drawing::Size(28, 20);
+			this->textBox4->TabIndex = 4;
 			// 
 			// groupBox2
 			// 
@@ -317,8 +334,8 @@ namespace FinalAppLidar {
 			// 
 			// flowLayoutPanel2
 			// 
-			this->flowLayoutPanel2->Controls->Add(this->checkBox1);
-			this->flowLayoutPanel2->Controls->Add(this->checkBox2);
+			this->flowLayoutPanel2->Controls->Add(this->ActivarLector);
+			this->flowLayoutPanel2->Controls->Add(this->ActivarLogs);
 			this->flowLayoutPanel2->Controls->Add(this->button2);
 			this->flowLayoutPanel2->Dock = System::Windows::Forms::DockStyle::Fill;
 			this->flowLayoutPanel2->Location = System::Drawing::Point(3, 16);
@@ -326,33 +343,33 @@ namespace FinalAppLidar {
 			this->flowLayoutPanel2->Size = System::Drawing::Size(180, 131);
 			this->flowLayoutPanel2->TabIndex = 0;
 			// 
-			// checkBox1
+			// ActivarLector
 			// 
-			this->checkBox1->Appearance = System::Windows::Forms::Appearance::Button;
-			this->checkBox1->AutoSize = true;
-			this->checkBox1->BackColor = System::Drawing::Color::IndianRed;
-			this->checkBox1->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
-			this->checkBox1->Location = System::Drawing::Point(3, 3);
-			this->checkBox1->Name = L"checkBox1";
-			this->checkBox1->Size = System::Drawing::Size(50, 23);
-			this->checkBox1->TabIndex = 0;
-			this->checkBox1->Text = L"Activar";
-			this->checkBox1->UseVisualStyleBackColor = false;
-			this->checkBox1->CheckedChanged += gcnew System::EventHandler(this, &Main::checkBox1_CheckedChanged);
+			this->ActivarLector->Appearance = System::Windows::Forms::Appearance::Button;
+			this->ActivarLector->AutoSize = true;
+			this->ActivarLector->BackColor = System::Drawing::Color::IndianRed;
+			this->ActivarLector->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
+			this->ActivarLector->Location = System::Drawing::Point(3, 3);
+			this->ActivarLector->Name = L"ActivarLector";
+			this->ActivarLector->Size = System::Drawing::Size(50, 23);
+			this->ActivarLector->TabIndex = 0;
+			this->ActivarLector->Text = L"Activar";
+			this->ActivarLector->UseVisualStyleBackColor = false;
+			this->ActivarLector->CheckedChanged += gcnew System::EventHandler(this, &Main::ActivarLector_CheckedChanged);
 			// 
-			// checkBox2
+			// ActivarLogs
 			// 
-			this->checkBox2->Appearance = System::Windows::Forms::Appearance::Button;
-			this->checkBox2->AutoSize = true;
-			this->checkBox2->BackColor = System::Drawing::Color::IndianRed;
-			this->checkBox2->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
-			this->checkBox2->Location = System::Drawing::Point(59, 3);
-			this->checkBox2->Name = L"checkBox2";
-			this->checkBox2->Size = System::Drawing::Size(40, 23);
-			this->checkBox2->TabIndex = 1;
-			this->checkBox2->Text = L"Logs";
-			this->checkBox2->UseVisualStyleBackColor = false;
-			this->checkBox2->CheckedChanged += gcnew System::EventHandler(this, &Main::checkBox2_CheckedChanged);
+			this->ActivarLogs->Appearance = System::Windows::Forms::Appearance::Button;
+			this->ActivarLogs->AutoSize = true;
+			this->ActivarLogs->BackColor = System::Drawing::Color::IndianRed;
+			this->ActivarLogs->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
+			this->ActivarLogs->Location = System::Drawing::Point(59, 3);
+			this->ActivarLogs->Name = L"ActivarLogs";
+			this->ActivarLogs->Size = System::Drawing::Size(40, 23);
+			this->ActivarLogs->TabIndex = 1;
+			this->ActivarLogs->Text = L"Logs";
+			this->ActivarLogs->UseVisualStyleBackColor = false;
+			this->ActivarLogs->CheckedChanged += gcnew System::EventHandler(this, &Main::ActivarLogs_CheckedChanged);
 			// 
 			// button2
 			// 
@@ -430,6 +447,7 @@ namespace FinalAppLidar {
 			this->button1->TabIndex = 4;
 			this->button1->Text = L"Conectar";
 			this->button1->UseVisualStyleBackColor = true;
+			this->button1->Click += gcnew System::EventHandler(this, &Main::button1_Click);
 			// 
 			// tabPage2
 			// 
@@ -448,23 +466,6 @@ namespace FinalAppLidar {
 			this->textBox3->Name = L"textBox3";
 			this->textBox3->Size = System::Drawing::Size(598, 235);
 			this->textBox3->TabIndex = 3;
-			// 
-			// label4
-			// 
-			this->label4->AutoSize = true;
-			this->label4->Location = System::Drawing::Point(59, 0);
-			this->label4->Name = L"label4";
-			this->label4->Padding = System::Windows::Forms::Padding(0, 8, 0, 0);
-			this->label4->Size = System::Drawing::Size(63, 21);
-			this->label4->TabIndex = 3;
-			this->label4->Text = L"Frecuencia:";
-			// 
-			// textBox4
-			// 
-			this->textBox4->Location = System::Drawing::Point(128, 3);
-			this->textBox4->Name = L"textBox4";
-			this->textBox4->Size = System::Drawing::Size(28, 20);
-			this->textBox4->TabIndex = 4;
 			// 
 			// Main
 			// 
@@ -501,56 +502,69 @@ namespace FinalAppLidar {
 
 		}
 #pragma endregion
-	
-private: System::Void checkBox1_CheckedChanged(System::Object^  sender, System::EventArgs^  e) {
-	if (checkBox1->Checked)
-		checkBox1->BackColor = System::Drawing::Color::PaleGreen;
-	else
-		checkBox1->BackColor = System::Drawing::Color::IndianRed;
-		
-	//TODO: MANDAR A CONTROL 
-	
-}
-private: System::Void checkBox2_CheckedChanged(System::Object^  sender, System::EventArgs^  e) {
-	if (checkBox2->Checked)
-		checkBox2->BackColor = System::Drawing::Color::PaleGreen;
-	else
-		checkBox2->BackColor = System::Drawing::Color::IndianRed;
-	//TODO: MANDAR A CONTROL //TODO: MANDAR A CONTROL 
-}
-private: System::Void checkBox4_CheckedChanged(System::Object^  sender, System::EventArgs^  e) {
-	if (checkBox4->Checked)
-		checkBox4->BackColor = System::Drawing::Color::PaleGreen;
-	else
-		checkBox4->BackColor = System::Drawing::Color::IndianRed;
-	//TODO: MANDAR A CONTROL 
-}
-private: System::Void checkBox3_CheckedChanged(System::Object^  sender, System::EventArgs^  e) {
-	if (checkBox3->Checked)
-	{
-		checkBox3->BackColor = System::Drawing::Color::PaleGreen;
-		Controlador->Flags[FlagAnalisysOn] = true;
+
+	private: System::Void ActivarLector_CheckedChanged(System::Object^  sender, System::EventArgs^  e) {
+		if (ActivarLector->Checked) {
+			ActivarLector->BackColor = System::Drawing::Color::PaleGreen;
+			Controlador->reActivar();
+		}
+		else {
+			ActivarLector->BackColor = System::Drawing::Color::IndianRed;
+			Controlador->Parar();
+		}
+
+		//TODO: MANDAR A CONTROL 
+
 	}
-	else 
-	{
-		checkBox3->BackColor = System::Drawing::Color::IndianRed;
-		Controlador->Flags[FlagAnalisysOn] = false;
+	private: System::Void ActivarLogs_CheckedChanged(System::Object^  sender, System::EventArgs^  e) {
+		if (ActivarLogs->Checked)
+			ActivarLogs->BackColor = System::Drawing::Color::PaleGreen;
+		else
+			ActivarLogs->BackColor = System::Drawing::Color::IndianRed;
+		//TODO: MANDAR A CONTROL //TODO: MANDAR A CONTROL 
 	}
-	//TODO: MANDAR A CONTROL 
+	private: System::Void ActivarGPS_CheckedChanged(System::Object^  sender, System::EventArgs^  e) {
+		if (ActivarGPS->Checked)
+			ActivarGPS->BackColor = System::Drawing::Color::PaleGreen;
+		else
+			ActivarGPS->BackColor = System::Drawing::Color::IndianRed;
+		//TODO: MANDAR A CONTROL 
+	}
+	private: System::Void ActivarAnalisys_CheckedChanged(System::Object^  sender, System::EventArgs^  e) {
+		if (ActivarAnalisys->Checked)
+		{
+			ActivarAnalisys->BackColor = System::Drawing::Color::PaleGreen;
+			Controlador->Flags[FlagAnalisysOn] = true;
+		}
+		else
+		{
+			ActivarAnalisys->BackColor = System::Drawing::Color::IndianRed;
+			Controlador->Flags[FlagAnalisysOn] = false;
+		}
+		//TODO: MANDAR A CONTROL 
 
-}
-private: System::Void checkBox5_CheckedChanged(System::Object^  sender, System::EventArgs^  e) {
-	if (checkBox5->Checked)
-		checkBox5->BackColor = System::Drawing::Color::PaleGreen;
-	else
-		checkBox5->BackColor = System::Drawing::Color::IndianRed;
-}
+	}
+	private: System::Void ActivarOpenGl_CheckedChanged(System::Object^  sender, System::EventArgs^  e) {
+		if (ActivarOpenGl->Checked) {
+			ActivarOpenGl->BackColor = System::Drawing::Color::PaleGreen;
+			Controlador->Flags[FlagOpenGlOn] = true;
+		}
+		else {
+			ActivarOpenGl->BackColor = System::Drawing::Color::IndianRed;
+			Controlador->Flags[FlagOpenGlOn] = false;
+		}
+	}
 
-private: System::Void button2_Click(System::Object^  sender, System::EventArgs^  e) {
-	System::Windows::Forms::DialogResult result = folderBrowserDialog1->ShowDialog();
-	//TODO: MANDAR A CONTROL 
-	textBox3->Text = folderBrowserDialog1->SelectedPath;
+	private: System::Void button2_Click(System::Object^  sender, System::EventArgs^  e) {
+		System::Windows::Forms::DialogResult result = folderBrowserDialog1->ShowDialog();
+		//TODO: MANDAR A CONTROL 
+		textBox3->Text = folderBrowserDialog1->SelectedPath;
 
-}
-};
+	}
+	private: System::Void button1_Click(System::Object^  sender, System::EventArgs^  e) {
+		IPEndPoint^ Connect = gcnew IPEndPoint(0xC901A8C0, Convert::ToInt32(textBox2->Text));
+		textBox3->Text = Connect->Address->ToString();
+		Controlador->ArrayDataReader[Ip] = Connect;
+	}
+	};
 }

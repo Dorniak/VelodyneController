@@ -49,7 +49,7 @@ void DataReader::ReadData(List<Punto3D^>^ puntosController, cli::array<Object^>^
 void DataReader::ReadDataThread()
 {
 	if (Flags[FlagLogOn]) {
-		path = (String^)ArrayDataReader[0] + "\\" + DateTime::Now.ToString("dd - MMMM - yyyy - HH - mm - ss");
+		path = (String^)ArrayDataReader[ppath] + "\\" + DateTime::Now.ToString("dd - MMMM - yyyy - HH - mm - ss");
 		Directory::CreateDirectory(path);
 		frame = 0;
 		loger = gcnew StreamWriter(path + "\\frame-" + frame + ".log", false, Encoding::ASCII, 4096);
@@ -60,14 +60,14 @@ void DataReader::ReadDataThread()
 		log = false;
 	}
 	double CALIBRATE_X, CALIBRATE_Y, CALIBRATE_Z, CALIBRATE_R, CALIBRATE_P, CALIBRATE_W, max, min;
-	CALIBRATE_X = Convert::ToDouble(ArrayDataReader[0]);
-	CALIBRATE_Y = Convert::ToDouble(ArrayDataReader[1]);
-	CALIBRATE_Z = Convert::ToDouble(ArrayDataReader[2]);
-	CALIBRATE_R = Convert::ToDouble(ArrayDataReader[3]);
-	CALIBRATE_P = Convert::ToDouble(ArrayDataReader[4]);
-	CALIBRATE_Y = Convert::ToDouble(ArrayDataReader[5]);
-	max = Convert::ToDouble(ArrayDataReader[11]);
-	min = Convert::ToDouble(ArrayDataReader[12]);
+	CALIBRATE_X = Convert::ToDouble(ArrayDataReader[PCALIBRATE_X]);
+	CALIBRATE_Y = Convert::ToDouble(ArrayDataReader[PCALIBRATE_Y]);
+	CALIBRATE_Z = Convert::ToDouble(ArrayDataReader[PCALIBRATE_Z]);
+	CALIBRATE_R = Convert::ToDouble(ArrayDataReader[PCALIBRATE_R]);
+	CALIBRATE_P = Convert::ToDouble(ArrayDataReader[PCALIBRATE_P]);
+	CALIBRATE_Y = Convert::ToDouble(ArrayDataReader[PCALIBRATE_W]);
+	max = Convert::ToDouble(ArrayDataReader[Pmax]);
+	min = Convert::ToDouble(ArrayDataReader[Pmin]);
 	int azimuth_index = 0, distance_index = 0, intensity_index = 0;
 	cli::array<Byte>^ ReceiveBytes;
 	cli::array<Double>^ azimuths;

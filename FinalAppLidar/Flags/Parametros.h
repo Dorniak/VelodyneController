@@ -13,7 +13,24 @@
 #define numParametrosReader 10
 #define numParametrosAnalisys 10
 //Posicion parametros array Reader
+#define ppath 0
 #define Ip 1
+#define Port 2
+#define PCALIBRATE_X 3
+#define PCALIBRATE_Y 4
+#define PCALIBRATE_Z 5
+#define PCALIBRATE_R 6
+#define PCALIBRATE_P 7
+#define PCALIBRATE_W 8
+#define Pmax 9
+#define Pmin 10
+
+
+
+
+
+
+
 //Posicion parametros array DataAnalisys
 #define posResolucion 0
 #define posApertura 1

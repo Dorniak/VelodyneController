@@ -13,6 +13,9 @@ void centerOnScreen();
 void trabajo();
 void specialKeys(int key, int x, int y);
 void timerFunc(int time);
+int radio1 = 3;
+int radio2 = 20;
+int radio3 = 50;
 // ----------------------------------------------------------
 // Variables globales
 // ----------------------------------------------------------
@@ -160,25 +163,25 @@ void display() {
 	for (int i = 0; i<360; i++) {
 		float x = (float)cos(i * 2 * PI / 360);
 		float y = (float)sin(i * 2 * PI / 360);
-		glVertex3f(x * 3, y * 3, 0);
+		glVertex3f(x * radio1, y * radio1, 0);
 	}
 	glEnd();
-	//Dibuja circunferencia 7m de diametro
+	//Dibuja circunferencia 20m de diametro
 	glBegin(GL_LINE_STRIP);
 	glColor3f(1.0f, 0.5f, 0.0f);      // activamos el color naranja
 	for (int i = 0; i<360; i++) {
 		float x = (float)cos(i * 2 * PI / 360);
 		float y = (float)sin(i * 2 * PI / 360);
-		glVertex3f(x * 7, y * 7, 0);
+		glVertex3f(x * radio2, y * radio2, 0);
 	}
 	glEnd();
-	//Dibuja circunferencia 10m de diametro
+	//Dibuja circunferencia 50m de diametro
 	glBegin(GL_LINE_STRIP);
 	glColor3f(0.0f, 1.0f, 0.0f);      // activamos el color verde
 	for (int i = 0; i<360; i++) {
 		float x = (float)cos(i * 2 * PI / 360);
 		float y = (float)sin(i * 2 * PI / 360);
-		glVertex3f(x * 10, y * 10, 0);
+		glVertex3f(x * radio3, y * radio3, 0);
 	}
 	glEnd();
 	//Dibuja cono de accion 3 m
@@ -188,29 +191,29 @@ void display() {
 	for (int i = 75; i<105; i++) {
 		float x = (float)cos(i * 2 * PI / 360);
 		float y = (float)sin(i * 2 * PI / 360);
-		glVertex3f(x * 3, y * 3, 0);
+		glVertex3f(x * radio1, y * radio1, 0);
 	}
 	glVertex3f(0, 0, 0);
 	glEnd();
-	//Dibuja cono de accion 3 m
+	//Dibuja cono de accion 20 m
 	glBegin(GL_LINE_STRIP);
 	glColor3f(1.0f, 0.5f, 0.0f);      // activamos el color naranja
 	glVertex3f(0, 0, 0);
 	for (int i = 75; i<105; i++) {
 		float x = (float)cos(i * 2 * PI / 360);
 		float y = (float)sin(i * 2 * PI / 360);
-		glVertex3f(x * 7, y * 7, 0);
+		glVertex3f(x * radio2, y * radio2, 0);
 	}
 	glVertex3f(0, 0, 0);
 	glEnd();
-	//Dibuja cono de accion 10 m
+	//Dibuja cono de accion 50 m
 	glBegin(GL_LINE_STRIP);
 	glColor3f(0.0f, 1.0f, 0.0f);      // activamos el color verde
 	glVertex3f(0, 0, 0);
 	for (int i = 75; i<105; i++) {
 		float x = (float)cos(i * 2 * PI / 360);
 		float y = (float)sin(i * 2 * PI / 360);
-		glVertex3f(x * 10, y * 10, 0);
+		glVertex3f(x * radio3, y * radio3, 0);
 	}
 	glVertex3f(0, 0, 0);
 	glEnd();
