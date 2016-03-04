@@ -29,7 +29,7 @@ public:
 	//Funcion que le dice al OpenGl que los obstaculos estan listos para ser dibujados
 	void DibujarObstaculos();
 	//Array de threads para apagarlos y encenderlos
-	cli::array<Thread^>^ Threads = gcnew cli::array<Thread^>(3);
+	cli::array<Thread^>^ Threads = gcnew cli::array<Thread^>(3); 
 	//Thread de interpretar conclusiones
 	void ThreadInterpretarConclusiones();
 private:

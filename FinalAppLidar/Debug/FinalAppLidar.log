@@ -1,20 +1,8 @@
-﻿  Main.cpp
-d:\documentos\github\finalapplidar\finalapplidar\Main.h(5): warning C4005: 'FlagTratamiento': macro redefinition
-  D:\Documentos\GitHub\FinalAppLidar\FinalAppLidar\Flags\Parametros.h(5): note: see previous definition of 'FlagTratamiento'
-d:\documentos\github\finalapplidar\finalapplidar\Main.h(6): warning C4005: 'FlagTratamiento': macro redefinition
-  d:\documentos\github\finalapplidar\finalapplidar\Main.h(5): note: see previous definition of 'FlagTratamiento'
-d:\documentos\github\finalapplidar\finalapplidar\Main.h(7): warning C4005: 'FlagTratamiento': macro redefinition
-  d:\documentos\github\finalapplidar\finalapplidar\Main.h(6): note: see previous definition of 'FlagTratamiento'
-d:\documentos\github\finalapplidar\finalapplidar\Main.h(8): warning C4005: 'FlagWarning': macro redefinition
-  D:\Documentos\GitHub\FinalAppLidar\FinalAppLidar\Flags\Parametros.h(7): note: see previous definition of 'FlagWarning'
-d:\documentos\github\finalapplidar\finalapplidar\Main.h(9): warning C4005: 'FlagPausa': macro redefinition
-  D:\Documentos\GitHub\FinalAppLidar\FinalAppLidar\Flags\Parametros.h(8): note: see previous definition of 'FlagPausa'
-d:\documentos\github\finalapplidar\finalapplidar\Main.h(10): warning C4005: 'FlagAnalisysOn': macro redefinition
-  D:\Documentos\GitHub\FinalAppLidar\FinalAppLidar\Flags\Parametros.h(9): note: see previous definition of 'FlagAnalisysOn'
-d:\documentos\github\finalapplidar\finalapplidar\Main.h(11): warning C4005: 'FlagOpenGlOn': macro redefinition
-  D:\Documentos\GitHub\FinalAppLidar\FinalAppLidar\Flags\Parametros.h(10): note: see previous definition of 'FlagOpenGlOn'
-d:\documentos\github\finalapplidar\finalapplidar\Main.h(12): warning C4005: 'FlagLogOn': macro redefinition
-  D:\Documentos\GitHub\FinalAppLidar\FinalAppLidar\Flags\Parametros.h(6): note: see previous definition of 'FlagLogOn'
+﻿  OpenGl.cpp
+OpenGl\OpenGl.cpp(319): warning C4305: 'argument': truncation from 'double' to 'GLfloat'
+OpenGl\OpenGl.cpp(322): warning C4305: 'argument': truncation from 'double' to 'GLfloat'
+OpenGl\OpenGl.cpp(326): warning C4305: 'argument': truncation from 'double' to 'GLfloat'
+d:\documentos\github\finalapplidar\finalapplidar\opengl\opengl.cpp(44): warning C4700: uninitialized local variable 'argv' used
   Controller.obj : /DEBUG:FASTLINK is not supported when managed code is present; restarting link with /DEBUG:FULL
   FinalAppLidar.vcxproj -> D:\Documentos\GitHub\FinalAppLidar\Debug\FinalAppLidar.exe
   FinalAppLidar.vcxproj -> D:\Documentos\GitHub\FinalAppLidar\Debug\FinalAppLidar.pdb (Partial PDB)

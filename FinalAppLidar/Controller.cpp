@@ -32,11 +32,11 @@ void Controller::interpretarConclusiones()
 
 void Controller::Iniciar()
 {
-	if (Flags[FlagAnalisysOn]==true) {
+	if (Flags[FlagAnalisysOn]) {
 		//Crear objeto DataAnalisys
 		Analisys = gcnew DataAnalisys();
 	}
-	if (Flags[FlagOpenGlOn] == true) {
+	if (Flags[FlagOpenGlOn]) {
 		//Crear objeto OpenGl
 		Dibujador = gcnew OpenGl();
 	}
@@ -47,9 +47,13 @@ void Controller::Iniciar()
 
 void Controller::IniciarThreads()
 {
+	Flags[FlagPausa] = false;
 	Reader->ReadData(Puntos,ArrayDataReader, Flags, Threads, Dibujador);
-	if (FlagAnalisysOn) {
+	if (Flags[FlagAnalisysOn]) {
 		Analisys->Analisys(Puntos, Obstaculos, ArrayDataAnalisys, Conclusiones, Flags, Threads, Dibujador);
+	}
+	if (Flags[FlagOpenGlOn]) {
+		Dibujador->constructor(Threads);
 	}
 }
 
@@ -57,8 +61,11 @@ void Controller::reActivar()
 {
 	Flags[FlagPausa] = false;
 	Reader->ReadData(Puntos, ArrayDataReader, Flags, Threads, Dibujador);
-	if (FlagAnalisysOn) {
+	if (Flags[FlagAnalisysOn]) {
 		Analisys->Analisys(Puntos, Obstaculos, ArrayDataAnalisys, Conclusiones, Flags, Threads, Dibujador);
+	}
+	if (Flags[FlagOpenGlOn]) {
+		Dibujador->constructor(Threads);
 	}
 }
 void Controller::Parar()

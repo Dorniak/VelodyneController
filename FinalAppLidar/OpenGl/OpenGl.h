@@ -7,14 +7,15 @@
 #include "Parametros.h"
 ref class OpenGl {
 public:
-	void constructor();
+	void constructor(cli::array<Thread^>^ Threads);
 	void modificarPuntos(List<Punto3D^>^ listEntradaPuntos);
 	void modificarObstaculos(List<Obstaculo^>^ listEntradaObstaculos);
 	static List<Punto3D^>^ puntos = gcnew List<Punto3D^>();
 	static List<Punto3D^>^ obstaculos = gcnew List<Punto3D^>();
 	static bool listo = false;
 private:
-	
+	Thread^ ThreadDIO;
+	cli::array<Thread^>^ Threads;
 	void threadconstructor();
 	void iniciarPuntos();
 	void iniciarObstaculos();

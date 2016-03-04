@@ -11,9 +11,17 @@
 /// <param name="LIp">The Lidar IP.</param>
 DataReader::DataReader(IPEndPoint^ LIp)//SerialPort^ p
 {
-	LaserIpEndPoint = LIp;
-	ClientLIDAR = gcnew UdpClient(LIp);
-	read = true;
+	try
+	{
+		Threads = gcnew cli::array<Thread^>(3);
+		LaserIpEndPoint = LIp;
+		ClientLIDAR = gcnew UdpClient(LaserIpEndPoint);
+		read = true;
+	}
+	catch (Exception^ e)
+	{
+		System::Windows::Forms::MessageBox::Show(e->ToString());
+	}
 }
 
 /// <summary>
@@ -34,17 +42,23 @@ DataReader::~DataReader()
 
 void DataReader::ReadData(List<Punto3D^>^ puntosController, cli::array<Object^>^ ParamReader, cli::array<bool>^ Flags, cli::array<Thread^>^ Threads, OpenGl^ Dibujador)
 {
-	this->Threads = Threads;
-	this->Flags = Flags;
-	ArrayDataReader = ParamReader;
-	this->puntosController = puntosController;
-	this->Dibujador = Dibujador;
-
-	if (!thread_reader) {
-		thread_reader = gcnew Thread(gcnew ThreadStart(this, &DataReader::ReadDataThread));
+	try
+	{
+		this->Threads = Threads;
+		this->Flags = Flags;
+		ArrayDataReader = ParamReader;
+		this->puntosController = puntosController;
+		this->Dibujador = Dibujador;
+		if (!thread_reader) {
+			thread_reader = gcnew Thread(gcnew ThreadStart(this, &DataReader::ReadDataThread));
+		}
+		thread_reader->Start();
+		this->Threads[0] = thread_reader;
 	}
-	thread_reader->Start();
-	Threads[0] = thread_Reader;
+	catch (Exception^ e)
+	{
+		System::Windows::Forms::MessageBox::Show(e->ToString());
+	}
 }
 void DataReader::ReadDataThread()
 {
@@ -60,14 +74,14 @@ void DataReader::ReadDataThread()
 		log = false;
 	}
 	double CALIBRATE_X, CALIBRATE_Y, CALIBRATE_Z, CALIBRATE_R, CALIBRATE_P, CALIBRATE_W, max, min;
-	CALIBRATE_X = Convert::ToDouble(ArrayDataReader[PCALIBRATE_X]);
-	CALIBRATE_Y = Convert::ToDouble(ArrayDataReader[PCALIBRATE_Y]);
-	CALIBRATE_Z = Convert::ToDouble(ArrayDataReader[PCALIBRATE_Z]);
-	CALIBRATE_R = Convert::ToDouble(ArrayDataReader[PCALIBRATE_R]);
-	CALIBRATE_P = Convert::ToDouble(ArrayDataReader[PCALIBRATE_P]);
-	CALIBRATE_Y = Convert::ToDouble(ArrayDataReader[PCALIBRATE_W]);
-	max = Convert::ToDouble(ArrayDataReader[Pmax]);
-	min = Convert::ToDouble(ArrayDataReader[Pmin]);
+	CALIBRATE_X = (Double)ArrayDataReader[PCALIBRATE_X];
+	CALIBRATE_Y = (Double)ArrayDataReader[PCALIBRATE_Y];
+	CALIBRATE_Z = (Double)ArrayDataReader[PCALIBRATE_Z];
+	CALIBRATE_R = (Double)ArrayDataReader[PCALIBRATE_R];
+	CALIBRATE_P = (Double)ArrayDataReader[PCALIBRATE_P];
+	CALIBRATE_Y = (Double)ArrayDataReader[PCALIBRATE_W];
+	max = (Double)ArrayDataReader[Pmax];
+	min = (Double)ArrayDataReader[Pmin];
 	int azimuth_index = 0, distance_index = 0, intensity_index = 0;
 	cli::array<Byte>^ ReceiveBytes;
 	cli::array<Double>^ azimuths;
@@ -78,7 +92,7 @@ void DataReader::ReadDataThread()
 	double dist, ang, az, azi = -1;
 
 
-	while (Flags[FlagWarning] && !Flags[FlagPausa]) {
+	while (!Flags[FlagWarning] && !Flags[FlagPausa]) {
 		try
 		{
 			ReceiveBytes = ClientLIDAR->Receive(LaserIpEndPoint);
@@ -91,9 +105,10 @@ void DataReader::ReadDataThread()
 				for (int i = 0; i < NUMBER_OF_CHANNELS; i++) {
 					//	if (corte == azimuth_index) {
 					if (azimuth_index > 0 && azimuths[azimuth_index] < azimuths[azimuth_index - 1]) {
-						loger->Close();
+						//loger->Close();
+						//System::Windows::Forms::MessageBox::Show("Fin de vuelta");
 						copiarPuntos();
-						loger = gcnew StreamWriter(path + "\\frame-" + frame + ".log", false, Encoding::ASCII, 4096);
+					//	loger = gcnew StreamWriter(path + "\\frame-" + frame + ".log", false, Encoding::ASCII, 4096);
 						corte = -1;
 						frame++;
 					}
@@ -113,7 +128,7 @@ void DataReader::ReadDataThread()
 					intensity_index++;
 					azimuth_index++;
 				}
-				loger->Flush();
+				//loger->Flush();
 			}
 			azimuth_index = 0, distance_index = 0, intensity_index = 0;
 
@@ -121,7 +136,7 @@ void DataReader::ReadDataThread()
 		catch (Exception^ e)
 		{
 			Flags[FlagWarning] = true;
-			//	System::Windows::Forms::MessageBox::Show(e->ToString());
+			System::Windows::Forms::MessageBox::Show(e->ToString());
 		}
 
 	}//while
@@ -259,11 +274,12 @@ void DataReader::copiarPuntos()
 {
 	puntosController->Clear();
 	puntosController->AddRange(Puntos);
+	Puntos->Clear();
 	if (Flags[FlagOpenGlOn]) {
 		Dibujador->modificarPuntos(puntosController);
 	}
 	//Controller de colision
-	if (Flags[FlagTratamiento] == 0) {
+	if (Flags[FlagTratamiento] == 0 && Flags[FlagAnalisysOn]) {
 		Flags[FlagWarning] = 1;
 		//mensaje pantalla
 	}

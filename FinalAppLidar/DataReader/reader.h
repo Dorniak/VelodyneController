@@ -32,7 +32,7 @@ private:
 	//array de parametros del DataReader
 	cli::array<Object^>^ ArrayDataReader;
 	//Puntero al array de thread
-	cli::array<Thread^>^ Threads;
+	cli::array<Thread^>^ Threads ;
 	//Puntero al array de flags
 	cli::array<bool>^ Flags;
 	//LIsta en la que se guardan los puntos
@@ -51,7 +51,5 @@ private:
 	IPEndPoint^ LaserIpEndPoint;
 	Thread^ thread_reader;
 	StreamWriter^ loger;
-	//Objeto thread del Reader
-	Thread^ thread_Reader;
 };
 

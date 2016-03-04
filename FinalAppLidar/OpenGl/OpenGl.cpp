@@ -51,10 +51,20 @@ void OpenGl::threadconstructor()
 //-------------------------------------------------------------------------
 //  Program Main method.
 //-------------------------------------------------------------------------
-void OpenGl::constructor()
+void OpenGl::constructor(cli::array<Thread^>^ Threads)
 {
-	Thread^ ThreadDIO = gcnew Thread(gcnew ThreadStart(this, &OpenGl::threadconstructor));
-	ThreadDIO->Start();
+	try
+	{
+		this->Threads = Threads;
+		if (!ThreadDIO)
+			ThreadDIO = gcnew Thread(gcnew ThreadStart(this, &OpenGl::threadconstructor));
+		ThreadDIO->Start();
+		this->Threads[2] = ThreadDIO;
+	}
+	catch (Exception^ e)
+	{
+		System::Windows::Forms::MessageBox::Show(e->ToString());
+	}
 }
 void OpenGl::modificarPuntos(List<Punto3D^>^ listEntradaPuntos)
 {
@@ -77,7 +87,7 @@ void OpenGl::modificarObstaculos(List<Obstaculo^>^ listEntradaObstaculos)
 void OpenGl::iniciarPuntos()
 {
 	Punto3D^ a;
-	for (int llenarPuntos = 0; llenarPuntos < 150000; llenarPuntos++) {
+	for (int llenarPuntos = 0; llenarPuntos < 5000; llenarPuntos++) {
 		a = gcnew Punto3D(0, 0, 0);
 		puntos->Add(a);
 	}
