@@ -63,7 +63,7 @@ void DataReader::ReadData(List<Punto3D^>^ puntosController, cli::array<Object^>^
 void DataReader::ReadDataThread()
 {
 	if (Flags[FlagLogOn]) {
-		path = (String^)ArrayDataReader[ppath] + "\\" + DateTime::Now.ToString("dd - MMMM - yyyy - HH - mm - ss");
+		path = (String^)ArrayDataReader[path] + "\\" + DateTime::Now.ToString("dd - MMMM - yyyy - HH - mm - ss");
 		Directory::CreateDirectory(path);
 		frame = 0;
 		loger = gcnew StreamWriter(path + "\\frame-" + frame + ".log", false, Encoding::ASCII, 4096);
@@ -103,14 +103,15 @@ void DataReader::ReadDataThread()
 
 			for (int block = 0; block < 12; block++) {
 				for (int i = 0; i < NUMBER_OF_CHANNELS; i++) {
-					//	if (corte == azimuth_index) {
-					if (azimuth_index > 0 && azimuths[azimuth_index] < azimuths[azimuth_index - 1]) {
-						//loger->Close();
-						//System::Windows::Forms::MessageBox::Show("Fin de vuelta");
+					//Corte de vuelta
+					if (azimuth_index == corte ||(azimuth_index > 0 && (azimuths[azimuth_index] < azimuths[azimuth_index - 1]))) {
+						if (log) {
+							loger->Close();
+							loger = gcnew StreamWriter(path + "\\frame-" + frame + ".log", false, Encoding::ASCII, 4096);
+						}
 						copiarPuntos();
-					//	loger = gcnew StreamWriter(path + "\\frame-" + frame + ".log", false, Encoding::ASCII, 4096);
 						corte = -1;
-						frame++;
+						frame = 0;
 					}
 					if (distances[distance_index] >= min && distances[distance_index] <= max) {
 						dist = distances[distance_index];
@@ -120,7 +121,8 @@ void DataReader::ReadDataThread()
 						p->CalculateCoordinates(CALIBRATE_X, CALIBRATE_Y, CALIBRATE_Z, CALIBRATE_P, CALIBRATE_R, CALIBRATE_Y);
 						Puntos->Add(p);
 						if (log) {
-							loger->WriteLine();
+							//Azimuth, X, Y, Z, Distance;
+							loger->WriteLine(p->visualize());
 						}
 
 					}
@@ -128,7 +130,7 @@ void DataReader::ReadDataThread()
 					intensity_index++;
 					azimuth_index++;
 				}
-				//loger->Flush();
+				loger->Flush();
 			}
 			azimuth_index = 0, distance_index = 0, intensity_index = 0;
 

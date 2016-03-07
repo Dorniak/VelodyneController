@@ -726,8 +726,10 @@ namespace FinalAppLidar {
 
 	}
 	private: System::Void ActivarLogs_CheckedChanged(System::Object^  sender, System::EventArgs^  e) {
-		if (ActivarLogs->Checked)
+		if (ActivarLogs->Checked) {
 			ActivarLogs->BackColor = System::Drawing::Color::PaleGreen;
+			Controlador->Flags[FlagLogOn] = true;
+		}
 		else
 			ActivarLogs->BackColor = System::Drawing::Color::IndianRed;
 		//TODO: MANDAR A CONTROL //TODO: MANDAR A CONTROL 
@@ -766,9 +768,7 @@ namespace FinalAppLidar {
 
 	private: System::Void button2_Click(System::Object^  sender, System::EventArgs^  e) {
 		System::Windows::Forms::DialogResult result = folderBrowserDialog1->ShowDialog();
-		//TODO: MANDAR A CONTROL 
-		Consola->Text = folderBrowserDialog1->SelectedPath;
-
+		Controlador->ArrayDataReader[Ppath] = folderBrowserDialog1->SelectedPath;
 	}
 	private: System::Void button1_Click(System::Object^  sender, System::EventArgs^  e) {
 		IPEndPoint^ Connect = gcnew IPEndPoint(IPAddress::Any, Convert::ToInt32(textBox2->Text));//0xC901A8C0  

@@ -208,7 +208,7 @@ double Punto3D::getModule()
 
 String^ Punto3D::visualize()
 {
-	return "X: " + x + "\t Y: " + y + "\t Z: " + z;
+	return Azimuth + "," + x + "," + y + "," + z + "," + Distance;
 }
 
 /// <summary>
