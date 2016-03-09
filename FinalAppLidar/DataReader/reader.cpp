@@ -98,7 +98,7 @@ void DataReader::ReadDataThread()
 	CALIBRATE_Z = (Double)ArrayDataReader[PCALIBRATE_Z];
 	CALIBRATE_R = (Double)ArrayDataReader[PCALIBRATE_R];
 	CALIBRATE_P = (Double)ArrayDataReader[PCALIBRATE_P];
-	CALIBRATE_Y = (Double)ArrayDataReader[PCALIBRATE_W];
+	CALIBRATE_W = (Double)ArrayDataReader[PCALIBRATE_W];
 	max = (Double)ArrayDataReader[Pmax];
 	min = (Double)ArrayDataReader[Pmin];
 	int azimuth_index = 0, distance_index = 0, intensity_index = 0;

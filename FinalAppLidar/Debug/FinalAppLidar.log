@@ -15,9 +15,9 @@ OpenGl\OpenGl.cpp(328): warning C4305: 'argument': truncation from 'double' to '
 OpenGl\OpenGl.cpp(332): warning C4305: 'argument': truncation from 'double' to 'GLfloat'
   Punto3D.cpp
   Generating Code...
-d:\documentos\github\finalapplidar\finalapplidar\opengl\opengl.cpp(44): warning C4700: uninitialized local variable 'argv' used
-d:\documentos\github\finalapplidar\finalapplidar\datareader\reader.cpp(366): warning C4715: 'DataReader::getAngle': not all control paths return a value
+d:\visual studio\projects\finalapplidar\finalapplidar\opengl\opengl.cpp(44): warning C4700: uninitialized local variable 'argv' used
+d:\visual studio\projects\finalapplidar\finalapplidar\datareader\reader.cpp(366): warning C4715: 'DataReader::getAngle': not all control paths return a value
   .NETFramework,Version=v4.5.2.AssemblyAttributes.cpp
   Controller.obj : /DEBUG:FASTLINK is not supported when managed code is present; restarting link with /DEBUG:FULL
-  FinalAppLidar.vcxproj -> D:\Documentos\GitHub\FinalAppLidar\Debug\FinalAppLidar.exe
-  FinalAppLidar.vcxproj -> D:\Documentos\GitHub\FinalAppLidar\Debug\FinalAppLidar.pdb (Partial PDB)
+  FinalAppLidar.vcxproj -> D:\Visual Studio\Projects\FinalAppLidar\Debug\FinalAppLidar.exe
+  FinalAppLidar.vcxproj -> D:\Visual Studio\Projects\FinalAppLidar\Debug\FinalAppLidar.pdb (Partial PDB)
