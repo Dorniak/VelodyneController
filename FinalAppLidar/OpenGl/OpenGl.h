@@ -19,6 +19,7 @@ private:
 	void threadconstructor();
 	void iniciarPuntos();
 	void iniciarObstaculos();
-	void limpiarListas();
+	void limpiarListas(int a);
+	int puntosAnterior;
 	
 };

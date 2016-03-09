@@ -1,14 +1,8 @@
-﻿  Controller.cpp
-d:\visual studio\projects\finalapplidar\finalapplidar\Controller.h(2): fatal error C1083: Cannot open include file: 'reader.h': No such file or directory
-  DataAnalisys.cpp
-d:\visual studio\projects\finalapplidar\finalapplidar\dataanalisys\DataAnalisys.h(2): fatal error C1083: Cannot open include file: 'Obstaculo.h': No such file or directory
-  reader.cpp
-d:\visual studio\projects\finalapplidar\finalapplidar\datareader\reader.h(3): fatal error C1083: Cannot open include file: 'Punto3D.h': No such file or directory
-  Main.cpp
-d:\visual studio\projects\finalapplidar\finalapplidar\Controller.h(2): fatal error C1083: Cannot open include file: 'reader.h': No such file or directory
-  Obstaculo.cpp
-d:\visual studio\projects\finalapplidar\finalapplidar\obstaculo\Obstaculo.h(2): fatal error C1083: Cannot open include file: 'Punto3D.h': No such file or directory
-  OpenGl.cpp
-d:\visual studio\projects\finalapplidar\finalapplidar\opengl\OpenGl.h(2): fatal error C1083: Cannot open include file: '../../packages/nupengl.core.0.1.0.1/build/native/include/GL/freeglut.h': No such file or directory
+﻿  reader.cpp
+DataReader\reader.cpp(95): warning C4101: 'CALIBRATE_W': unreferenced local variable
   Punto3D.cpp
   Generating Code...
+d:\documentos\github\finalapplidar\finalapplidar\datareader\reader.cpp(366): warning C4715: 'DataReader::getAngle': not all control paths return a value
+  Controller.obj : /DEBUG:FASTLINK is not supported when managed code is present; restarting link with /DEBUG:FULL
+  FinalAppLidar.vcxproj -> D:\Documentos\GitHub\FinalAppLidar\Debug\FinalAppLidar.exe
+  FinalAppLidar.vcxproj -> D:\Documentos\GitHub\FinalAppLidar\Debug\FinalAppLidar.pdb (Partial PDB)

@@ -13,6 +13,20 @@ Controller::Controller()
 	ArrayDataAnalisys = gcnew cli::array<double>(numParametrosAnalisys);
 	ArrayDataReader = gcnew cli::array<Object^>(numParametrosReader);
 }
+Controller::Controller(System::Windows::Forms::TextBox ^ Consola)
+{
+	this->Consola = Consola;
+	Obstaculos = gcnew List<Obstaculo^>();
+	Puntos = gcnew List<Punto3D^>();
+	Conclusiones = gcnew List<int>();
+	Flags = gcnew cli::array<bool>(ARRAYFlags_SIZE);
+	for (int a = 0; a < ARRAYFlags_SIZE; a++) {
+		Flags[a] = false;
+	}
+	Flags[FlagPausa] = true;
+	ArrayDataAnalisys = gcnew cli::array<double>(numParametrosAnalisys);
+	ArrayDataReader = gcnew cli::array<Object^>(numParametrosReader);
+}
 //Es el encargado de poner el flag de fin de tratamiento a 1 a la vez 
 // que llama a la funcion de interpretar conclusiones
 void Controller::setFlagTratamiento()
@@ -42,15 +56,21 @@ void Controller::Iniciar()
 	}
 	//Crear objeto DataReader
 	Reader = gcnew DataReader((IPEndPoint^)ArrayDataReader[Ip]);
-	IniciarThreads();
+	//IniciarThreads();
 }
 
 void Controller::IniciarThreads()
 {
 	Flags[FlagPausa] = false;
-	Reader->ReadData(Puntos,ArrayDataReader, Flags, Threads, Dibujador);
+	if (FlagOpenGlOn) {
+		Reader->ReadData(Puntos, ArrayDataReader, Flags, Threads, Dibujador);
+	}
+	else Reader->ReadData(Puntos, ArrayDataReader, Flags, Threads);
 	if (Flags[FlagAnalisysOn]) {
-		Analisys->Analisys(Puntos, Obstaculos, ArrayDataAnalisys, Conclusiones, Flags, Threads, Dibujador);
+		if (FlagOpenGlOn) {
+			Analisys->Analisys(Puntos, Obstaculos, ArrayDataAnalisys, Conclusiones, Flags, Threads, Dibujador);
+		}
+		else Analisys->Analisys(Puntos, Obstaculos, ArrayDataAnalisys, Conclusiones, Flags, Threads);
 	}
 	if (Flags[FlagOpenGlOn]) {
 		Dibujador->constructor(Threads);
@@ -59,28 +79,12 @@ void Controller::IniciarThreads()
 
 void Controller::reActivar()
 {
-	Flags[FlagPausa] = false;
-	Reader->ReadData(Puntos, ArrayDataReader, Flags, Threads, Dibujador);
-	if (Flags[FlagAnalisysOn]) {
-		Analisys->Analisys(Puntos, Obstaculos, ArrayDataAnalisys, Conclusiones, Flags, Threads, Dibujador);
-	}
-	if (Flags[FlagOpenGlOn]) {
-		Dibujador->constructor(Threads);
-	}
+	IniciarThreads();
 }
+
 void Controller::Parar()
 {
 	Flags[FlagPausa] = true;
-}
-
-void Controller::DibujarPuntos()
-{
-	Dibujador->modificarPuntos(Puntos);
-}
-
-void Controller::DibujarObstaculos()
-{
-	Dibujador->modificarObstaculos(Obstaculos);
 }
 
 void Controller::ThreadInterpretarConclusiones()

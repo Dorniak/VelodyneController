@@ -11,6 +11,7 @@ public:
 	DataAnalisys();
 	//Funcion que arranca el thread de analisis
 	void Analisys(List<Punto3D^>^ puntosControl, List<Obstaculo^>^ ObstaculosControl, cli::array<double>^ ParamAnalisys,List<int>^ Conclusiones, cli::array<bool>^ Flags, cli::array<Thread^>^ Threads,OpenGl^ Dibujador);
+	void Analisys(List<Punto3D^>^ puntosController, List<Obstaculo^>^ ObstaculosController, cli::array<double>^ ParamAnalisys, List<int>^ Conclusiones, cli::array<bool>^ Flags, cli::array<Thread^>^ Threads);
 	//Funcion de thread
 	void AnalisysThread();
 	//Funcion para abortar el thread

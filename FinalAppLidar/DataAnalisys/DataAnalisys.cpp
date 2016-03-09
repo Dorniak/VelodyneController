@@ -15,8 +15,8 @@ DataAnalisys::DataAnalisys()
 //consigna velocidad:: puntero para devolucion de parametro de velocidad
 //consigna volante:: puntero para devolucion de parametro de volante
 //apertura::Angulo de interes de lectura en grados
-void DataAnalisys::Analisys(List<Punto3D^>^ puntosController, List<Obstaculo^>^ ObstaculosController, array<double>^ ParamAnalisys, List<int>^ Conclusiones, array<bool>^ Flags, array<Thread^>^ Threads,OpenGl^ Dibujador) {
-
+void DataAnalisys::Analisys(List<Punto3D^>^ puntosController, List<Obstaculo^>^ ObstaculosController, array<double>^ ParamAnalisys, List<int>^ Conclusiones, array<bool>^ Flags, array<Thread^>^ Threads, OpenGl^ Dibujador)
+{
 	this->Dibujador = Dibujador;
 	this->Threads = Threads;
 	this->Flags = Flags;
@@ -32,15 +32,30 @@ void DataAnalisys::Analisys(List<Punto3D^>^ puntosController, List<Obstaculo^>^ 
 	//Guarda el identificador de thread en el array de threads del Controllerador 
 	Threads[1] = thread_analysis;
 }
-
+void DataAnalisys::Analisys(List<Punto3D^>^ puntosController, List<Obstaculo^>^ ObstaculosController, cli::array<double>^ ParamAnalisys, List<int>^ Conclusiones, cli::array<bool>^ Flags, cli::array<Thread^>^ Threads) 
+{
+	this->Threads = Threads;
+	this->Flags = Flags;
+	parametros = ParamAnalisys;
+	this->Conclusiones = Conclusiones;
+	matriz = puntosController;
+	ObstaculosvAnt = ObstaculosController;
+	Obstaculos->Clear();
+	if (!thread_analysis) {
+		thread_analysis = gcnew Thread(gcnew ThreadStart(this, &DataAnalisys::AnalisysThread));
+	}
+	thread_analysis->Start();
+	//Guarda el identificador de thread en el array de threads del Controllerador 
+	Threads[1] = thread_analysis;
+}
 //List<Punto3D^>^ matriz, double resolucionAngular,double Vcoche, double &consigna_velocidad, double &consigna_volante, double apertura
-void DataAnalisys::AnalisysThread() {
-
-
+void DataAnalisys::AnalisysThread() 
+{
 	//En caso de que se desactive y se reactive despues hay que limpiar los objetos
 	ObstaculosvAnt->Clear();
 
-	while (Flags[FlagAnalisysOn] && Flags[FlagWarning] && !Flags[FlagPausa]) {
+	while (Flags[FlagAnalisysOn] && Flags[FlagWarning] && !Flags[FlagPausa]) 
+	{
 		try
 		{
 			if (Flags[FlagTratamiento] == 0) {

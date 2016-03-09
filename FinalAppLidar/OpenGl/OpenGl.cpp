@@ -69,12 +69,15 @@ void OpenGl::constructor(cli::array<Thread^>^ Threads)
 void OpenGl::modificarPuntos(List<Punto3D^>^ listEntradaPuntos)
 {
 	listo = false;
-	limpiarListas();
+	if (listEntradaPuntos->Count < puntos->Count) {
+		limpiarListas(listEntradaPuntos->Count);
+	}
 	for (int recorridoP = 0; recorridoP < listEntradaPuntos->Count; recorridoP++) {
 		puntos[recorridoP]->setCoordinatesX(listEntradaPuntos[recorridoP]->getCoordinatesX());
 		puntos[recorridoP]->setCoordinatesY(listEntradaPuntos[recorridoP]->getCoordinatesY());
-		puntos[recorridoP]->setCoordinatesZ(listEntradaPuntos[recorridoP]->getCoordinatesZ());
+		puntos[recorridoP]->setCoordinatesZ(-listEntradaPuntos[recorridoP]->getCoordinatesZ());
 	}
+	listo = true;
 }
 void OpenGl::modificarObstaculos(List<Obstaculo^>^ listEntradaObstaculos)
 {
@@ -87,10 +90,11 @@ void OpenGl::modificarObstaculos(List<Obstaculo^>^ listEntradaObstaculos)
 void OpenGl::iniciarPuntos()
 {
 	Punto3D^ a;
-	for (int llenarPuntos = 0; llenarPuntos < 5000; llenarPuntos++) {
+	for (int llenarPuntos = 0; llenarPuntos < 500000; llenarPuntos++) {
 		a = gcnew Punto3D(0, 0, 0);
 		puntos->Add(a);
 	}
+	puntosAnterior = puntos->Count;
 }
 void OpenGl::iniciarObstaculos()
 {
@@ -100,17 +104,17 @@ void OpenGl::iniciarObstaculos()
 		obstaculos->Add(b);
 	}
 }
-void OpenGl::limpiarListas()
+void OpenGl::limpiarListas(int a)
 {
-	for (int recorrerListaPuntos = 0; recorrerListaPuntos < puntos->Count; recorrerListaPuntos++) {
+	for (int recorrerListaPuntos = a; recorrerListaPuntos < puntosAnterior; recorrerListaPuntos++) {
 		puntos[recorrerListaPuntos]->setCoordinatesX(0);
 		puntos[recorrerListaPuntos]->setCoordinatesY(0);
 		puntos[recorrerListaPuntos]->setCoordinatesZ(0);
 	}
 	for (int recorrerListaObstaculos = 0; recorrerListaObstaculos < obstaculos->Count; recorrerListaObstaculos++) {
-		puntos[recorrerListaObstaculos]->setCoordinatesX(0);
-		puntos[recorrerListaObstaculos]->setCoordinatesY(0);
-		puntos[recorrerListaObstaculos]->setCoordinatesZ(0);
+		obstaculos[recorrerListaObstaculos]->setCoordinatesX(0);
+		obstaculos[recorrerListaObstaculos]->setCoordinatesY(0);
+		obstaculos[recorrerListaObstaculos]->setCoordinatesZ(0);
 	}
 }
 
@@ -256,10 +260,12 @@ void display() {
 	glutSwapBuffers();
 
 }
+//Funcion inhabilitada
 void timerFunc(int time) {
+	if (OpenGl::listo) {
 		glutPostRedisplay();
 		glFlush();
-		OpenGl::listo = true;
+	}
 	glutTimerFunc(50, timerFunc, 0);
 }
 //-------------------------------------------------------------------------

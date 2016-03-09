@@ -19,7 +19,7 @@ namespace FinalAppLidar {
 		Main(void)
 		{
 			InitializeComponent();
-			Controlador = gcnew Controller();
+			Controlador = gcnew Controller(Consola);
 
 			//
 			//TODO: Add the constructor code here
@@ -101,7 +101,7 @@ namespace FinalAppLidar {
 	private: System::Windows::Forms::TextBox^  textBox9;
 	private: System::Windows::Forms::Label^  label11;
 	private: System::Windows::Forms::TextBox^  textBox10;
-	private: System::Windows::Forms::Timer^  timer1;
+
 	private: System::ComponentModel::IContainer^  components;
 
 
@@ -120,7 +120,6 @@ namespace FinalAppLidar {
 		/// </summary>
 		void InitializeComponent(void)
 		{
-			this->components = (gcnew System::ComponentModel::Container());
 			System::ComponentModel::ComponentResourceManager^  resources = (gcnew System::ComponentModel::ComponentResourceManager(Main::typeid));
 			this->toolStrip1 = (gcnew System::Windows::Forms::ToolStrip());
 			this->toolStripButton1 = (gcnew System::Windows::Forms::ToolStripButton());
@@ -168,7 +167,6 @@ namespace FinalAppLidar {
 			this->tabPage2 = (gcnew System::Windows::Forms::TabPage());
 			this->folderBrowserDialog1 = (gcnew System::Windows::Forms::FolderBrowserDialog());
 			this->Consola = (gcnew System::Windows::Forms::TextBox());
-			this->timer1 = (gcnew System::Windows::Forms::Timer(this->components));
 			this->toolStrip1->SuspendLayout();
 			this->tabControl1->SuspendLayout();
 			this->tabPage1->SuspendLayout();
@@ -609,6 +607,7 @@ namespace FinalAppLidar {
 			this->textBox1->Name = L"textBox1";
 			this->textBox1->Size = System::Drawing::Size(127, 20);
 			this->textBox1->TabIndex = 1;
+			this->textBox1->Text = L"192.168.1.201";
 			// 
 			// label2
 			// 
@@ -650,17 +649,11 @@ namespace FinalAppLidar {
 			// 
 			// Consola
 			// 
-			this->Consola->Location = System::Drawing::Point(438, 89);
+			this->Consola->Location = System::Drawing::Point(430, 64);
 			this->Consola->Multiline = true;
 			this->Consola->Name = L"Consola";
 			this->Consola->Size = System::Drawing::Size(598, 235);
 			this->Consola->TabIndex = 3;
-			// 
-			// timer1
-			// 
-			this->timer1->Enabled = true;
-			this->timer1->Interval = 1000;
-			this->timer1->Tick += gcnew System::EventHandler(this, &Main::timer1_Tick);
 			// 
 			// Main
 			// 
@@ -715,7 +708,12 @@ namespace FinalAppLidar {
 				Controlador->Iniciar();
 				Iniciado = true;
 			}
-			//Controlador->reActivar();
+			Controlador->reActivar();
+
+			//Bloquear botones al pulsar el activar
+			ActivarOpenGl->Enabled = false;
+
+
 		}
 		else {
 			ActivarLector->BackColor = System::Drawing::Color::IndianRed;
@@ -730,8 +728,10 @@ namespace FinalAppLidar {
 			ActivarLogs->BackColor = System::Drawing::Color::PaleGreen;
 			Controlador->Flags[FlagLogOn] = true;
 		}
-		else
+		else {
 			ActivarLogs->BackColor = System::Drawing::Color::IndianRed;
+			Controlador->Flags[FlagLogOn] = false;
+		}
 		//TODO: MANDAR A CONTROL //TODO: MANDAR A CONTROL 
 	}
 	private: System::Void ActivarGPS_CheckedChanged(System::Object^  sender, System::EventArgs^  e) {
@@ -753,7 +753,6 @@ namespace FinalAppLidar {
 			Controlador->Flags[FlagAnalisysOn] = false;
 		}
 		//TODO: MANDAR A CONTROL 
-
 	}
 	private: System::Void ActivarOpenGl_CheckedChanged(System::Object^  sender, System::EventArgs^  e) {
 		if (ActivarOpenGl->Checked) {
@@ -771,7 +770,8 @@ namespace FinalAppLidar {
 		Controlador->ArrayDataReader[Ppath] = folderBrowserDialog1->SelectedPath;
 	}
 	private: System::Void button1_Click(System::Object^  sender, System::EventArgs^  e) {
-		IPEndPoint^ Connect = gcnew IPEndPoint(IPAddress::Any, Convert::ToInt32(textBox2->Text));//0xC901A8C0  
+		IPAddress^ lidarIP = IPAddress::Parse(textBox1->Text);
+		IPEndPoint^ Connect = gcnew IPEndPoint(IPAddress::Any, Convert::ToInt32(textBox2->Text));//0xC901A8C0   IPAddress::Any
 		Consola->Text = Connect->Address->ToString();
 		Controlador->ArrayDataReader[Ip] = Connect;
 	}
@@ -782,9 +782,6 @@ namespace FinalAppLidar {
 			if (Controlador->Threads[i])
 				Controlador->Threads[i]->Abort();
 		}
-	}
-	private: System::Void timer1_Tick(System::Object^  sender, System::EventArgs^  e) {
-		Consola->AppendText(Controlador->Puntos->Count.ToString()+"   ");
 	}
 };
 }

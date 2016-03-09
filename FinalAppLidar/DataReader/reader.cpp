@@ -60,10 +60,29 @@ void DataReader::ReadData(List<Punto3D^>^ puntosController, cli::array<Object^>^
 		System::Windows::Forms::MessageBox::Show(e->ToString());
 	}
 }
+void DataReader::ReadData(List<Punto3D^>^ puntosController, cli::array<Object^>^ ParamReader, cli::array<bool>^ Flags, cli::array<Thread^>^ Threads)
+{
+	try
+	{
+		this->Threads = Threads;
+		this->Flags = Flags;
+		ArrayDataReader = ParamReader;
+		this->puntosController = puntosController;
+		if (!thread_reader) {
+			thread_reader = gcnew Thread(gcnew ThreadStart(this, &DataReader::ReadDataThread));
+		}
+		thread_reader->Start();
+		this->Threads[0] = thread_reader;
+	}
+	catch (Exception^ e)
+	{
+				System::Windows::Forms::MessageBox::Show(e->ToString());
+	}
+}
 void DataReader::ReadDataThread()
 {
 	if (Flags[FlagLogOn]) {
-		path = (String^)ArrayDataReader[path] + "\\" + DateTime::Now.ToString("dd - MMMM - yyyy - HH - mm - ss");
+		path = (String^)ArrayDataReader[Ppath] + "\\" + DateTime::Now.ToString("dd - MMMM - yyyy - HH - mm - ss");
 		Directory::CreateDirectory(path);
 		frame = 0;
 		loger = gcnew StreamWriter(path + "\\frame-" + frame + ".log", false, Encoding::ASCII, 4096);
@@ -104,14 +123,41 @@ void DataReader::ReadDataThread()
 			for (int block = 0; block < 12; block++) {
 				for (int i = 0; i < NUMBER_OF_CHANNELS; i++) {
 					//Corte de vuelta
-					if (azimuth_index == corte ||(azimuth_index > 0 && (azimuths[azimuth_index] < azimuths[azimuth_index - 1]))) {
-						if (log) {
-							loger->Close();
-							loger = gcnew StreamWriter(path + "\\frame-" + frame + ".log", false, Encoding::ASCII, 4096);
+					//if ((azimuth_index > 0 && (azimuths[azimuth_index] < azimuths[azimuth_index - 1]))) {
+					if (azimuth_index > 0 && (azimuths[azimuth_index] - azimuths[azimuth_index - 1]) < -1) {
+						if (Puntos->Count > 50) {
+							if (log) {
+								loger->Close();
+								loger = gcnew StreamWriter(path + "\\frame-" + frame + ".log", false, Encoding::ASCII, 4096);
+								frame++;
+							}
+							copiarPuntos();
 						}
-						copiarPuntos();
-						corte = -1;
-						frame = 0;
+						else {
+							if (log) {
+								loger->Close();
+								loger = gcnew StreamWriter(path + "\\frame-" + frame + ".log", false, Encoding::ASCII, 4096);
+							}
+							Puntos->Clear();
+						}
+						
+					}
+					else if (azimuth_index == 0 && (azimuths[azimuth_index + 1] - azimuths[azimuth_index]) < -1) {
+						if (Puntos->Count > 50) {
+							if (log) {
+								loger->Close();
+								loger = gcnew StreamWriter(path + "\\frame-" + frame + ".log", false, Encoding::ASCII, 4096);
+								frame++;
+							}
+							copiarPuntos();
+						}
+						else {
+							if (log) {
+								loger->Close();
+								loger = gcnew StreamWriter(path + "\\frame-" + frame + ".log", false, Encoding::ASCII, 4096);
+							}
+							Puntos->Clear();
+						}
 					}
 					if (distances[distance_index] >= min && distances[distance_index] <= max) {
 						dist = distances[distance_index];
@@ -124,13 +170,14 @@ void DataReader::ReadDataThread()
 							//Azimuth, X, Y, Z, Distance;
 							loger->WriteLine(p->visualize());
 						}
-
 					}
 					distance_index++;
 					intensity_index++;
 					azimuth_index++;
 				}
-				loger->Flush();
+				if (log) {
+					loger->Flush();
+				}
 			}
 			azimuth_index = 0, distance_index = 0, intensity_index = 0;
 
@@ -172,8 +219,8 @@ cli::array<Double>^ DataReader::InterpolateAzimuth(cli::array<Byte>^ &ReceiveByt
 	if (ReceiveBytes->Length != 1206)
 		throw gcnew Exception("Paquete con formato extraño");
 
-	cli::array<Double>^ result = gcnew cli::array<Double>(384);
-	cli::array<Double>^ azimuths = gcnew cli::array<Double>(12);
+	cli::array<double>^ result = gcnew cli::array<double>(384);
+	cli::array<double>^ azimuths = gcnew cli::array<double>(12);
 	int byteIndex = 2;
 
 	for (int i = 0; i < 12; i++)
@@ -196,8 +243,8 @@ cli::array<Double>^ DataReader::InterpolateAzimuth(cli::array<Byte>^ &ReceiveByt
 				result[j + (32 * k)] = azimuths[k] + ((j*0.0165887) + 0.1326959);
 			}
 
-			if (result[j + (32 * k)] > 359.99) {
-				result[j + (32 * k)] -= 359.99;
+			if (result[j + (32 * k)] >= 360) {
+				result[j + (32 * k)] -= 360;
 
 				if (*corte == -1)
 					*corte = (j + (32 * k));
@@ -275,8 +322,9 @@ cli::array<Double>^ DataReader::ExtractIntensities(cli::array<Byte>^ &ReceiveByt
 void DataReader::copiarPuntos()
 {
 	puntosController->Clear();
+	Sleep(50);
 	puntosController->AddRange(Puntos);
-	Puntos->Clear();
+	
 	if (Flags[FlagOpenGlOn]) {
 		Dibujador->modificarPuntos(puntosController);
 	}
@@ -286,6 +334,7 @@ void DataReader::copiarPuntos()
 		//mensaje pantalla
 	}
 	Flags[FlagTratamiento] = 0;
+	Puntos->Clear();
 }
 
 /// <summary>

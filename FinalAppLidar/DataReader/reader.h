@@ -13,6 +13,7 @@ public:
 	~DataReader();
 
 	void ReadData(List<Punto3D^>^ puntosController, cli::array<Object^>^ ParamReader, cli::array<bool>^ Flags, cli::array<Thread^>^ Threads, OpenGl^ Dibujador);
+	void ReadData(List<Punto3D^>^ puntosController, cli::array<Object^>^ ParamReader, cli::array<bool>^ Flags, cli::array<Thread^>^ Threads);
 	void ReadDataThread();
 	void Kill();
 
@@ -37,7 +38,6 @@ private:
 	cli::array<bool>^ Flags;
 	//LIsta en la que se guardan los puntos
 	List<Punto3D^>^ puntosController;
-
 
 
 

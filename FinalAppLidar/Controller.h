@@ -8,6 +8,7 @@ ref class Controller {
 public:
 	//Constructor
 	Controller();
+	Controller(System::Windows::Forms::TextBox^  Consola);
 	//Lista de Obstaculos
 	List<Obstaculo^>^ Obstaculos;
 	//Lista de puntos
@@ -24,14 +25,12 @@ public:
 	void Iniciar();
 	void reActivar();
 	void Parar();
-	//Funcion que le dice al OpenGl que los puntos estan listos para ser dibujados
-	void DibujarPuntos();
-	//Funcion que le dice al OpenGl que los obstaculos estan listos para ser dibujados
-	void DibujarObstaculos();
 	//Array de threads para apagarlos y encenderlos
 	cli::array<Thread^>^ Threads = gcnew cli::array<Thread^>(3); 
 	//Thread de interpretar conclusiones
 	void ThreadInterpretarConclusiones();
+	//Consola
+	System::Windows::Forms::TextBox^  Consola;
 private:
 	Thread^ thread_Conclusiones;
 	//Objeto DataAnalisys
