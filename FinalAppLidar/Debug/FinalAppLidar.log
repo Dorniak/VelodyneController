@@ -1,8 +1,23 @@
-﻿  reader.cpp
+﻿  Controller.cpp
+  DataAnalisys.cpp
+DataAnalisys\DataAnalisys.cpp(89): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
+DataAnalisys\DataAnalisys.cpp(90): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
+DataAnalisys\DataAnalisys.cpp(93): warning C4101: 'e': unreferenced local variable
+DataAnalisys\DataAnalisys.cpp(124): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
+DataAnalisys\DataAnalisys.cpp(260): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
+  reader.cpp
 DataReader\reader.cpp(95): warning C4101: 'CALIBRATE_W': unreferenced local variable
+  Main.cpp
+  Obstaculo.cpp
+  OpenGl.cpp
+OpenGl\OpenGl.cpp(325): warning C4305: 'argument': truncation from 'double' to 'GLfloat'
+OpenGl\OpenGl.cpp(328): warning C4305: 'argument': truncation from 'double' to 'GLfloat'
+OpenGl\OpenGl.cpp(332): warning C4305: 'argument': truncation from 'double' to 'GLfloat'
   Punto3D.cpp
   Generating Code...
+d:\documentos\github\finalapplidar\finalapplidar\opengl\opengl.cpp(44): warning C4700: uninitialized local variable 'argv' used
 d:\documentos\github\finalapplidar\finalapplidar\datareader\reader.cpp(366): warning C4715: 'DataReader::getAngle': not all control paths return a value
+  .NETFramework,Version=v4.5.2.AssemblyAttributes.cpp
   Controller.obj : /DEBUG:FASTLINK is not supported when managed code is present; restarting link with /DEBUG:FULL
   FinalAppLidar.vcxproj -> D:\Documentos\GitHub\FinalAppLidar\Debug\FinalAppLidar.exe
   FinalAppLidar.vcxproj -> D:\Documentos\GitHub\FinalAppLidar\Debug\FinalAppLidar.pdb (Partial PDB)
