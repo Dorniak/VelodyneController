@@ -85,7 +85,7 @@ void DataReader::ReadDataThread()
 		path = (String^)ArrayDataReader[Ppath] + "\\" + DateTime::Now.ToString("dd - MMMM - yyyy - HH - mm - ss");
 		Directory::CreateDirectory(path);
 		frame = 0;
-		loger = gcnew StreamWriter(path + "\\frame-" + frame + ".log", false, Encoding::ASCII, 4096);
+		loger = gcnew StreamWriter(path + "log.log", false, Encoding::ASCII, 4096);
 		loger->AutoFlush = false;
 		log = true;
 	}
@@ -108,7 +108,7 @@ void DataReader::ReadDataThread()
 	cli::array<Double>^ intensities;
 	Punto3D^ p;
 	int corte = -1;
-	double dist, ang, az, azi = -1;
+	double azi = -1;
 
 
 	while (!Flags[FlagWarning] && !Flags[FlagPausa]) {
@@ -125,50 +125,21 @@ void DataReader::ReadDataThread()
 					//Corte de vuelta
 					//if ((azimuth_index > 0 && (azimuths[azimuth_index] < azimuths[azimuth_index - 1]))) {
 					if (azimuth_index > 0 && (azimuths[azimuth_index] - azimuths[azimuth_index - 1]) < -1) {
-						if (Puntos->Count > 50) {
-							if (log) {
-								loger->Close();
-								loger = gcnew StreamWriter(path + "\\frame-" + frame + ".log", false, Encoding::ASCII, 4096);
-								frame++;
-							}
 							copiarPuntos();
-						}
-						else {
-							if (log) {
-								loger->Close();
-								loger = gcnew StreamWriter(path + "\\frame-" + frame + ".log", false, Encoding::ASCII, 4096);
-							}
-							Puntos->Clear();
-						}
-						
+							frame++;
 					}
 					else if (azimuth_index == 0 && (azimuths[azimuth_index + 1] - azimuths[azimuth_index]) < -1) {
-						if (Puntos->Count > 50) {
-							if (log) {
-								loger->Close();
-								loger = gcnew StreamWriter(path + "\\frame-" + frame + ".log", false, Encoding::ASCII, 4096);
-								frame++;
-							}
 							copiarPuntos();
+							frame++;
 						}
-						else {
-							if (log) {
-								loger->Close();
-								loger = gcnew StreamWriter(path + "\\frame-" + frame + ".log", false, Encoding::ASCII, 4096);
-							}
-							Puntos->Clear();
-						}
-					}
+					
 					if (distances[distance_index] >= min && distances[distance_index] <= max) {
-						dist = distances[distance_index];
-						az = azimuths[azimuth_index];
-						ang = getAngle(i);
-						p = gcnew Punto3D(dist, intensities[intensity_index], az, ang);
+						p = gcnew Punto3D(distances[distance_index], intensities[intensity_index], azimuths[azimuth_index], getAngle(i));
 						p->CalculateCoordinates(CALIBRATE_X, CALIBRATE_Y, CALIBRATE_Z, CALIBRATE_P, CALIBRATE_R, CALIBRATE_Y);
 						Puntos->Add(p);
 						if (log) {
 							//Azimuth, X, Y, Z, Distance;
-							loger->WriteLine(p->visualize());
+							loger->WriteLine(frame + " " + p->visualize());
 						}
 					}
 					distance_index++;
@@ -180,7 +151,6 @@ void DataReader::ReadDataThread()
 				}
 			}
 			azimuth_index = 0, distance_index = 0, intensity_index = 0;
-
 		}//Try
 		catch (Exception^ e)
 		{
