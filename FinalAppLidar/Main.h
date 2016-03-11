@@ -20,7 +20,10 @@ namespace FinalAppLidar {
 		{
 			InitializeComponent();
 			Controlador = gcnew Controller(Consola);
-
+			groupBox2->Visible = false;
+			groupBox3->Visible = false;
+			groupBox4->Visible = false;
+			groupBox5->Visible = false;
 			//
 			//TODO: Add the constructor code here
 			//
@@ -231,7 +234,6 @@ namespace FinalAppLidar {
 			// 
 			this->groupBox5->Controls->Add(this->flowLayoutPanel5);
 			this->groupBox5->Dock = System::Windows::Forms::DockStyle::Top;
-			this->groupBox5->Enabled = false;
 			this->groupBox5->Location = System::Drawing::Point(3, 561);
 			this->groupBox5->Name = L"groupBox5";
 			this->groupBox5->Size = System::Drawing::Size(186, 100);
@@ -266,7 +268,6 @@ namespace FinalAppLidar {
 			// 
 			this->groupBox4->Controls->Add(this->flowLayoutPanel4);
 			this->groupBox4->Dock = System::Windows::Forms::DockStyle::Top;
-			this->groupBox4->Enabled = false;
 			this->groupBox4->Location = System::Drawing::Point(3, 461);
 			this->groupBox4->Name = L"groupBox4";
 			this->groupBox4->Size = System::Drawing::Size(186, 100);
@@ -301,7 +302,6 @@ namespace FinalAppLidar {
 			// 
 			this->groupBox3->Controls->Add(this->flowLayoutPanel3);
 			this->groupBox3->Dock = System::Windows::Forms::DockStyle::Top;
-			this->groupBox3->Enabled = false;
 			this->groupBox3->Location = System::Drawing::Point(3, 367);
 			this->groupBox3->Name = L"groupBox3";
 			this->groupBox3->Size = System::Drawing::Size(186, 94);
@@ -355,7 +355,6 @@ namespace FinalAppLidar {
 			// 
 			this->groupBox2->Controls->Add(this->flowLayoutPanel2);
 			this->groupBox2->Dock = System::Windows::Forms::DockStyle::Top;
-			this->groupBox2->Enabled = false;
 			this->groupBox2->Location = System::Drawing::Point(3, 110);
 			this->groupBox2->Name = L"groupBox2";
 			this->groupBox2->Size = System::Drawing::Size(186, 257);
@@ -780,16 +779,17 @@ namespace FinalAppLidar {
 			IPEndPoint^ Connect = gcnew IPEndPoint(IPAddress::Any, Convert::ToInt32(textBox2->Text));//0xC901A8C0   IPAddress::Any
 			Controlador->ArrayDataReader[Ip] = Connect;
 			UdpClient^ Client = gcnew UdpClient(Connect);
-			if (true) {
+			if (true) {//Client->Available > 0
 				button1->BackColor = System::Drawing::Color::PaleGreen;
-				groupBox2->Enabled = true;
-				groupBox3->Enabled = true;
-				groupBox4->Enabled = true;
-				groupBox5->Enabled = true;
+				groupBox5->Visible = true;
+				groupBox4->Visible = true;
+				groupBox3->Visible = true;
+				groupBox2->Visible = true;
 			}
 			else {
 				button1->BackColor = System::Drawing::Color::IndianRed;
 			}
+			Client->Close();
 			delete Client;
 		}
 		catch (Exception^ e)
