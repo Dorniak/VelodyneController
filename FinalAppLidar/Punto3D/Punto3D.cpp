@@ -208,7 +208,8 @@ double Punto3D::getModule()
 
 String^ Punto3D::visualize()
 {
-	return Azimuth + "," + x + "," + y + "," + z + "," + Distance;
+	//return Azimuth + "," + x + "," + y + "," + z + "," + Distance;
+	return z.ToString();
 }
 
 /// <summary>

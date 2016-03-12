@@ -77,7 +77,7 @@ void OpenGl::modificarPuntos(List<Punto3D^>^ listEntradaPuntos)
 		puntos[recorridoP]->setCoordinatesY(listEntradaPuntos[recorridoP]->getCoordinatesY());
 		puntos[recorridoP]->setCoordinatesZ(-listEntradaPuntos[recorridoP]->getCoordinatesZ());
 	}
-	listo = true;
+	puntosAnterior = listEntradaPuntos->Count;
 }
 void OpenGl::modificarObstaculos(List<Obstaculo^>^ listEntradaObstaculos)
 {
@@ -90,7 +90,7 @@ void OpenGl::modificarObstaculos(List<Obstaculo^>^ listEntradaObstaculos)
 void OpenGl::iniciarPuntos()
 {
 	Punto3D^ a;
-	for (int llenarPuntos = 0; llenarPuntos < 500000; llenarPuntos++) {
+	for (int llenarPuntos = 0; llenarPuntos < 250000; llenarPuntos++) {
 		a = gcnew Punto3D(0, 0, 0);
 		puntos->Add(a);
 	}
@@ -111,11 +111,11 @@ void OpenGl::limpiarListas(int a)
 		puntos[recorrerListaPuntos]->setCoordinatesY(0);
 		puntos[recorrerListaPuntos]->setCoordinatesZ(0);
 	}
-	for (int recorrerListaObstaculos = 0; recorrerListaObstaculos < obstaculos->Count; recorrerListaObstaculos++) {
+	/*for (int recorrerListaObstaculos = 0; recorrerListaObstaculos < obstaculos->Count; recorrerListaObstaculos++) {
 		obstaculos[recorrerListaObstaculos]->setCoordinatesX(0);
 		obstaculos[recorrerListaObstaculos]->setCoordinatesY(0);
 		obstaculos[recorrerListaObstaculos]->setCoordinatesZ(0);
-	}
+	}*/
 }
 
 void trabajo()
@@ -230,6 +230,15 @@ void display() {
 		glVertex3f(x * radio3, y * radio3, 0);
 	}
 	glVertex3f(0, 0, 0);
+	glEnd();
+	glColor3f(1.0f, 1.0f, 1.0f);      // activamos el color blanco
+	//Vehiculo
+	glBegin(GL_LINE_STRIP);
+	glVertex3d(1, 2, 0);
+	glVertex3d(1, -2, 0);
+	glVertex3d(-1, -2, 0);
+	glVertex3d(-1, 2, 0);
+	glVertex3d(1, 2, 0);
 	glEnd();
 
 

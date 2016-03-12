@@ -85,7 +85,7 @@ void DataReader::ReadDataThread()
 		path = (String^)ArrayDataReader[Ppath] + "\\" + DateTime::Now.ToString("dd - MMMM - yyyy - HH - mm - ss");
 		Directory::CreateDirectory(path);
 		frame = 0;
-		loger = gcnew StreamWriter(path + "log.log", false, Encoding::ASCII, 4096);
+		loger = gcnew StreamWriter(path + "\\log.log", false, Encoding::ASCII, 4096);
 		loger->AutoFlush = false;
 		log = true;
 	}
@@ -136,6 +136,7 @@ void DataReader::ReadDataThread()
 					if (distances[distance_index] >= min && distances[distance_index] <= max) {
 						p = gcnew Punto3D(distances[distance_index], intensities[intensity_index], azimuths[azimuth_index], getAngle(i));
 						p->CalculateCoordinates(CALIBRATE_X, CALIBRATE_Y, CALIBRATE_Z, CALIBRATE_P, CALIBRATE_R, CALIBRATE_Y);
+						if (p->getCoordinatesZ()>0)
 						Puntos->Add(p);
 						if (log) {
 							//Azimuth, X, Y, Z, Distance;
@@ -296,7 +297,10 @@ void DataReader::copiarPuntos()
 	puntosController->AddRange(Puntos);
 	
 	if (Flags[FlagOpenGlOn]) {
-		Dibujador->modificarPuntos(puntosController);
+		if (puntosController->Count>2000) {
+			Dibujador->modificarPuntos(puntosController);
+			Dibujador->listo = true;
+		}
 	}
 	//Controller de colision
 	if (Flags[FlagTratamiento] == 0 && Flags[FlagAnalisysOn]) {
