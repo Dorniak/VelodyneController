@@ -286,7 +286,6 @@ void centerOnScreen()
 	window_x = (glutGet(GLUT_SCREEN_WIDTH) - window_width) / 2;
 	window_y = (glutGet(GLUT_SCREEN_HEIGHT) - window_height) / 2;
 }
-
 void keyboard(unsigned char key, int x, int y) {
 	switch (key) {
 	/*case 'p':
