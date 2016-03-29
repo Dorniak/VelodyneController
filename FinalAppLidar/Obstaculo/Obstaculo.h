@@ -8,6 +8,7 @@ using namespace System::Collections::Generic;
 ref class Obstaculo
 {
 public:
+	bool Valido = true;
 	Obstaculo::Obstaculo(const Obstaculo %copy);
 #pragma region Constructors
 	Obstaculo();

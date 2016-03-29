@@ -25,20 +25,22 @@
 #define Pmax 8
 #define Pmin 9
 
-
-
+//Analisys puntos
+#define ToleranciaVertical 10
+#define ToleranciaDiagonal 10
 
 
 //Posicion parametros array DataAnalisys
-#define posResolucion 0
-#define posApertura 1
-#define posVcoche 2
+#define posResolucionH 0
+#define posResolucionV 1
+#define posApertura 2
+#define posVcoche 3
 //Constantes DataAnalisys
 #define NUMERO_FILAS 16 //Coincide con el numero de canales
 #define TAMAÑO_MINIMO_OBSTACULO 20
 #define TIEMPO_MARGEN 0.3 //TODO: Ajustar parametro
 #define DISTANCIA_MAXIMA 2
-#define PI 3.14159265
+#define PI Math::PI
 
 //Includes para las clases Controller Reader DataAnalisys y OpenGl
 using namespace std;

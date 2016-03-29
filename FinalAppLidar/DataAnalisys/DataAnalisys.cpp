@@ -60,7 +60,8 @@ void DataAnalisys::AnalisysThread()
 		{
 			if (Flags[FlagTratamiento] == 0) {
 				//matriz = Controllerador->Puntos;  La matriz es siempre igual a la matriz de puntos
-				resolution = parametros[posResolucion];//Resolucion
+				resolutionH = parametros[posResolucionH];//Resolucion
+				resolutionV = parametros[posResolucionV];//Resolucion
 				VCOCHE = parametros[posApertura];//Vcoche
 				apertura = parametros[posVcoche];//Apertura
 				NUMERO_COLUMNAS = matriz->Count / NUMERO_FILAS;
@@ -119,21 +120,21 @@ void DataAnalisys::copiarObstaculos()
 	Flags[FlagTratamiento] = 1;
 }
 
-void DataAnalisys::Segmentacion(List<Punto3D^>^ matrix,double apertura)
+void DataAnalisys::Segmentacion(List<Punto3D^>^ matrix, double apertura)
 {
-	int aprr = (apertura / 2)/resolution;
-	int inicio = (NUMERO_COLUMNAS / 2)-aprr;
-	int final= (NUMERO_COLUMNAS / 2)+aprr;
+	int aprr = (apertura / 2) / resolutionH;
+	int inicio = (NUMERO_COLUMNAS / 2) - aprr;
+	int final = (NUMERO_COLUMNAS / 2) + aprr;
 	//Se recorre la matriz linealmente
-	for (int i = 0; i <= NUMERO_FILAS; i++)
+	for (int j = NUMERO_FILAS; j <= 0; j++)
 	{
-		for (int j = inicio; j < final; j++)
+		for (int i = inicio; i < final; i++)
 		{
 			//Se comprubea si el punto a tratar Existe
 			if (matrix[convaPos(i, j)]->getDistance() > 0)
 			{
 				//En caso de que sea el primer punto se asigna directamente al obstaculo 1
-				if (i == 0 && j == 0)
+				if (i == 0 && j == NUMERO_FILAS)
 				{
 					//Mete al final del vector de obstaculos un obstaculo que crea
 					Obstaculos->Add(gcnew Obstaculo());
@@ -143,78 +144,112 @@ void DataAnalisys::Segmentacion(List<Punto3D^>^ matrix,double apertura)
 				}
 				else {
 					//Se compara cada punto a tratar con sus puntos adyacentes ya tratados
-					if (i > 0)
-					{//Multiplicar a cada punto por un valor de rango para hacer el tanto por 1
+
+					if (j < NUMERO_FILAS)
+					{
 						//Resolver ambiguedades
 						//Punto de encima
-						if (matrix[convaPos(i - 1, j)]->getDistance() > 0)
+						if (puntosCercanosV(matrix[convaPos(i, j)], matrix[convaPos(i, j + 1)]))
 						{
-							listMenor[2] = matrix[convaPos(i, j)]->distanceToPoint(matrix[convaPos(i + 1, j)]);//   /2
+							Cercanos[0] = true;
+							PCercanos[0] = matrix[convaPos(i, j + 1)];
 						}
 						if (j > 0)
 						{
 							//Punto de encima a la izquierda
-							if (matrix[convaPos(i - 1, j - 1)]->getDistance() > 0)
+							if (puntosCercanosD(matrix[convaPos(i, j)], matrix[convaPos(i - 1, j + 1)]))
 							{
-								listMenor[1] = matrix[convaPos(i, j)]->distanceToPoint(matrix[convaPos(i - 1, j - 1)]);  // //2*res h
+								Cercanos[1] = true;
+								PCercanos[0] = matrix[convaPos(i - 1, j + 1)];
 							}
 						}
 						if (i > 0 && j < NUMERO_COLUMNAS)
 						{
 							//Punto de encima a la derecha
-							if (matrix[convaPos(i - 1, j + 1)]->getDistance() < 0)
-								listMenor[3] = matrix[convaPos(i, j)]->distanceToPoint(matrix[convaPos(i - 1, j + 1)]);// /2*res h
+							if (puntosCercanosD(matrix[convaPos(i, j)], matrix[convaPos(i + 1, j + 1)]))
+							{
+								Cercanos[2] = true;
+								PCercanos[0] = matrix[convaPos(i + 1, j + 1)];
+							}
 						}
 					}
 					if (j > 0)
 					{
 						//Punto de la izquierda
-						if (matrix[convaPos(i, j - 1)]->getDistance()>0)
-							listMenor[4] = matrix[convaPos(i, j)]->distanceToPoint(matrix[convaPos(i, j - 1)]);// /res h
+						if (puntosCercanosH(matrix[convaPos(i, j)], matrix[convaPos(i - 1, j)]))
+						{
+							Cercanos[3] = true;
+							PCercanos[0] = matrix[convaPos(i - 1, j)];
+						}
 					}
-					//Se coge el punto mas cercano al que estamos tratando y se incluye en su obstaculo
-					if (listMenor[0] != 0) { menor = 0; }
-					else if (listMenor[1] != 0) { menor = 1; }
-					else if (listMenor[2] != 0) { menor = 2; }
-					else if (listMenor[3] != 0) { menor = 3; }
+
+					int numCercanos = 0;
+					int localizador;
+					for (int recorrido = 0; recorrido < 4; recorrido++)
+					{
+						if (Cercanos[recorrido])
+						{
+							numCercanos++;
+							localizador = recorrido;
+						}
+					}
+
+					if (numCercanos == 0)
+					{
+						Obstaculos->Add(gcnew Obstaculo());
+						matrix[convaPos(i, j)]->setObstacle((int)Obstaculos->Count - 1);
+						Obstaculos[Obstaculos->Count - 1]->components->Add(matrix[convaPos(i, j)]);
+					}
+					else if (numCercanos == 1) {
+						int VarX, VarY;
+						matrix[convaPos(i, j)]->setObstacle(PCercanos[localizador]->getObstacle());
+						Obstaculos[matrix[convaPos(i, j)]->getObstacle()]->components->Add(matrix[convaPos(i, j)]);
+					}
+					else {
+						bool iguales = true;
+						int Obs;
+						int Obstmenor = -1;
+						for (int recorrido = 0; recorrido < 4; recorrido++)
+						{
+							if (Cercanos[recorrido]) {
+								if (Obstmenor == -1) {
+									Obstmenor = PCercanos[recorrido]->getObstacle();
+								}
+								else if (PCercanos[recorrido]->getObstacle() != Obstmenor) {
+									iguales = false;
+									if (PCercanos[recorrido]->getObstacle() < Obstmenor)
+									{
+										Obstmenor = PCercanos[recorrido]->getObstacle();
+									}
+								}
+							}
+						}
+						if (iguales) {
+							matrix[convaPos(i, j)]->setObstacle(Obstmenor);
+							Obstaculos[Obstmenor]->components->Add(matrix[convaPos(i, j)]);
+						}
+						else {
+							for (int recorrido = 0; recorrido < 4; recorrido++) {
+								if (Cercanos[recorrido]) {
+									if (PCercanos[recorrido]->getObstacle() != Obstmenor)
+										MoverObstaculo(PCercanos[recorrido]->getObstacle(), Obstmenor);
+								}
+							}
+							matrix[convaPos(i, j)]->setObstacle(Obstmenor);
+							Obstaculos[Obstmenor]->components->Add(matrix[convaPos(i, j)]);
+						}
+					}
 					//TODO::Recorrer la lista y eliminar puntos no validos
 					//TODO::resolver ambiguedades:si un punto puede pertenecer a dos obstaculos unir dichos obstaculos
 
 					//Si los puntos adyacentes no existen se incluye este punto en un obstaculo
-					if (menor != -1)
-					{
-						for (int b = menor; b < 4; b++)
-						{
-							if (listMenor[b] != 0 && (listMenor[b] < listMenor[menor])) { menor = b; }
-						}
-						int t, s;
-						if (menor = 0) { t = -1, s = -1; }
-						if (menor = 1) { t = -1, s = 0; }
-						if (menor = 2) { t = -1, s = 1; }
-						if (menor = 3) { t = 0, s = -1; }
-						if (puntosCercanos(matrix[convaPos(i, j)], matrix[convaPos(i + t, j + s)]))
-						{
-							int p = matrix[convaPos(i + t, j + s)]->getObstacle();
-							matrix[convaPos(i, j)]->setObstacle(p);
-							Obstaculos[p]->components->Add(matrix[convaPos(i, j)]);
-						}
-						//A pesar de tener puntos cerca no cumplen la condicion de vecindad por tanto se crea un nuevo obstaculo
-						else
-						{
-							Obstaculos->Add(gcnew Obstaculo());
-							matrix[convaPos(i, j)]->setObstacle((int)Obstaculos->Count);
-							Obstaculos[Obstaculos->Count]->components->Add(matrix[convaPos(i, j)]);
-						}
-					}//En este caso el punto no tiene puntos validos a su alrededor
-					else
-					{
-						Obstaculos->Add(gcnew Obstaculo());
-						matrix[convaPos(i, j)]->setObstacle((int)Obstaculos->Count);
-						Obstaculos[Obstaculos->Count]->components->Add(matrix[convaPos(i, j)]);
-					}
-				}
 
-				menor = -1;
+
+
+
+					//TODO::Ver como se guarda la matriz
+
+				}
 			}
 		}
 	}
@@ -257,7 +292,7 @@ void DataAnalisys::RelacionarObstaculos()
 			}
 			else if (Obstaculos[i]->getCenter()->distanceToPoint(ObstaculosvAnt[j]->getCenter()) < DISTANCIA_MAXIMA /*&& fabs(Obstaculos[i].getYaw() - Obstaculos[i].getYaw()) < 5*/)
 			{
-				relacionarPos(i, j, VCOCHE, resolution);
+				relacionarPos(i, j, VCOCHE, resolutionH);
 				indice = j;
 			}
 		}
@@ -267,14 +302,14 @@ void DataAnalisys::relacionarVel(int i, int j)
 {
 	Obstaculos[i]->setDirection(ObstaculosvAnt[j]->getCenter());
 	Obstaculos[i]->calculatePrediceCenter();
-	Obstaculos[i]->setVelocity(VCOCHE, resolution);
+	Obstaculos[i]->setVelocity(VCOCHE, resolutionH);
 	Obstaculos[i]->calculateTimeToCollision(VCOCHE);
 }
 void DataAnalisys::relacionarPos(int i, int j, int VelC, int Res)
 {
 	Obstaculos[i]->setDirection(ObstaculosvAnt[j]->getCenter());
 	Obstaculos[i]->calculatePrediceCenter();
-	Obstaculos[i]->setVelocity(VCOCHE, resolution);
+	Obstaculos[i]->setVelocity(VCOCHE, resolutionH);
 }
 bool DataAnalisys::comprobarBloqueo(List<Punto3D^>^ matriz)
 {
@@ -289,10 +324,10 @@ bool DataAnalisys::comprobarBloqueo(List<Punto3D^>^ matriz)
 	}
 	return false;
 }
-bool DataAnalisys::puntosCercanos(Punto3D^ p1, Punto3D^ p2)
+bool DataAnalisys::puntosCercanosH(Punto3D^ p1, Punto3D^ p2)
 {
 	double s0 = 1.4;
-	double s1 = sqrt(2 - (2 * cos(2 * resolution*PI / 180)));
+	double s1 = sqrt(2 - (2 * cos(2 * resolutionH*PI / 180)));
 	double r = p1->getDistance();
 	if (p1->getDistance() > p2->getDistance())
 		r = p2->getDistance();
@@ -300,6 +335,27 @@ bool DataAnalisys::puntosCercanos(Punto3D^ p1, Punto3D^ p2)
 
 	return (tolererancia > p1->distanceToPoint(p2));
 }
+bool DataAnalisys::puntosCercanosV(Punto3D^ p1, Punto3D^ p2)
+{
+	double tolerancia = p1->getDistance() * tan(resolutionV  * PI / 180);
+	tolerancia = tolerancia * ((100 + ToleranciaVertical) / 100);
+	return(tolerancia > p1->distanceToPoint(p2));
+}
+bool DataAnalisys::puntosCercanosD(Punto3D^ p1, Punto3D^ p2)
+{
+	double toleranciaV = p1->getDistance() * tan(resolutionV  * PI / 180);
+	double toleranciaH = p1->getDistance() * tan(resolutionH  * PI / 180);
+	Punto3D ^a = gcnew Punto3D(toleranciaH, toleranciaV, 0);
+	double tolerancia = a->getModule();
+	tolerancia = tolerancia * ((100 + ToleranciaDiagonal) / 100);
+	return(tolerancia > p1->distanceToPoint(p2));
+}
 int DataAnalisys::convaPos(int a, int b) {
-	return (a - 1) * 16 + b;
+	//return (a - 1) * 16 + b;
+	return a * 16 + b;
+}
+
+void DataAnalisys::MoverObstaculo(int Obst1, int Obst2)
+{
+	throw gcnew System::NotImplementedException();
 }
