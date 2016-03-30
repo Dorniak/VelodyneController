@@ -24,6 +24,8 @@
 #define PCALIBRATE_W 7
 #define Pmax 8
 #define Pmin 9
+#define NUMBER_OF_BLOCKS 12
+#define NUMBER_OF_CHANNELS 32
 
 //Analisys puntos
 #define ToleranciaVertical 10

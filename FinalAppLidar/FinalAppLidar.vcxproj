@@ -139,6 +139,7 @@
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Obstaculo\Obstaculo.cpp" />
     <ClCompile Include="OpenGl\OpenGl.cpp" />
+    <ClCompile Include="PostProceso.cpp" />
     <ClCompile Include="Punto3D\Punto3D.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -151,6 +152,7 @@
     </ClInclude>
     <ClInclude Include="Obstaculo\Obstaculo.h" />
     <ClInclude Include="OpenGl\OpenGl.h" />
+    <ClInclude Include="PostProceso.h" />
     <ClInclude Include="Punto3D\Punto3D.h" />
   </ItemGroup>
   <ItemGroup>

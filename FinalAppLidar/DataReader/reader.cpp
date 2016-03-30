@@ -1,7 +1,5 @@
 #include "reader.h"
-#include <time.h>
-#define NUMBER_OF_BLOCKS 12
-#define NUMBER_OF_CHANNELS 32
+
 
 /// <summary>
 /// Initializes a new instance of the <see cref="DataReader"/> class.
@@ -136,13 +134,17 @@ void DataReader::ReadDataThread()
 					if (distances[distance_index] >= min && distances[distance_index] <= max) {
 						p = gcnew Punto3D(distances[distance_index], intensities[intensity_index], azimuths[azimuth_index], getAngle(i));
 						p->CalculateCoordinates(CALIBRATE_X, CALIBRATE_Y, CALIBRATE_Z, CALIBRATE_P, CALIBRATE_R, CALIBRATE_Y);
-						if (p->getCoordinatesZ()>0)
 						Puntos->Add(p);
 						if (log) {
 							//Azimuth, X, Y, Z, Distance;
 							loger->WriteLine(frame + " " + p->visualize());
 						}
 					}
+					else {
+						p = gcnew Punto3D();
+						Puntos->Add(p);
+					}
+
 					distance_index++;
 					intensity_index++;
 					azimuth_index++;

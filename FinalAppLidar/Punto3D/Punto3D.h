@@ -7,6 +7,7 @@ using namespace std;
 ref class Punto3D
 {
 public:
+	bool valido;
 	Punto3D::Punto3D(const Punto3D %copy);
 #pragma region Constructors Definitions
 	Punto3D(double d, double i, double r, double a);
@@ -59,6 +60,5 @@ private:
 	double x;			// X coordinate of the point
 	double y;			// Y coordinate of the point
 	double z;			// Z coordinate of the point
-
 #pragma endregion
 };

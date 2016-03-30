@@ -32,7 +32,7 @@ void DataAnalisys::Analisys(List<Punto3D^>^ puntosController, List<Obstaculo^>^ 
 	//Guarda el identificador de thread en el array de threads del Controllerador 
 	Threads[1] = thread_analysis;
 }
-void DataAnalisys::Analisys(List<Punto3D^>^ puntosController, List<Obstaculo^>^ ObstaculosController, cli::array<double>^ ParamAnalisys, List<int>^ Conclusiones, cli::array<bool>^ Flags, cli::array<Thread^>^ Threads) 
+void DataAnalisys::Analisys(List<Punto3D^>^ puntosController, List<Obstaculo^>^ ObstaculosController, cli::array<double>^ ParamAnalisys, List<int>^ Conclusiones, cli::array<bool>^ Flags, cli::array<Thread^>^ Threads)
 {
 	this->Threads = Threads;
 	this->Flags = Flags;
@@ -49,12 +49,12 @@ void DataAnalisys::Analisys(List<Punto3D^>^ puntosController, List<Obstaculo^>^ 
 	Threads[1] = thread_analysis;
 }
 //List<Punto3D^>^ matriz, double resolucionAngular,double Vcoche, double &consigna_velocidad, double &consigna_volante, double apertura
-void DataAnalisys::AnalisysThread() 
+void DataAnalisys::AnalisysThread()
 {
 	//En caso de que se desactive y se reactive despues hay que limpiar los objetos
 	ObstaculosvAnt->Clear();
 
-	while (Flags[FlagAnalisysOn] && Flags[FlagWarning] && !Flags[FlagPausa]) 
+	while (Flags[FlagAnalisysOn] && Flags[FlagWarning] && !Flags[FlagPausa])
 	{
 		try
 		{
@@ -125,16 +125,17 @@ void DataAnalisys::Segmentacion(List<Punto3D^>^ matrix, double apertura)
 	int aprr = (apertura / 2) / resolutionH;
 	int inicio = (NUMERO_COLUMNAS / 2) - aprr;
 	int final = (NUMERO_COLUMNAS / 2) + aprr;
+	NUMERO_COLUMNAS = matrix->Count / 16;
 	//Se recorre la matriz linealmente
-	for (int j = NUMERO_FILAS; j <= 0; j++)
+	for (int j = NUMERO_FILAS - 1; j <= 0; j++)
 	{
 		for (int i = inicio; i < final; i++)
 		{
 			//Se comprubea si el punto a tratar Existe
-			if (matrix[convaPos(i, j)]->getDistance() > 0)
+			if (matrix[convaPos(i, j)]->valido)
 			{
 				//En caso de que sea el primer punto se asigna directamente al obstaculo 1
-				if (i == 0 && j == NUMERO_FILAS)
+				if (i == 0 && j == NUMERO_FILAS - 1)
 				{
 					//Mete al final del vector de obstaculos un obstaculo que crea
 					Obstaculos->Add(gcnew Obstaculo());
@@ -145,41 +146,40 @@ void DataAnalisys::Segmentacion(List<Punto3D^>^ matrix, double apertura)
 				else {
 					//Se compara cada punto a tratar con sus puntos adyacentes ya tratados
 
-					if (j < NUMERO_FILAS)
+					if (j < NUMERO_FILAS - 1)
 					{
-						//Resolver ambiguedades
 						//Punto de encima
 						if (puntosCercanosV(matrix[convaPos(i, j)], matrix[convaPos(i, j + 1)]))
 						{
 							Cercanos[0] = true;
 							PCercanos[0] = matrix[convaPos(i, j + 1)];
 						}
-						if (j > 0)
+						if (i > 0)
 						{
 							//Punto de encima a la izquierda
 							if (puntosCercanosD(matrix[convaPos(i, j)], matrix[convaPos(i - 1, j + 1)]))
 							{
 								Cercanos[1] = true;
-								PCercanos[0] = matrix[convaPos(i - 1, j + 1)];
+								PCercanos[1] = matrix[convaPos(i - 1, j + 1)];
 							}
 						}
-						if (i > 0 && j < NUMERO_COLUMNAS)
+						if (i < NUMERO_COLUMNAS - 1)
 						{
 							//Punto de encima a la derecha
 							if (puntosCercanosD(matrix[convaPos(i, j)], matrix[convaPos(i + 1, j + 1)]))
 							{
 								Cercanos[2] = true;
-								PCercanos[0] = matrix[convaPos(i + 1, j + 1)];
+								PCercanos[2] = matrix[convaPos(i + 1, j + 1)];
 							}
 						}
 					}
-					if (j > 0)
+					if (i > 0)
 					{
 						//Punto de la izquierda
 						if (puntosCercanosH(matrix[convaPos(i, j)], matrix[convaPos(i - 1, j)]))
 						{
 							Cercanos[3] = true;
-							PCercanos[0] = matrix[convaPos(i - 1, j)];
+							PCercanos[3] = matrix[convaPos(i - 1, j)];
 						}
 					}
 
@@ -239,16 +239,6 @@ void DataAnalisys::Segmentacion(List<Punto3D^>^ matrix, double apertura)
 							Obstaculos[Obstmenor]->components->Add(matrix[convaPos(i, j)]);
 						}
 					}
-					//TODO::Recorrer la lista y eliminar puntos no validos
-					//TODO::resolver ambiguedades:si un punto puede pertenecer a dos obstaculos unir dichos obstaculos
-
-					//Si los puntos adyacentes no existen se incluye este punto en un obstaculo
-
-
-
-
-					//TODO::Ver como se guarda la matriz
-
 				}
 			}
 		}
@@ -350,9 +340,27 @@ bool DataAnalisys::puntosCercanosD(Punto3D^ p1, Punto3D^ p2)
 	tolerancia = tolerancia * ((100 + ToleranciaDiagonal) / 100);
 	return(tolerancia > p1->distanceToPoint(p2));
 }
-int DataAnalisys::convaPos(int a, int b) {
-	//return (a - 1) * 16 + b;
-	return a * 16 + b;
+int DataAnalisys::convaPos(int columna, int fila) {
+	
+	switch (fila)
+	{
+	case 1: fila = 2;
+	case 2: fila = 4;
+	case 3: fila = 6;
+	case 4: fila = 8;
+	case 5: fila = 10;
+	case 6: fila = 12;
+	case 7: fila = 14;
+	case 8: fila = 1;
+	case 9: fila = 3;
+	case 10: fila = 5;
+	case 11: fila = 7;
+	case 12: fila = 9;
+	case 13: fila = 11;
+	case 14: fila = 13;
+	default: break;
+	}
+	return columna * 16 + fila;
 }
 
 void DataAnalisys::MoverObstaculo(int Obst1, int Obst2)

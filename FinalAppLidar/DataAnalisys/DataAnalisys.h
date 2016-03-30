@@ -10,7 +10,7 @@ public:
 	//Constructor
 	DataAnalisys();
 	//Funcion que arranca el thread de analisis
-	void Analisys(List<Punto3D^>^ puntosControl, List<Obstaculo^>^ ObstaculosControl, cli::array<double>^ ParamAnalisys,List<int>^ Conclusiones, cli::array<bool>^ Flags, cli::array<Thread^>^ Threads,OpenGl^ Dibujador);
+	void Analisys(List<Punto3D^>^ puntosControl, List<Obstaculo^>^ ObstaculosControl, cli::array<double>^ ParamAnalisys, List<int>^ Conclusiones, cli::array<bool>^ Flags, cli::array<Thread^>^ Threads, OpenGl^ Dibujador);
 	void Analisys(List<Punto3D^>^ puntosController, List<Obstaculo^>^ ObstaculosController, cli::array<double>^ ParamAnalisys, List<int>^ Conclusiones, cli::array<bool>^ Flags, cli::array<Thread^>^ Threads);
 	//Funcion de thread
 	void AnalisysThread();
@@ -34,7 +34,7 @@ private:
 	double  consigna_velocidad;
 	//Valor de consigna de volante para el vector de conclusiones
 	double  consigna_volante;
-	
+
 	double apertura;
 
 	int indice;
@@ -57,7 +57,7 @@ private:
 	cli::array<bool>^ Cercanos = gcnew cli::array<bool>(4);
 	cli::array<Punto3D^>^ PCercanos = gcnew cli::array<Punto3D^>(4);
 	//Funcion encargada de agrupar puntos en obstaculos
-	void Segmentacion(List<Punto3D^>^ matrix,double apertura);
+	void Segmentacion(List<Punto3D^>^ matrix, double apertura);
 
 	void prepararObstaculos();
 	//Funcion encargada de eliminar obstaculos no validos
@@ -78,10 +78,10 @@ private:
 	//para considerarse parte de un mismo obstaculo cuando dos puntos estan en la misma horizontal
 	bool puntosCercanosH(Punto3D^ p1, Punto3D^ p2);
 	//COnvierte una coordenada en el plano en una posicion de la lista de puntos
-	int convaPos(int a, int b);
+	int convaPos(int columna, int fila);
 	//LIsta en la que se guardan los puntos de esta vuelta
 	List<Punto3D^>^ matriz;
 	//Objeto thread del analisys
 	Thread^ thread_analysis;
-	void MoverObstaculo(int Obst1,int Obst2);
+	void MoverObstaculo(int Obst1, int Obst2);
 };

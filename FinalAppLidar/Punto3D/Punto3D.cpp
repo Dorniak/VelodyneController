@@ -26,6 +26,7 @@ Punto3D::Punto3D(double d, double i, double r, double a) {
 	Intensity = i;
 	Azimuth = r;
 	Angle = a;
+	valido = true;
 }
 Punto3D::Punto3D(double xx, double yy, double zz)
 {
@@ -36,6 +37,7 @@ Punto3D::Punto3D(double xx, double yy, double zz)
 	Intensity = -1;
 	Azimuth = -1;
 	Angle = -1;
+	valido = true;
 }
 /// <summary>
 /// Initializes a new instance of the <see cref="Punto3D"/> class.
@@ -48,6 +50,7 @@ Punto3D::Punto3D() {
 	x = 0;
 	y = 0;
 	z = 0;
+	valido = false;
 }
 
 #pragma endregion
