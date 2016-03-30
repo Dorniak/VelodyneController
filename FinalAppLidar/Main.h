@@ -1,6 +1,6 @@
 #pragma once
 #include "Controller.h"
-
+#include "PostProceso.h"
 namespace FinalAppLidar {
 
 	using namespace System;
@@ -104,6 +104,7 @@ namespace FinalAppLidar {
 	private: System::Windows::Forms::TextBox^  textBox9;
 	private: System::Windows::Forms::Label^  label11;
 	private: System::Windows::Forms::TextBox^  textBox10;
+	private: System::Windows::Forms::Button^  button3;
 
 	private: System::ComponentModel::IContainer^  components;
 
@@ -170,6 +171,7 @@ namespace FinalAppLidar {
 			this->tabPage2 = (gcnew System::Windows::Forms::TabPage());
 			this->folderBrowserDialog1 = (gcnew System::Windows::Forms::FolderBrowserDialog());
 			this->Consola = (gcnew System::Windows::Forms::TextBox());
+			this->button3 = (gcnew System::Windows::Forms::Button());
 			this->toolStrip1->SuspendLayout();
 			this->tabControl1->SuspendLayout();
 			this->tabPage1->SuspendLayout();
@@ -234,7 +236,7 @@ namespace FinalAppLidar {
 			// 
 			this->groupBox5->Controls->Add(this->flowLayoutPanel5);
 			this->groupBox5->Dock = System::Windows::Forms::DockStyle::Top;
-			this->groupBox5->Location = System::Drawing::Point(3, 561);
+			this->groupBox5->Location = System::Drawing::Point(3, 488);
 			this->groupBox5->Name = L"groupBox5";
 			this->groupBox5->Size = System::Drawing::Size(186, 100);
 			this->groupBox5->TabIndex = 4;
@@ -268,7 +270,7 @@ namespace FinalAppLidar {
 			// 
 			this->groupBox4->Controls->Add(this->flowLayoutPanel4);
 			this->groupBox4->Dock = System::Windows::Forms::DockStyle::Top;
-			this->groupBox4->Location = System::Drawing::Point(3, 461);
+			this->groupBox4->Location = System::Drawing::Point(3, 388);
 			this->groupBox4->Name = L"groupBox4";
 			this->groupBox4->Size = System::Drawing::Size(186, 100);
 			this->groupBox4->TabIndex = 3;
@@ -302,7 +304,7 @@ namespace FinalAppLidar {
 			// 
 			this->groupBox3->Controls->Add(this->flowLayoutPanel3);
 			this->groupBox3->Dock = System::Windows::Forms::DockStyle::Top;
-			this->groupBox3->Location = System::Drawing::Point(3, 367);
+			this->groupBox3->Location = System::Drawing::Point(3, 294);
 			this->groupBox3->Name = L"groupBox3";
 			this->groupBox3->Size = System::Drawing::Size(186, 94);
 			this->groupBox3->TabIndex = 2;
@@ -357,7 +359,7 @@ namespace FinalAppLidar {
 			this->groupBox2->Dock = System::Windows::Forms::DockStyle::Top;
 			this->groupBox2->Location = System::Drawing::Point(3, 110);
 			this->groupBox2->Name = L"groupBox2";
-			this->groupBox2->Size = System::Drawing::Size(186, 257);
+			this->groupBox2->Size = System::Drawing::Size(186, 184);
 			this->groupBox2->TabIndex = 1;
 			this->groupBox2->TabStop = false;
 			this->groupBox2->Text = L"Lector";
@@ -386,7 +388,7 @@ namespace FinalAppLidar {
 			this->flowLayoutPanel2->Dock = System::Windows::Forms::DockStyle::Fill;
 			this->flowLayoutPanel2->Location = System::Drawing::Point(3, 16);
 			this->flowLayoutPanel2->Name = L"flowLayoutPanel2";
-			this->flowLayoutPanel2->Size = System::Drawing::Size(180, 238);
+			this->flowLayoutPanel2->Size = System::Drawing::Size(180, 165);
 			this->flowLayoutPanel2->TabIndex = 0;
 			// 
 			// ActivarLector
@@ -658,11 +660,22 @@ namespace FinalAppLidar {
 			this->Consola->Size = System::Drawing::Size(598, 235);
 			this->Consola->TabIndex = 3;
 			// 
+			// button3
+			// 
+			this->button3->Location = System::Drawing::Point(299, 66);
+			this->button3->Name = L"button3";
+			this->button3->Size = System::Drawing::Size(75, 23);
+			this->button3->TabIndex = 4;
+			this->button3->Text = L"button3";
+			this->button3->UseVisualStyleBackColor = true;
+			this->button3->Click += gcnew System::EventHandler(this, &Main::button3_Click);
+			// 
 			// Main
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
 			this->ClientSize = System::Drawing::Size(1294, 726);
+			this->Controls->Add(this->button3);
 			this->Controls->Add(this->Consola);
 			this->Controls->Add(this->tabControl1);
 			this->Controls->Add(this->toolStrip1);
@@ -806,5 +819,9 @@ namespace FinalAppLidar {
 				Controlador->Threads[i]->Abort();
 		}
 	}
+private: System::Void button3_Click(System::Object^  sender, System::EventArgs^  e) {
+	PostProceso^ p = gcnew PostProceso();
+	p->Show();
+}
 };
 }
