@@ -106,6 +106,8 @@ namespace FinalAppLidar {
 	private: System::Windows::Forms::TextBox^  textBox10;
 	private: System::Windows::Forms::Button^  button3;
 	private: System::Windows::Forms::TrackBar^  trackBar1;
+	private: System::Windows::Forms::Label^  label12;
+	private: System::Windows::Forms::Label^  label13;
 
 
 	private: System::ComponentModel::IContainer^  components;
@@ -142,6 +144,8 @@ namespace FinalAppLidar {
 			this->ActivarAnalisys = (gcnew System::Windows::Forms::CheckBox());
 			this->label4 = (gcnew System::Windows::Forms::Label());
 			this->textBox4 = (gcnew System::Windows::Forms::TextBox());
+			this->label12 = (gcnew System::Windows::Forms::Label());
+			this->trackBar1 = (gcnew System::Windows::Forms::TrackBar());
 			this->groupBox2 = (gcnew System::Windows::Forms::GroupBox());
 			this->flowLayoutPanel2 = (gcnew System::Windows::Forms::FlowLayoutPanel());
 			this->ActivarLector = (gcnew System::Windows::Forms::CheckBox());
@@ -174,7 +178,7 @@ namespace FinalAppLidar {
 			this->folderBrowserDialog1 = (gcnew System::Windows::Forms::FolderBrowserDialog());
 			this->Consola = (gcnew System::Windows::Forms::TextBox());
 			this->button3 = (gcnew System::Windows::Forms::Button());
-			this->trackBar1 = (gcnew System::Windows::Forms::TrackBar());
+			this->label13 = (gcnew System::Windows::Forms::Label());
 			this->toolStrip1->SuspendLayout();
 			this->tabControl1->SuspendLayout();
 			this->tabPage1->SuspendLayout();
@@ -184,11 +188,11 @@ namespace FinalAppLidar {
 			this->flowLayoutPanel4->SuspendLayout();
 			this->groupBox3->SuspendLayout();
 			this->flowLayoutPanel3->SuspendLayout();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->trackBar1))->BeginInit();
 			this->groupBox2->SuspendLayout();
 			this->flowLayoutPanel2->SuspendLayout();
 			this->groupBox1->SuspendLayout();
 			this->flowLayoutPanel1->SuspendLayout();
-			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->trackBar1))->BeginInit();
 			this->SuspendLayout();
 			// 
 			// toolStrip1
@@ -240,7 +244,7 @@ namespace FinalAppLidar {
 			// 
 			this->groupBox5->Controls->Add(this->flowLayoutPanel5);
 			this->groupBox5->Dock = System::Windows::Forms::DockStyle::Top;
-			this->groupBox5->Location = System::Drawing::Point(3, 488);
+			this->groupBox5->Location = System::Drawing::Point(3, 530);
 			this->groupBox5->Name = L"groupBox5";
 			this->groupBox5->Size = System::Drawing::Size(186, 100);
 			this->groupBox5->TabIndex = 4;
@@ -274,7 +278,7 @@ namespace FinalAppLidar {
 			// 
 			this->groupBox4->Controls->Add(this->flowLayoutPanel4);
 			this->groupBox4->Dock = System::Windows::Forms::DockStyle::Top;
-			this->groupBox4->Location = System::Drawing::Point(3, 388);
+			this->groupBox4->Location = System::Drawing::Point(3, 430);
 			this->groupBox4->Name = L"groupBox4";
 			this->groupBox4->Size = System::Drawing::Size(186, 100);
 			this->groupBox4->TabIndex = 3;
@@ -310,7 +314,7 @@ namespace FinalAppLidar {
 			this->groupBox3->Dock = System::Windows::Forms::DockStyle::Top;
 			this->groupBox3->Location = System::Drawing::Point(3, 294);
 			this->groupBox3->Name = L"groupBox3";
-			this->groupBox3->Size = System::Drawing::Size(186, 94);
+			this->groupBox3->Size = System::Drawing::Size(186, 136);
 			this->groupBox3->TabIndex = 2;
 			this->groupBox3->TabStop = false;
 			this->groupBox3->Text = L"Análisis";
@@ -320,10 +324,13 @@ namespace FinalAppLidar {
 			this->flowLayoutPanel3->Controls->Add(this->ActivarAnalisys);
 			this->flowLayoutPanel3->Controls->Add(this->label4);
 			this->flowLayoutPanel3->Controls->Add(this->textBox4);
+			this->flowLayoutPanel3->Controls->Add(this->label12);
+			this->flowLayoutPanel3->Controls->Add(this->trackBar1);
+			this->flowLayoutPanel3->Controls->Add(this->label13);
 			this->flowLayoutPanel3->Dock = System::Windows::Forms::DockStyle::Fill;
 			this->flowLayoutPanel3->Location = System::Drawing::Point(3, 16);
 			this->flowLayoutPanel3->Name = L"flowLayoutPanel3";
-			this->flowLayoutPanel3->Size = System::Drawing::Size(180, 75);
+			this->flowLayoutPanel3->Size = System::Drawing::Size(180, 117);
 			this->flowLayoutPanel3->TabIndex = 0;
 			// 
 			// ActivarAnalisys
@@ -356,6 +363,28 @@ namespace FinalAppLidar {
 			this->textBox4->Name = L"textBox4";
 			this->textBox4->Size = System::Drawing::Size(28, 20);
 			this->textBox4->TabIndex = 4;
+			// 
+			// label12
+			// 
+			this->label12->AutoSize = true;
+			this->label12->Location = System::Drawing::Point(3, 29);
+			this->label12->Name = L"label12";
+			this->label12->Padding = System::Windows::Forms::Padding(0, 5, 0, 0);
+			this->label12->Size = System::Drawing::Size(57, 18);
+			this->label12->TabIndex = 5;
+			this->label12->Text = L"Tolerancia";
+			// 
+			// trackBar1
+			// 
+			this->trackBar1->BackColor = System::Drawing::SystemColors::ButtonHighlight;
+			this->trackBar1->Location = System::Drawing::Point(3, 50);
+			this->trackBar1->Maximum = 100;
+			this->trackBar1->Name = L"trackBar1";
+			this->trackBar1->Size = System::Drawing::Size(174, 45);
+			this->trackBar1->TabIndex = 5;
+			this->trackBar1->TickStyle = System::Windows::Forms::TickStyle::Both;
+			this->trackBar1->Value = 10;
+			this->trackBar1->Scroll += gcnew System::EventHandler(this, &Main::trackBar1_Scroll);
 			// 
 			// groupBox2
 			// 
@@ -674,21 +703,21 @@ namespace FinalAppLidar {
 			this->button3->UseVisualStyleBackColor = true;
 			this->button3->Click += gcnew System::EventHandler(this, &Main::button3_Click);
 			// 
-			// trackBar1
+			// label13
 			// 
-			this->trackBar1->Location = System::Drawing::Point(299, 335);
-			this->trackBar1->Name = L"trackBar1";
-			this->trackBar1->Size = System::Drawing::Size(104, 45);
-			this->trackBar1->TabIndex = 5;
-			this->trackBar1->Value = 1;
-			this->trackBar1->Scroll += gcnew System::EventHandler(this, &Main::trackBar1_Scroll);
+			this->label13->AutoSize = true;
+			this->label13->Location = System::Drawing::Point(3, 98);
+			this->label13->Name = L"label13";
+			this->label13->Padding = System::Windows::Forms::Padding(10, 0, 0, 0);
+			this->label13->Size = System::Drawing::Size(40, 13);
+			this->label13->TabIndex = 6;
+			this->label13->Text = L"10 %";
 			// 
 			// Main
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
 			this->ClientSize = System::Drawing::Size(1294, 726);
-			this->Controls->Add(this->trackBar1);
 			this->Controls->Add(this->button3);
 			this->Controls->Add(this->Consola);
 			this->Controls->Add(this->tabControl1);
@@ -710,13 +739,13 @@ namespace FinalAppLidar {
 			this->groupBox3->ResumeLayout(false);
 			this->flowLayoutPanel3->ResumeLayout(false);
 			this->flowLayoutPanel3->PerformLayout();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->trackBar1))->EndInit();
 			this->groupBox2->ResumeLayout(false);
 			this->flowLayoutPanel2->ResumeLayout(false);
 			this->flowLayoutPanel2->PerformLayout();
 			this->groupBox1->ResumeLayout(false);
 			this->flowLayoutPanel1->ResumeLayout(false);
 			this->flowLayoutPanel1->PerformLayout();
-			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->trackBar1))->EndInit();
 			this->ResumeLayout(false);
 			this->PerformLayout();
 
@@ -743,14 +772,17 @@ namespace FinalAppLidar {
 
 			//Bloquear botones al pulsar el activar
 			ActivarOpenGl->Enabled = false;
-
-
+			groupBox3->Enabled = false;
+			groupBox4->Enabled = false;
+			groupBox5->Enabled = false;
 		}
 		else {
 			ActivarLector->BackColor = System::Drawing::Color::IndianRed;
+			groupBox3->Enabled = true;
+			groupBox4->Enabled = true;
+			groupBox5->Enabled = true;
 			Controlador->Parar();
 		}
-
 		//TODO: MANDAR A CONTROL 
 
 	}
@@ -839,7 +871,10 @@ private: System::Void button3_Click(System::Object^  sender, System::EventArgs^ 
 	p->Show();
 }
 private: System::Void trackBar1_Scroll(System::Object^  sender, System::EventArgs^  e) {
-	Controlador->ArrayDataAnalisys[Tolerancia] = trackBar1->Value*10;
+	if (trackBar1->Value < 10)
+		trackBar1->Value = 10;
+	Controlador->ArrayDataAnalisys[Tolerancia] = trackBar1->Value;
+	label13->Text = trackBar1->Value.ToString() + " %";
 }
 };
 }
