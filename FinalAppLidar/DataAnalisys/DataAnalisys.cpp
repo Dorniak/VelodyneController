@@ -262,6 +262,10 @@ void DataAnalisys::EliminarObstaculos()
 			Obstaculos->RemoveAt(p);
 			p--;
 		}
+		else if (!Obstaculos[p]->Valido) {
+			Obstaculos->RemoveAt(p);
+			p--;
+		}
 	}
 }
 void DataAnalisys::RelacionarObstaculos()
