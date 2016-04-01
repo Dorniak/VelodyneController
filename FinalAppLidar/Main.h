@@ -105,6 +105,7 @@ namespace FinalAppLidar {
 	private: System::Windows::Forms::Label^  label11;
 	private: System::Windows::Forms::TextBox^  textBox10;
 	private: System::Windows::Forms::Button^  button3;
+	private: System::Windows::Forms::TrackBar^  trackBar1;
 
 	private: System::ComponentModel::IContainer^  components;
 
@@ -172,6 +173,7 @@ namespace FinalAppLidar {
 			this->folderBrowserDialog1 = (gcnew System::Windows::Forms::FolderBrowserDialog());
 			this->Consola = (gcnew System::Windows::Forms::TextBox());
 			this->button3 = (gcnew System::Windows::Forms::Button());
+			this->trackBar1 = (gcnew System::Windows::Forms::TrackBar());
 			this->toolStrip1->SuspendLayout();
 			this->tabControl1->SuspendLayout();
 			this->tabPage1->SuspendLayout();
@@ -185,6 +187,7 @@ namespace FinalAppLidar {
 			this->flowLayoutPanel2->SuspendLayout();
 			this->groupBox1->SuspendLayout();
 			this->flowLayoutPanel1->SuspendLayout();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->trackBar1))->BeginInit();
 			this->SuspendLayout();
 			// 
 			// toolStrip1
@@ -670,11 +673,19 @@ namespace FinalAppLidar {
 			this->button3->UseVisualStyleBackColor = true;
 			this->button3->Click += gcnew System::EventHandler(this, &Main::button3_Click);
 			// 
+			// trackBar1
+			// 
+			this->trackBar1->Location = System::Drawing::Point(270, 335);
+			this->trackBar1->Name = L"trackBar1";
+			this->trackBar1->Size = System::Drawing::Size(104, 45);
+			this->trackBar1->TabIndex = 5;
+			// 
 			// Main
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
 			this->ClientSize = System::Drawing::Size(1294, 726);
+			this->Controls->Add(this->trackBar1);
 			this->Controls->Add(this->button3);
 			this->Controls->Add(this->Consola);
 			this->Controls->Add(this->tabControl1);
@@ -702,6 +713,7 @@ namespace FinalAppLidar {
 			this->groupBox1->ResumeLayout(false);
 			this->flowLayoutPanel1->ResumeLayout(false);
 			this->flowLayoutPanel1->PerformLayout();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->trackBar1))->EndInit();
 			this->ResumeLayout(false);
 			this->PerformLayout();
 
