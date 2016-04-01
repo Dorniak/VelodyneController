@@ -19,7 +19,7 @@ public:
 
 private:
 	OpenGl^ Dibujador;
-
+	double tolerancia;
 	//Funcion que copia los obstaculos de la vuelta actual a la anterior y al control
 	void copiarObstaculos();
 	//Puntero al array de thread

@@ -12,7 +12,7 @@
 
 //Numero de parametros de los arrays
 #define numParametrosReader 10
-#define numParametrosAnalisys 10
+#define numParametrosAnalisys 11
 //Posicion parametros array Reader
 #define Ppath 0
 #define Ip 1
@@ -24,12 +24,16 @@
 #define PCALIBRATE_W 7
 #define Pmax 8
 #define Pmin 9
+#define Tolerancia 10
+
 #define NUMBER_OF_BLOCKS 12
 #define NUMBER_OF_CHANNELS 32
+
 
 //Analisys puntos
 #define ToleranciaVertical 10
 #define ToleranciaDiagonal 10
+#define ToleranciaHorizontal 10
 
 
 //Posicion parametros array DataAnalisys

@@ -64,6 +64,7 @@ void DataAnalisys::AnalisysThread()
 				resolutionV = parametros[posResolucionV];//Resolucion
 				VCOCHE = parametros[posApertura];//Vcoche
 				apertura = parametros[posVcoche];//Apertura
+				tolerancia = parametros[Tolerancia];
 				NUMERO_COLUMNAS = matriz->Count / NUMERO_FILAS;
 
 				//Trabajo
@@ -316,14 +317,9 @@ bool DataAnalisys::comprobarBloqueo(List<Punto3D^>^ matriz)
 }
 bool DataAnalisys::puntosCercanosH(Punto3D^ p1, Punto3D^ p2)
 {
-	double s0 = 1.4;
-	double s1 = sqrt(2 - (2 * cos(2 * resolutionH*PI / 180)));
-	double r = p1->getDistance();
-	if (p1->getDistance() > p2->getDistance())
-		r = p2->getDistance();
-	double tolererancia = s0 + (s1 * r);
-
-	return (tolererancia > p1->distanceToPoint(p2));
+	double tolerancia = p1->getDistance() * tan(resolutionV  * PI / 180);
+	tolerancia = tolerancia * ((100 + ToleranciaHorizontal) / 100);
+	return(tolerancia > p1->distanceToPoint(p2));
 }
 bool DataAnalisys::puntosCercanosV(Punto3D^ p1, Punto3D^ p2)
 {
@@ -365,5 +361,8 @@ int DataAnalisys::convaPos(int columna, int fila) {
 
 void DataAnalisys::MoverObstaculo(int Obst1, int Obst2)
 {
-	throw gcnew System::NotImplementedException();
+	for (int i = 0; i < Obstaculos[Obst1]->components->Count; i++) {
+		Obstaculos[Obst2]->components->Add(Obstaculos[Obst1]->components[i]);
+	}
+	Obstaculos[Obst1]->Valido = false;
 }
