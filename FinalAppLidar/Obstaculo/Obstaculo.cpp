@@ -63,6 +63,16 @@ Punto3D^ Obstaculo::getEast() {
 Punto3D^ Obstaculo::getWest() {
 	return West;
 }
+Punto3D ^ Obstaculo::getCloser()
+{
+	return Closer;
+	// TODO: insert return statement here
+}
+Punto3D ^ Obstaculo::getFarthest()
+{
+	return Farthest;
+	// TODO: insert return statement here
+}
 /// <summary>
 /// Gets the velocity.
 /// </summary>

@@ -135,7 +135,7 @@ void DataAnalisys::Segmentacion(List<Punto3D^>^ matrix, double apertura)
 			//Se comprubea si el punto a tratar Existe
 			if (matrix[convaPos(i, j)]->valido)
 			{
-				//En caso de que sea el primer punto se asigna directamente al obstaculo 1
+				//En caso de que sea el primer punto se asigna directamente al obstaculo 0
 				if (i == 0 && j == NUMERO_FILAS - 1)
 				{
 					//Mete al final del vector de obstaculos un obstaculo que crea
@@ -312,7 +312,7 @@ bool DataAnalisys::comprobarBloqueo(List<Punto3D^>^ matriz)
 	int medio = matriz->Count / 2;
 	for (int k = medio - 20; k < medio + 20; k++) {
 		for (int i = 0; i < NUMERO_FILAS; i++) {
-			if (matriz[convaPos(i, k)]->getDistance() < 15) {
+			if (matriz[convaPos(k, i)]->getDistance() < 15) {
 				return true;
 			}
 		}
@@ -321,7 +321,7 @@ bool DataAnalisys::comprobarBloqueo(List<Punto3D^>^ matriz)
 }
 bool DataAnalisys::puntosCercanosH(Punto3D^ p1, Punto3D^ p2)
 {
-	double tolerancia = p1->getDistance() * tan(resolutionV  * PI / 180);
+	double tolerancia = p1->getDistance() * tan(resolutionV * PI / 180);
 	tolerancia = tolerancia * ((100 + ToleranciaHorizontal) / 100);
 	return(tolerancia > p1->distanceToPoint(p2));
 }
@@ -341,7 +341,7 @@ bool DataAnalisys::puntosCercanosD(Punto3D^ p1, Punto3D^ p2)
 	return(tolerancia > p1->distanceToPoint(p2));
 }
 int DataAnalisys::convaPos(int columna, int fila) {
-	
+
 	switch (fila)
 	{
 	case 1: fila = 2;

@@ -1,2 +1,9 @@
-﻿  FinalAppLidar.vcxproj -> D:\Visual Studio\FinalAppLidar\Debug\FinalAppLidar.exe
-  FinalAppLidar.vcxproj -> D:\Visual Studio\FinalAppLidar\Debug\FinalAppLidar.pdb (Partial PDB)
+﻿  OpenGl.cpp
+OpenGl\OpenGl.cpp(408): warning C4305: 'argument': truncation from 'double' to 'GLfloat'
+OpenGl\OpenGl.cpp(411): warning C4305: 'argument': truncation from 'double' to 'GLfloat'
+OpenGl\OpenGl.cpp(415): warning C4305: 'argument': truncation from 'double' to 'GLfloat'
+d:\documentos\github\finalapplidar\finalapplidar\opengl\opengl.cpp(44): warning C4700: uninitialized local variable 'argv' used
+  .NETFramework,Version=v4.5.2.AssemblyAttributes.cpp
+  Controller.obj : /DEBUG:FASTLINK is not supported when managed code is present; restarting link with /DEBUG:FULL
+  FinalAppLidar.vcxproj -> D:\Documentos\GitHub\FinalAppLidar\Debug\FinalAppLidar.exe
+  FinalAppLidar.vcxproj -> D:\Documentos\GitHub\FinalAppLidar\Debug\FinalAppLidar.pdb (Partial PDB)

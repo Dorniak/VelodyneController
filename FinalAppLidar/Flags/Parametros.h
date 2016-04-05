@@ -48,6 +48,9 @@
 #define DISTANCIA_MAXIMA 2
 #define PI Math::PI
 
+//Constantes OpenGl
+#define NUM_OBSTACULOS 10
+
 //Includes para las clases Controller Reader DataAnalisys y OpenGl
 using namespace std;
 using namespace System;

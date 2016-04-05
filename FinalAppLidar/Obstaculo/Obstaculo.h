@@ -22,6 +22,8 @@ public:
 	Punto3D^ getSouth();
 	Punto3D^ getEast();
 	Punto3D^ getWest();
+	Punto3D^ getCloser();
+	Punto3D^ getFarthest();
 	double getVelocity();//Devuelve a la velocidad a la que va el obstaculo
 
 #pragma endregion
