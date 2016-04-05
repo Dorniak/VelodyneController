@@ -82,6 +82,10 @@ void OpenGl::modificarPuntos(List<Punto3D^>^ listEntradaPuntos)
 void OpenGl::modificarObstaculos(List<Obstaculo^>^ listEntradaObstaculos)
 {
 	for (int recorridoO = 0; recorridoO < listEntradaObstaculos->Count; recorridoO++) {
+		if (recorridoO == NUM_OBSTACULOS)
+		{
+			break;
+		}
 		// 2*---------*3
 		//	|		  |
 		//	|		  |
@@ -145,10 +149,10 @@ void OpenGl::limpiarListas(int a)
 		puntos[recorrerListaPuntos]->setCoordinatesZ(0);
 	}
 	for (int recorrerListaObstaculos = 0; recorrerListaObstaculos < obstaculos->Count; recorrerListaObstaculos++) {
-		if (obstaculos[recorrerListaObstaculos]->getCoordinatesX() == 0 && obstaculos[recorrerListaObstaculos]->getCoordinatesY() == 0 && obstaculos[recorrerListaObstaculos]->getCoordinatesZ() == 0)
+		/*if (obstaculos[recorrerListaObstaculos]->getCoordinatesX() == 0 && obstaculos[recorrerListaObstaculos]->getCoordinatesY() == 0 && obstaculos[recorrerListaObstaculos]->getCoordinatesZ() == 0)
 		{
 			break;
-		}
+		}*/
 		obstaculos[recorrerListaObstaculos]->setCoordinatesX(0);
 		obstaculos[recorrerListaObstaculos]->setCoordinatesY(0);
 		obstaculos[recorrerListaObstaculos]->setCoordinatesZ(0);

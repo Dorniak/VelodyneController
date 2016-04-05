@@ -4,10 +4,6 @@ DataAnalisys::DataAnalisys()
 	timeBeginPeriod(1);
 	indice = -1;
 	menor = -1;
-	for (int k = 0; k < 4; k++)
-	{
-		listMenor[k] = 0;
-	}
 }
 //matriz::Lista de puntos
 //resolucionAngular::resolucion del laser

@@ -53,7 +53,6 @@ private:
 	//Lista de obstaculos de la vuelta anterior
 	List<Obstaculo^>^ ObstaculosvAnt = gcnew List<Obstaculo^>();
 	//Lista usada para ordenacion
-	List<double>^ listMenor = gcnew List<double>();
 	cli::array<bool>^ Cercanos = gcnew cli::array<bool>(4);
 	cli::array<Punto3D^>^ PCercanos = gcnew cli::array<Punto3D^>(4);
 	//Funcion encargada de agrupar puntos en obstaculos

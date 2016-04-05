@@ -1,9 +1,18 @@
-﻿  OpenGl.cpp
-OpenGl\OpenGl.cpp(408): warning C4305: 'argument': truncation from 'double' to 'GLfloat'
-OpenGl\OpenGl.cpp(411): warning C4305: 'argument': truncation from 'double' to 'GLfloat'
+﻿  DataAnalisys.cpp
+DataAnalisys\DataAnalisys.cpp(87): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
+DataAnalisys\DataAnalisys.cpp(88): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
+DataAnalisys\DataAnalisys.cpp(91): warning C4101: 'e': unreferenced local variable
+DataAnalisys\DataAnalisys.cpp(122): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
+DataAnalisys\DataAnalisys.cpp(201): warning C4101: 'VarX': unreferenced local variable
+DataAnalisys\DataAnalisys.cpp(201): warning C4101: 'VarY': unreferenced local variable
+DataAnalisys\DataAnalisys.cpp(207): warning C4101: 'Obs': unreferenced local variable
+DataAnalisys\DataAnalisys.cpp(286): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
+  OpenGl.cpp
+OpenGl\OpenGl.cpp(412): warning C4305: 'argument': truncation from 'double' to 'GLfloat'
 OpenGl\OpenGl.cpp(415): warning C4305: 'argument': truncation from 'double' to 'GLfloat'
+OpenGl\OpenGl.cpp(419): warning C4305: 'argument': truncation from 'double' to 'GLfloat'
+  Generating Code...
 d:\documentos\github\finalapplidar\finalapplidar\opengl\opengl.cpp(44): warning C4700: uninitialized local variable 'argv' used
-  .NETFramework,Version=v4.5.2.AssemblyAttributes.cpp
   Controller.obj : /DEBUG:FASTLINK is not supported when managed code is present; restarting link with /DEBUG:FULL
   FinalAppLidar.vcxproj -> D:\Documentos\GitHub\FinalAppLidar\Debug\FinalAppLidar.exe
   FinalAppLidar.vcxproj -> D:\Documentos\GitHub\FinalAppLidar\Debug\FinalAppLidar.pdb (Partial PDB)
