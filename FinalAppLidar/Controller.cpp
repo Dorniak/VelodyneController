@@ -10,8 +10,14 @@ Controller::Controller()
 		Flags[a] = false;
 	}
 	Flags[FlagPausa] = true;
+	Flags[FlagAnalisysOn] = true;
 	ArrayDataAnalisys = gcnew cli::array<Object^>(numParametrosAnalisys);
 	ArrayDataReader = gcnew cli::array<Object^>(numParametrosReader);
+	for (int i = 0; i < numParametrosAnalisys-1; i++)
+	{
+		ArrayDataAnalisys[i] = 0;
+	}
+	
 }
 Controller::Controller(System::Windows::Forms::TextBox ^ Consola)
 {

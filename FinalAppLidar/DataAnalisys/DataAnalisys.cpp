@@ -47,23 +47,22 @@ void DataAnalisys::Analisys(List<Punto3D^>^ puntosController, List<Obstaculo^>^ 
 //List<Punto3D^>^ matriz, double resolucionAngular,double Vcoche, double &consigna_velocidad, double &consigna_volante, double apertura
 void DataAnalisys::AnalisysThread()
 {
+	
 	//En caso de que se desactive y se reactive despues hay que limpiar los objetos
 	ObstaculosvAnt->Clear();
-	Informe += "[" + DateTime::Now.ToString("HH - mm - ss") + "] Inicio del Thread de Analisys\r\n";
-	while (Flags[FlagAnalisysOn] && Flags[FlagWarning] && !Flags[FlagPausa])
+	while (Flags[FlagAnalisysOn] && !Flags[FlagWarning] && !Flags[FlagPausa])
 	{
 		try
 		{
-			if (Flags[FlagTratamiento] == 0) {
+			if (!Flags[FlagTratamiento]) {
 				//matriz = Controllerador->Puntos;  La matriz es siempre igual a la matriz de puntos
-				resolutionH = (double)parametros[posResolucionH];//Resolucion
-				resolutionV = (double)parametros[posResolucionV];//Resolucion
-				VCOCHE = (double)parametros[posApertura];//Vcoche
-				apertura = (double)parametros[posVcoche];//Apertura
-				tolerancia = (double)parametros[posTolerancia];
-				Informe = (String^)parametros[posInforme];
+				resolutionH = Convert::ToDouble(parametros[posResolucionH]);//Resolucion
+				resolutionV = Convert::ToDouble(parametros[posResolucionV]);//Resolucion
+				VCOCHE = Convert::ToDouble(parametros[posApertura]);//Vcoche
+				apertura = Convert::ToDouble(parametros[posVcoche]);//Apertura
+				tolerancia = Convert::ToDouble(parametros[posTolerancia]);
+				Informe = Convert::ToString(parametros[posInforme]);
 				NUMERO_COLUMNAS = matriz->Count / NUMERO_FILAS;
-
 				//Trabajo
 
 				if (VCOCHE > 5) {
@@ -89,6 +88,7 @@ void DataAnalisys::AnalisysThread()
 				//Actualizar consignas en el vector de conclusiones
 				Conclusiones[0] = consigna_velocidad;
 				Conclusiones[1] = consigna_volante;
+				Flags[FlagTratamiento] = true;
 			}
 		}
 		catch (Exception^ e)

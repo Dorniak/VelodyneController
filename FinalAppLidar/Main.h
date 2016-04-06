@@ -821,7 +821,7 @@ namespace FinalAppLidar {
 		else
 		{
 			ActivarAnalisys->BackColor = System::Drawing::Color::IndianRed;
-			Controlador->Flags[FlagAnalisysOn] = false;
+			Controlador->Flags[FlagAnalisysOn] = true;
 		}
 		//TODO: MANDAR A CONTROL 
 	}

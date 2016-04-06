@@ -91,14 +91,14 @@ void DataReader::ReadDataThread()
 		log = false;
 	}
 	double CALIBRATE_X, CALIBRATE_Y, CALIBRATE_Z, CALIBRATE_R, CALIBRATE_P, CALIBRATE_W, max, min;
-	CALIBRATE_X = (Double)ArrayDataReader[PCALIBRATE_X];
-	CALIBRATE_Y = (Double)ArrayDataReader[PCALIBRATE_Y];
-	CALIBRATE_Z = (Double)ArrayDataReader[PCALIBRATE_Z];
-	CALIBRATE_R = (Double)ArrayDataReader[PCALIBRATE_R];
-	CALIBRATE_P = (Double)ArrayDataReader[PCALIBRATE_P];
-	CALIBRATE_W = (Double)ArrayDataReader[PCALIBRATE_W];
-	max = (Double)ArrayDataReader[Pmax];
-	min = (Double)ArrayDataReader[Pmin];
+	CALIBRATE_X = Convert::ToDouble(ArrayDataReader[PCALIBRATE_X]);
+	CALIBRATE_Y = Convert::ToDouble(ArrayDataReader[PCALIBRATE_Y]);
+	CALIBRATE_Z = Convert::ToDouble(ArrayDataReader[PCALIBRATE_Z]);
+	CALIBRATE_R = Convert::ToDouble(ArrayDataReader[PCALIBRATE_R]);
+	CALIBRATE_P = Convert::ToDouble(ArrayDataReader[PCALIBRATE_P]);
+	CALIBRATE_W = Convert::ToDouble(ArrayDataReader[PCALIBRATE_W]);
+	max = Convert::ToDouble(ArrayDataReader[Pmax]);
+	min = Convert::ToDouble(ArrayDataReader[Pmin]);
 	Informe = (String^)ArrayDataReader[INFORME];
 	int azimuth_index = 0, distance_index = 0, intensity_index = 0;
 	cli::array<Byte>^ ReceiveBytes;
@@ -122,7 +122,6 @@ void DataReader::ReadDataThread()
 			for (int block = 0; block < 12; block++) {
 				for (int i = 0; i < NUMBER_OF_CHANNELS; i++) {
 					//Corte de vuelta
-					//if ((azimuth_index > 0 && (azimuths[azimuth_index] < azimuths[azimuth_index - 1]))) {
 					if (azimuth_index > 0 && (azimuths[azimuth_index] - azimuths[azimuth_index - 1]) < -1) {
 							copiarPuntos();
 							frame++;
@@ -306,11 +305,11 @@ void DataReader::copiarPuntos()
 		}
 	}
 	//Controller de colision
-	if (Flags[FlagTratamiento] == 0 && Flags[FlagAnalisysOn]) {
+	if (!Flags[FlagTratamiento] && Flags[FlagAnalisysOn]) {
 		Flags[FlagWarning] = 1;
 		//mensaje pantalla
 	}
-	Flags[FlagTratamiento] = 0;
+	Flags[FlagTratamiento] = false;
 	Puntos->Clear();
 }
 
