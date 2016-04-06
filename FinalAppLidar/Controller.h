@@ -19,7 +19,7 @@ public:
 	//Array de flags que sincroniza los threads
 	cli::array<bool>^ Flags;
 	//Conjunto de parametros que necesita el DataAnalisys en tiempo de ejecucion
-	cli::array<double>^ ArrayDataAnalisys;
+	cli::array<Object^>^ ArrayDataAnalisys;
 	cli::array<Object^>^ ArrayDataReader;
 	//Pone el flag de conclusion a 1 para que la aplicacion que lo recoja sepa que las conclusiones estan listas
 	void setFlagTratamiento();

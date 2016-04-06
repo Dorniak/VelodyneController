@@ -11,7 +11,7 @@ DataAnalisys::DataAnalisys()
 //consigna velocidad:: puntero para devolucion de parametro de velocidad
 //consigna volante:: puntero para devolucion de parametro de volante
 //apertura::Angulo de interes de lectura en grados
-void DataAnalisys::Analisys(List<Punto3D^>^ puntosController, List<Obstaculo^>^ ObstaculosController, array<double>^ ParamAnalisys, List<int>^ Conclusiones, array<bool>^ Flags, array<Thread^>^ Threads, OpenGl^ Dibujador)
+void DataAnalisys::Analisys(List<Punto3D^>^ puntosController, List<Obstaculo^>^ ObstaculosController, array<Object^>^ ParamAnalisys, List<int>^ Conclusiones, array<bool>^ Flags, array<Thread^>^ Threads, OpenGl^ Dibujador)
 {
 	this->Dibujador = Dibujador;
 	this->Threads = Threads;
@@ -28,7 +28,7 @@ void DataAnalisys::Analisys(List<Punto3D^>^ puntosController, List<Obstaculo^>^ 
 	//Guarda el identificador de thread en el array de threads del Controllerador 
 	Threads[1] = thread_analysis;
 }
-void DataAnalisys::Analisys(List<Punto3D^>^ puntosController, List<Obstaculo^>^ ObstaculosController, cli::array<double>^ ParamAnalisys, List<int>^ Conclusiones, cli::array<bool>^ Flags, cli::array<Thread^>^ Threads)
+void DataAnalisys::Analisys(List<Punto3D^>^ puntosController, List<Obstaculo^>^ ObstaculosController, cli::array<Object^>^ ParamAnalisys, List<int>^ Conclusiones, cli::array<bool>^ Flags, cli::array<Thread^>^ Threads)
 {
 	this->Threads = Threads;
 	this->Flags = Flags;
@@ -49,18 +49,19 @@ void DataAnalisys::AnalisysThread()
 {
 	//En caso de que se desactive y se reactive despues hay que limpiar los objetos
 	ObstaculosvAnt->Clear();
-
+	Informe += "[" + DateTime::Now.ToString("HH - mm - ss") + "] Inicio del Thread de Analisys\r\n";
 	while (Flags[FlagAnalisysOn] && Flags[FlagWarning] && !Flags[FlagPausa])
 	{
 		try
 		{
 			if (Flags[FlagTratamiento] == 0) {
 				//matriz = Controllerador->Puntos;  La matriz es siempre igual a la matriz de puntos
-				resolutionH = parametros[posResolucionH];//Resolucion
-				resolutionV = parametros[posResolucionV];//Resolucion
-				VCOCHE = parametros[posApertura];//Vcoche
-				apertura = parametros[posVcoche];//Apertura
-				tolerancia = parametros[Tolerancia];
+				resolutionH = (double)parametros[posResolucionH];//Resolucion
+				resolutionV = (double)parametros[posResolucionV];//Resolucion
+				VCOCHE = (double)parametros[posApertura];//Vcoche
+				apertura = (double)parametros[posVcoche];//Apertura
+				tolerancia = (double)parametros[posTolerancia];
+				Informe = (String^)parametros[posInforme];
 				NUMERO_COLUMNAS = matriz->Count / NUMERO_FILAS;
 
 				//Trabajo
@@ -68,7 +69,9 @@ void DataAnalisys::AnalisysThread()
 				if (VCOCHE > 5) {
 					if (!comprobarBloqueo(matriz))
 					{
+						Informe += "[" + DateTime::Now.ToString("HH - mm - ss") + "] Inicio de la segmentacion\r\n";
 						Segmentacion(matriz, apertura);
+						Informe += "[" + DateTime::Now.ToString("HH - mm - ss") + "] Fin de la segmentacion\r\n";
 						//TODO::Identificar tipo de obstaculo
 						EliminarObstaculos();
 						prepararObstaculos();

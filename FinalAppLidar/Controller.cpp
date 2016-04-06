@@ -10,7 +10,7 @@ Controller::Controller()
 		Flags[a] = false;
 	}
 	Flags[FlagPausa] = true;
-	ArrayDataAnalisys = gcnew cli::array<double>(numParametrosAnalisys);
+	ArrayDataAnalisys = gcnew cli::array<Object^>(numParametrosAnalisys);
 	ArrayDataReader = gcnew cli::array<Object^>(numParametrosReader);
 }
 Controller::Controller(System::Windows::Forms::TextBox ^ Consola)
@@ -24,7 +24,7 @@ Controller::Controller(System::Windows::Forms::TextBox ^ Consola)
 		Flags[a] = false;
 	}
 	Flags[FlagPausa] = true;
-	ArrayDataAnalisys = gcnew cli::array<double>(numParametrosAnalisys);
+	ArrayDataAnalisys = gcnew cli::array<Object^>(numParametrosAnalisys);
 	ArrayDataReader = gcnew cli::array<Object^>(numParametrosReader);
 }
 //Es el encargado de poner el flag de fin de tratamiento a 1 a la vez 
@@ -61,6 +61,8 @@ void Controller::Iniciar()
 
 void Controller::IniciarThreads()
 {
+	ArrayDataReader[INFORME] = Informe;
+	ArrayDataAnalisys[posInforme] = Informe;
 	Flags[FlagPausa] = false;
 	if (FlagOpenGlOn) {
 		Reader->ReadData(Puntos, ArrayDataReader, Flags, Threads, Dibujador);
@@ -73,7 +75,7 @@ void Controller::IniciarThreads()
 		else Analisys->Analisys(Puntos, Obstaculos, ArrayDataAnalisys, Conclusiones, Flags, Threads);
 	}
 	if (Flags[FlagOpenGlOn]) {
-		Dibujador->constructor(Threads);
+		Dibujador->constructor(Threads,Informe);
 	}
 }
 

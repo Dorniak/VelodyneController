@@ -881,7 +881,7 @@ namespace FinalAppLidar {
 	private: System::Void trackBar1_Scroll(System::Object^  sender, System::EventArgs^  e) {
 		if (trackBar1->Value < 10)
 			trackBar1->Value = 10;
-		Controlador->ArrayDataAnalisys[Tolerancia] = trackBar1->Value;
+		Controlador->ArrayDataAnalisys[posTolerancia] = trackBar1->Value;
 		label13->Text = trackBar1->Value.ToString() + " %";
 	}
 	private: System::Void timer1_Tick(System::Object^  sender, System::EventArgs^  e) {

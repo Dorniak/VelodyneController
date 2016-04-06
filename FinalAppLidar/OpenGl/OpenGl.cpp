@@ -51,10 +51,11 @@ void OpenGl::threadconstructor()
 //-------------------------------------------------------------------------
 //  Program Main method.
 //-------------------------------------------------------------------------
-void OpenGl::constructor(cli::array<Thread^>^ Threads)
+void OpenGl::constructor(cli::array<Thread^>^ Threads,String^ Informe)
 {
 	try
 	{
+		this->Informe = Informe;
 		this->Threads = Threads;
 		if (!ThreadDIO)
 			ThreadDIO = gcnew Thread(gcnew ThreadStart(this, &OpenGl::threadconstructor));

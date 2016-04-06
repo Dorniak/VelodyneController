@@ -11,8 +11,8 @@
 
 
 //Numero de parametros de los arrays
-#define numParametrosReader 10
-#define numParametrosAnalisys 11
+#define numParametrosReader 11
+#define numParametrosAnalisys 6
 //Posicion parametros array Reader
 #define Ppath 0
 #define Ip 1
@@ -24,7 +24,8 @@
 #define PCALIBRATE_W 7
 #define Pmax 8
 #define Pmin 9
-#define Tolerancia 10
+#define INFORME 10
+
 
 #define NUMBER_OF_BLOCKS 12
 #define NUMBER_OF_CHANNELS 32
@@ -41,6 +42,9 @@
 #define posResolucionV 1
 #define posApertura 2
 #define posVcoche 3
+#define posInforme 4
+#define posTolerancia 5
+
 //Constantes DataAnalisys
 #define NUMERO_FILAS 16 //Coincide con el numero de canales
 #define TAMAÑO_MINIMO_OBSTACULO 20
