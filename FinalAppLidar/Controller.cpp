@@ -94,3 +94,10 @@ void Controller::ThreadInterpretarConclusiones()
 		Sleep(50);
 	}
 }
+
+void Controller::EscribirInforme()
+{
+	Informe += "";
+	Consola->AppendText(Informe);
+	Informe = "["+ DateTime::Now.ToString("HH - mm - ss") +"] Escritura\r\n";
+}

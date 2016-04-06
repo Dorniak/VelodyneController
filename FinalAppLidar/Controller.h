@@ -6,6 +6,7 @@
 
 ref class Controller {
 public:
+	String^ Informe;
 	//Constructor
 	Controller();
 	Controller(System::Windows::Forms::TextBox^  Consola);
@@ -31,6 +32,7 @@ public:
 	void ThreadInterpretarConclusiones();
 	//Consola
 	System::Windows::Forms::TextBox^  Consola;
+	void EscribirInforme();
 private:
 	Thread^ thread_Conclusiones;
 	//Objeto DataAnalisys

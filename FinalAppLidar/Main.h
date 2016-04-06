@@ -108,6 +108,7 @@ namespace FinalAppLidar {
 	private: System::Windows::Forms::TrackBar^  trackBar1;
 	private: System::Windows::Forms::Label^  label12;
 	private: System::Windows::Forms::Label^  label13;
+	private: System::Windows::Forms::Timer^  timer1;
 
 
 	private: System::ComponentModel::IContainer^  components;
@@ -128,6 +129,7 @@ namespace FinalAppLidar {
 		/// </summary>
 		void InitializeComponent(void)
 		{
+			this->components = (gcnew System::ComponentModel::Container());
 			System::ComponentModel::ComponentResourceManager^  resources = (gcnew System::ComponentModel::ComponentResourceManager(Main::typeid));
 			this->toolStrip1 = (gcnew System::Windows::Forms::ToolStrip());
 			this->toolStripButton1 = (gcnew System::Windows::Forms::ToolStripButton());
@@ -146,6 +148,7 @@ namespace FinalAppLidar {
 			this->textBox4 = (gcnew System::Windows::Forms::TextBox());
 			this->label12 = (gcnew System::Windows::Forms::Label());
 			this->trackBar1 = (gcnew System::Windows::Forms::TrackBar());
+			this->label13 = (gcnew System::Windows::Forms::Label());
 			this->groupBox2 = (gcnew System::Windows::Forms::GroupBox());
 			this->flowLayoutPanel2 = (gcnew System::Windows::Forms::FlowLayoutPanel());
 			this->ActivarLector = (gcnew System::Windows::Forms::CheckBox());
@@ -178,7 +181,7 @@ namespace FinalAppLidar {
 			this->folderBrowserDialog1 = (gcnew System::Windows::Forms::FolderBrowserDialog());
 			this->Consola = (gcnew System::Windows::Forms::TextBox());
 			this->button3 = (gcnew System::Windows::Forms::Button());
-			this->label13 = (gcnew System::Windows::Forms::Label());
+			this->timer1 = (gcnew System::Windows::Forms::Timer(this->components));
 			this->toolStrip1->SuspendLayout();
 			this->tabControl1->SuspendLayout();
 			this->tabPage1->SuspendLayout();
@@ -385,6 +388,16 @@ namespace FinalAppLidar {
 			this->trackBar1->TickStyle = System::Windows::Forms::TickStyle::Both;
 			this->trackBar1->Value = 10;
 			this->trackBar1->Scroll += gcnew System::EventHandler(this, &Main::trackBar1_Scroll);
+			// 
+			// label13
+			// 
+			this->label13->AutoSize = true;
+			this->label13->Location = System::Drawing::Point(3, 98);
+			this->label13->Name = L"label13";
+			this->label13->Padding = System::Windows::Forms::Padding(10, 0, 0, 0);
+			this->label13->Size = System::Drawing::Size(40, 13);
+			this->label13->TabIndex = 6;
+			this->label13->Text = L"10 %";
 			// 
 			// groupBox2
 			// 
@@ -703,15 +716,10 @@ namespace FinalAppLidar {
 			this->button3->UseVisualStyleBackColor = true;
 			this->button3->Click += gcnew System::EventHandler(this, &Main::button3_Click);
 			// 
-			// label13
+			// timer1
 			// 
-			this->label13->AutoSize = true;
-			this->label13->Location = System::Drawing::Point(3, 98);
-			this->label13->Name = L"label13";
-			this->label13->Padding = System::Windows::Forms::Padding(10, 0, 0, 0);
-			this->label13->Size = System::Drawing::Size(40, 13);
-			this->label13->TabIndex = 6;
-			this->label13->Text = L"10 %";
+			this->timer1->Enabled = true;
+			this->timer1->Tick += gcnew System::EventHandler(this, &Main::timer1_Tick);
 			// 
 			// Main
 			// 
@@ -866,15 +874,20 @@ namespace FinalAppLidar {
 				Controlador->Threads[i]->Abort();
 		}
 	}
-private: System::Void button3_Click(System::Object^  sender, System::EventArgs^  e) {
-	PostProceso^ p = gcnew PostProceso();
-	p->Show();
-}
-private: System::Void trackBar1_Scroll(System::Object^  sender, System::EventArgs^  e) {
-	if (trackBar1->Value < 10)
-		trackBar1->Value = 10;
-	Controlador->ArrayDataAnalisys[Tolerancia] = trackBar1->Value;
-	label13->Text = trackBar1->Value.ToString() + " %";
-}
-};
+	private: System::Void button3_Click(System::Object^  sender, System::EventArgs^  e) {
+		PostProceso^ p = gcnew PostProceso();
+		p->Show();
+	}
+	private: System::Void trackBar1_Scroll(System::Object^  sender, System::EventArgs^  e) {
+		if (trackBar1->Value < 10)
+			trackBar1->Value = 10;
+		Controlador->ArrayDataAnalisys[Tolerancia] = trackBar1->Value;
+		label13->Text = trackBar1->Value.ToString() + " %";
+	}
+	private: System::Void timer1_Tick(System::Object^  sender, System::EventArgs^  e) {
+		if (ActivarLector->Checked) {
+			Controlador->EscribirInforme();
+		}
+	}
+	};
 }
