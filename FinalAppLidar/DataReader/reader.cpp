@@ -1,5 +1,5 @@
 #include "reader.h"
-
+#include <locale.h>
 
 /// <summary>
 /// Initializes a new instance of the <see cref="DataReader"/> class.
@@ -74,11 +74,12 @@ void DataReader::ReadData(List<Punto3D^>^ puntosController, cli::array<Object^>^
 	}
 	catch (Exception^ e)
 	{
-				System::Windows::Forms::MessageBox::Show(e->ToString());
+		System::Windows::Forms::MessageBox::Show(e->ToString());
 	}
 }
 void DataReader::ReadDataThread()
 {
+	setlocale(LC_NUMERIC, "es_ES");
 	if (Flags[FlagLogOn]) {
 		path = (String^)ArrayDataReader[Ppath] + "\\" + DateTime::Now.ToString("dd - MMMM - yyyy - HH - mm - ss");
 		Directory::CreateDirectory(path);
@@ -107,11 +108,16 @@ void DataReader::ReadDataThread()
 	Punto3D^ p;
 	int corte = -1;
 	double azi = -1;
-
-
+	LARGE_INTEGER frequency;        // ticks per second
+	LARGE_INTEGER t1, t2;           // ticks
+	double elapsedTime;
+	QueryPerformanceFrequency(&frequency);
+	QueryPerformanceCounter(&t2);
+	QueryPerformanceCounter(&t1);
 	while (!Flags[FlagWarning] && !Flags[FlagPausa]) {
 		try
 		{
+
 			ReceiveBytes = ClientLIDAR->Receive(LaserIpEndPoint);
 
 			azimuths = InterpolateAzimuth(ReceiveBytes, &corte, &azi);
@@ -122,21 +128,29 @@ void DataReader::ReadDataThread()
 				for (int i = 0; i < NUMBER_OF_CHANNELS; i++) {
 					//Corte de vuelta
 					if (azimuth_index > 0 && (azimuths[azimuth_index] - azimuths[azimuth_index - 1]) < -1) {
-							copiarPuntos();
-							frame++;
+						copiarPuntos();
+						QueryPerformanceCounter(&t2); //parar
+						//compute and print the elapsed time in millisec
+						elapsedTime = (t2.QuadPart - t1.QuadPart) * 1000.0 / frequency.QuadPart;
+						QueryPerformanceCounter(&t1); //iniciar
+						frame++;
 					}
 					else if (azimuth_index == 0 && (azimuths[azimuth_index + 1] - azimuths[azimuth_index]) < -1) {
-							copiarPuntos();
-							frame++;
-						}
-					
+						copiarPuntos();
+						QueryPerformanceCounter(&t2); //parar
+						//compute and print the elapsed time in millisec
+						elapsedTime = (t2.QuadPart - t1.QuadPart) * 1000.0 / frequency.QuadPart;
+						QueryPerformanceCounter(&t1); //iniciar
+						frame++;
+					}
+
 					if (distances[distance_index] >= min && distances[distance_index] <= max) {
 						p = gcnew Punto3D(distances[distance_index], intensities[intensity_index], azimuths[azimuth_index], getAngle(i));
 						p->CalculateCoordinates(CALIBRATE_X, CALIBRATE_Y, CALIBRATE_Z, CALIBRATE_P, CALIBRATE_R, CALIBRATE_Y);
 						Puntos->Add(p);
 						if (log) {
 							//Azimuth, X, Y, Z, Distance;
-							loger->WriteLine(frame + " " + p->visualize());
+							loger->WriteLine(frame + "," + p->visualize());
 						}
 					}
 					else {
@@ -294,11 +308,11 @@ cli::array<Double>^ DataReader::ExtractIntensities(cli::array<Byte>^ &ReceiveByt
 void DataReader::copiarPuntos()
 {
 	puntosController->Clear();
-	Sleep(50);
+	Sleep(50);////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	puntosController->AddRange(Puntos);
-	
+
 	if (Flags[FlagOpenGlOn]) {
-		if (puntosController->Count>2000) {
+		if (puntosController->Count > 2000) {
 			Dibujador->modificarPuntos(puntosController);
 			Dibujador->listo = true;
 		}
