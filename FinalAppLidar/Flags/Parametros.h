@@ -24,7 +24,6 @@
 #define PCALIBRATE_W 7
 #define Pmax 8
 #define Pmin 9
-#define INFORME 10
 
 
 #define NUMBER_OF_BLOCKS 12

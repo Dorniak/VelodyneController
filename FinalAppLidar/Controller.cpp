@@ -13,11 +13,11 @@ Controller::Controller()
 	Flags[FlagAnalisysOn] = true;
 	ArrayDataAnalisys = gcnew cli::array<Object^>(numParametrosAnalisys);
 	ArrayDataReader = gcnew cli::array<Object^>(numParametrosReader);
-	for (int i = 0; i < numParametrosAnalisys-1; i++)
+	for (int i = 0; i < numParametrosAnalisys - 1; i++)
 	{
 		ArrayDataAnalisys[i] = 0;
 	}
-	
+
 }
 Controller::Controller(System::Windows::Forms::TextBox ^ Consola)
 {
@@ -37,7 +37,7 @@ Controller::Controller(System::Windows::Forms::TextBox ^ Consola)
 // que llama a la funcion de interpretar conclusiones
 void Controller::setFlagTratamiento()
 {
-	Flags[FlagTratamiento]=1;
+	Flags[FlagTratamiento] = 1;
 	interpretarConclusiones();
 }
 
@@ -67,21 +67,20 @@ void Controller::Iniciar()
 
 void Controller::IniciarThreads()
 {
-	ArrayDataReader[INFORME] = Informe;
-	ArrayDataAnalisys[posInforme] = Informe;
 	Flags[FlagPausa] = false;
 	if (FlagOpenGlOn) {
 		Reader->ReadData(Puntos, ArrayDataReader, Flags, Threads, Dibujador);
 	}
 	else Reader->ReadData(Puntos, ArrayDataReader, Flags, Threads);
+	pin_ptr<String^> pointertoInforme = &Informe;
 	if (Flags[FlagAnalisysOn]) {
 		if (FlagOpenGlOn) {
-			Analisys->Analisys(Puntos, Obstaculos, ArrayDataAnalisys, Conclusiones, Flags, Threads, Dibujador);
+			Analisys->Analisys(Puntos, Obstaculos, ArrayDataAnalisys, Conclusiones, Flags, Threads, pointertoInforme, Dibujador);
 		}
-		else Analisys->Analisys(Puntos, Obstaculos, ArrayDataAnalisys, Conclusiones, Flags, Threads);
+		else Analisys->Analisys(Puntos, Obstaculos, ArrayDataAnalisys, Conclusiones, Flags, Threads, pointertoInforme);
 	}
 	if (Flags[FlagOpenGlOn]) {
-		Dibujador->constructor(Threads,Informe);
+		Dibujador->constructor(Threads, Informe);
 	}
 }
 
@@ -107,5 +106,5 @@ void Controller::EscribirInforme()
 {
 	Informe += "";
 	Consola->AppendText(Informe);
-	Informe = "["+ DateTime::Now.ToString("HH - mm - ss") +"] Escritura\r\n";
+	Informe = "[" + DateTime::Now.ToString("HH - mm - ss") + "] Escritura\r\n";
 }
