@@ -27,7 +27,6 @@ public:
 
 
 private:
-	String^ Informe;
 	OpenGl^ Dibujador;
 	void copiarPuntos();
 
