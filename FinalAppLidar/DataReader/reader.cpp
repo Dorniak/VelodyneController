@@ -100,6 +100,7 @@ void DataReader::ReadDataThread()
 	CALIBRATE_W = Convert::ToDouble(ArrayDataReader[PCALIBRATE_W]);
 	max = Convert::ToDouble(ArrayDataReader[Pmax]);
 	min = Convert::ToDouble(ArrayDataReader[Pmin]);
+	Informe = (String^)ArrayDataReader[INFORME];
 	int azimuth_index = 0, distance_index = 0, intensity_index = 0;
 	cli::array<Byte>^ ReceiveBytes;
 	cli::array<Double>^ azimuths;

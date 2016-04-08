@@ -6,7 +6,6 @@
 
 ref class Controller {
 public:
-	
 	String^ Informe;
 	//Constructor
 	Controller();
