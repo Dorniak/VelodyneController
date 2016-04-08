@@ -1,6 +1,7 @@
 #pragma once
 #include "Controller.h"
 #include "PostProceso.h"
+
 namespace FinalAppLidar {
 
 	using namespace System;
@@ -44,7 +45,8 @@ namespace FinalAppLidar {
 
 	private:
 		bool Iniciado = false;
-
+		Image^ image;
+		Graphics^ p;
 
 
 
@@ -58,7 +60,7 @@ namespace FinalAppLidar {
 
 	private: Controller^ Controlador;
 	private: System::Windows::Forms::ToolStrip^  toolStrip1;
-	private: System::Windows::Forms::ToolStripButton^  toolStripButton1;
+
 	private: System::Windows::Forms::TabControl^  tabControl1;
 	private: System::Windows::Forms::TabPage^  tabPage1;
 	private: System::Windows::Forms::GroupBox^  groupBox4;
@@ -82,13 +84,13 @@ namespace FinalAppLidar {
 	private: System::Windows::Forms::CheckBox^  ActivarGPS;
 	private: System::Windows::Forms::FlowLayoutPanel^  flowLayoutPanel3;
 	private: System::Windows::Forms::CheckBox^  ActivarAnalisys;
-	private: System::Windows::Forms::Button^  button2;
+
 	private: System::Windows::Forms::FolderBrowserDialog^  folderBrowserDialog1;
 	private: System::Windows::Forms::TextBox^  Consola;
 
 	private: System::Windows::Forms::Label^  label4;
 	private: System::Windows::Forms::TextBox^  textBox4;
-	private: System::Windows::Forms::Label^  label3;
+
 	private: System::Windows::Forms::TextBox^  Minimo;
 	private: System::Windows::Forms::Label^  label5;
 	private: System::Windows::Forms::TextBox^  Maximo;
@@ -109,6 +111,15 @@ namespace FinalAppLidar {
 	private: System::Windows::Forms::Label^  label12;
 	private: System::Windows::Forms::Label^  label13;
 	private: System::Windows::Forms::Timer^  timer1;
+	private: System::Windows::Forms::ToolStripLabel^  toolStripLabel1;
+	private: System::Windows::Forms::ToolStripLabel^  toolStripLabel2;
+	private: System::Windows::Forms::ToolStripLabel^  toolStripLabel3;
+	private: System::Windows::Forms::ToolStripLabel^  toolStripLabel4;
+	private: System::Windows::Forms::ToolStripLabel^  toolStripLabel5;
+	private: System::Windows::Forms::Timer^  timer2;
+	private: System::Windows::Forms::ImageList^  imageList1;
+private: System::Windows::Forms::TableLayoutPanel^  tableLayoutPanel1;
+private: System::Windows::Forms::Label^  label3;
 
 
 	private: System::ComponentModel::IContainer^  components;
@@ -132,7 +143,11 @@ namespace FinalAppLidar {
 			this->components = (gcnew System::ComponentModel::Container());
 			System::ComponentModel::ComponentResourceManager^  resources = (gcnew System::ComponentModel::ComponentResourceManager(Main::typeid));
 			this->toolStrip1 = (gcnew System::Windows::Forms::ToolStrip());
-			this->toolStripButton1 = (gcnew System::Windows::Forms::ToolStripButton());
+			this->toolStripLabel1 = (gcnew System::Windows::Forms::ToolStripLabel());
+			this->toolStripLabel2 = (gcnew System::Windows::Forms::ToolStripLabel());
+			this->toolStripLabel3 = (gcnew System::Windows::Forms::ToolStripLabel());
+			this->toolStripLabel4 = (gcnew System::Windows::Forms::ToolStripLabel());
+			this->toolStripLabel5 = (gcnew System::Windows::Forms::ToolStripLabel());
 			this->tabControl1 = (gcnew System::Windows::Forms::TabControl());
 			this->tabPage1 = (gcnew System::Windows::Forms::TabPage());
 			this->groupBox5 = (gcnew System::Windows::Forms::GroupBox());
@@ -152,9 +167,8 @@ namespace FinalAppLidar {
 			this->groupBox2 = (gcnew System::Windows::Forms::GroupBox());
 			this->flowLayoutPanel2 = (gcnew System::Windows::Forms::FlowLayoutPanel());
 			this->ActivarLector = (gcnew System::Windows::Forms::CheckBox());
+			this->imageList1 = (gcnew System::Windows::Forms::ImageList(this->components));
 			this->ActivarLogs = (gcnew System::Windows::Forms::CheckBox());
-			this->button2 = (gcnew System::Windows::Forms::Button());
-			this->label3 = (gcnew System::Windows::Forms::Label());
 			this->Minimo = (gcnew System::Windows::Forms::TextBox());
 			this->label5 = (gcnew System::Windows::Forms::Label());
 			this->Maximo = (gcnew System::Windows::Forms::TextBox());
@@ -176,12 +190,15 @@ namespace FinalAppLidar {
 			this->textBox1 = (gcnew System::Windows::Forms::TextBox());
 			this->label2 = (gcnew System::Windows::Forms::Label());
 			this->textBox2 = (gcnew System::Windows::Forms::TextBox());
+			this->tableLayoutPanel1 = (gcnew System::Windows::Forms::TableLayoutPanel());
 			this->button1 = (gcnew System::Windows::Forms::Button());
 			this->tabPage2 = (gcnew System::Windows::Forms::TabPage());
 			this->folderBrowserDialog1 = (gcnew System::Windows::Forms::FolderBrowserDialog());
 			this->Consola = (gcnew System::Windows::Forms::TextBox());
 			this->button3 = (gcnew System::Windows::Forms::Button());
 			this->timer1 = (gcnew System::Windows::Forms::Timer(this->components));
+			this->timer2 = (gcnew System::Windows::Forms::Timer(this->components));
+			this->label3 = (gcnew System::Windows::Forms::Label());
 			this->toolStrip1->SuspendLayout();
 			this->tabControl1->SuspendLayout();
 			this->tabPage1->SuspendLayout();
@@ -196,26 +213,51 @@ namespace FinalAppLidar {
 			this->flowLayoutPanel2->SuspendLayout();
 			this->groupBox1->SuspendLayout();
 			this->flowLayoutPanel1->SuspendLayout();
+			this->tableLayoutPanel1->SuspendLayout();
 			this->SuspendLayout();
 			// 
 			// toolStrip1
 			// 
 			this->toolStrip1->Dock = System::Windows::Forms::DockStyle::Bottom;
-			this->toolStrip1->Items->AddRange(gcnew cli::array< System::Windows::Forms::ToolStripItem^  >(1) { this->toolStripButton1 });
+			this->toolStrip1->Items->AddRange(gcnew cli::array< System::Windows::Forms::ToolStripItem^  >(5) {
+				this->toolStripLabel1,
+					this->toolStripLabel2, this->toolStripLabel3, this->toolStripLabel4, this->toolStripLabel5
+			});
 			this->toolStrip1->Location = System::Drawing::Point(0, 701);
 			this->toolStrip1->Name = L"toolStrip1";
 			this->toolStrip1->Size = System::Drawing::Size(1294, 25);
 			this->toolStrip1->TabIndex = 1;
 			this->toolStrip1->Text = L"toolStrip1";
 			// 
-			// toolStripButton1
+			// toolStripLabel1
 			// 
-			this->toolStripButton1->DisplayStyle = System::Windows::Forms::ToolStripItemDisplayStyle::Image;
-			this->toolStripButton1->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"toolStripButton1.Image")));
-			this->toolStripButton1->ImageTransparentColor = System::Drawing::Color::Magenta;
-			this->toolStripButton1->Name = L"toolStripButton1";
-			this->toolStripButton1->Size = System::Drawing::Size(23, 22);
-			this->toolStripButton1->Text = L"toolStripButton1";
+			this->toolStripLabel1->Name = L"toolStripLabel1";
+			this->toolStripLabel1->Size = System::Drawing::Size(86, 22);
+			this->toolStripLabel1->Text = L"toolStripLabel1";
+			// 
+			// toolStripLabel2
+			// 
+			this->toolStripLabel2->Name = L"toolStripLabel2";
+			this->toolStripLabel2->Size = System::Drawing::Size(86, 22);
+			this->toolStripLabel2->Text = L"toolStripLabel2";
+			// 
+			// toolStripLabel3
+			// 
+			this->toolStripLabel3->Name = L"toolStripLabel3";
+			this->toolStripLabel3->Size = System::Drawing::Size(86, 22);
+			this->toolStripLabel3->Text = L"toolStripLabel3";
+			// 
+			// toolStripLabel4
+			// 
+			this->toolStripLabel4->Name = L"toolStripLabel4";
+			this->toolStripLabel4->Size = System::Drawing::Size(86, 22);
+			this->toolStripLabel4->Text = L"toolStripLabel4";
+			// 
+			// toolStripLabel5
+			// 
+			this->toolStripLabel5->Name = L"toolStripLabel5";
+			this->toolStripLabel5->Size = System::Drawing::Size(86, 22);
+			this->toolStripLabel5->Text = L"toolStripLabel5";
 			// 
 			// tabControl1
 			// 
@@ -247,7 +289,7 @@ namespace FinalAppLidar {
 			// 
 			this->groupBox5->Controls->Add(this->flowLayoutPanel5);
 			this->groupBox5->Dock = System::Windows::Forms::DockStyle::Top;
-			this->groupBox5->Location = System::Drawing::Point(3, 530);
+			this->groupBox5->Location = System::Drawing::Point(3, 553);
 			this->groupBox5->Name = L"groupBox5";
 			this->groupBox5->Size = System::Drawing::Size(186, 100);
 			this->groupBox5->TabIndex = 4;
@@ -281,7 +323,7 @@ namespace FinalAppLidar {
 			// 
 			this->groupBox4->Controls->Add(this->flowLayoutPanel4);
 			this->groupBox4->Dock = System::Windows::Forms::DockStyle::Top;
-			this->groupBox4->Location = System::Drawing::Point(3, 430);
+			this->groupBox4->Location = System::Drawing::Point(3, 453);
 			this->groupBox4->Name = L"groupBox4";
 			this->groupBox4->Size = System::Drawing::Size(186, 100);
 			this->groupBox4->TabIndex = 3;
@@ -315,7 +357,7 @@ namespace FinalAppLidar {
 			// 
 			this->groupBox3->Controls->Add(this->flowLayoutPanel3);
 			this->groupBox3->Dock = System::Windows::Forms::DockStyle::Top;
-			this->groupBox3->Location = System::Drawing::Point(3, 294);
+			this->groupBox3->Location = System::Drawing::Point(3, 317);
 			this->groupBox3->Name = L"groupBox3";
 			this->groupBox3->Size = System::Drawing::Size(186, 136);
 			this->groupBox3->TabIndex = 2;
@@ -403,9 +445,9 @@ namespace FinalAppLidar {
 			// 
 			this->groupBox2->Controls->Add(this->flowLayoutPanel2);
 			this->groupBox2->Dock = System::Windows::Forms::DockStyle::Top;
-			this->groupBox2->Location = System::Drawing::Point(3, 110);
+			this->groupBox2->Location = System::Drawing::Point(3, 120);
 			this->groupBox2->Name = L"groupBox2";
-			this->groupBox2->Size = System::Drawing::Size(186, 184);
+			this->groupBox2->Size = System::Drawing::Size(186, 197);
 			this->groupBox2->TabIndex = 1;
 			this->groupBox2->TabStop = false;
 			this->groupBox2->Text = L"Lector";
@@ -414,7 +456,6 @@ namespace FinalAppLidar {
 			// 
 			this->flowLayoutPanel2->Controls->Add(this->ActivarLector);
 			this->flowLayoutPanel2->Controls->Add(this->ActivarLogs);
-			this->flowLayoutPanel2->Controls->Add(this->button2);
 			this->flowLayoutPanel2->Controls->Add(this->label3);
 			this->flowLayoutPanel2->Controls->Add(this->Minimo);
 			this->flowLayoutPanel2->Controls->Add(this->label5);
@@ -434,60 +475,57 @@ namespace FinalAppLidar {
 			this->flowLayoutPanel2->Dock = System::Windows::Forms::DockStyle::Fill;
 			this->flowLayoutPanel2->Location = System::Drawing::Point(3, 16);
 			this->flowLayoutPanel2->Name = L"flowLayoutPanel2";
-			this->flowLayoutPanel2->Size = System::Drawing::Size(180, 165);
+			this->flowLayoutPanel2->Size = System::Drawing::Size(180, 178);
 			this->flowLayoutPanel2->TabIndex = 0;
 			// 
 			// ActivarLector
 			// 
 			this->ActivarLector->Appearance = System::Windows::Forms::Appearance::Button;
 			this->ActivarLector->AutoSize = true;
-			this->ActivarLector->BackColor = System::Drawing::Color::IndianRed;
+			this->ActivarLector->BackColor = System::Drawing::Color::Transparent;
+			this->ActivarLector->Dock = System::Windows::Forms::DockStyle::Right;
+			this->ActivarLector->FlatAppearance->BorderSize = 0;
 			this->ActivarLector->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
+			this->ActivarLector->ImageIndex = 2;
+			this->ActivarLector->ImageList = this->imageList1;
 			this->ActivarLector->Location = System::Drawing::Point(3, 3);
 			this->ActivarLector->Name = L"ActivarLector";
-			this->ActivarLector->Size = System::Drawing::Size(50, 23);
+			this->ActivarLector->Size = System::Drawing::Size(38, 38);
 			this->ActivarLector->TabIndex = 0;
-			this->ActivarLector->Text = L"Activar";
 			this->ActivarLector->UseVisualStyleBackColor = false;
 			this->ActivarLector->CheckedChanged += gcnew System::EventHandler(this, &Main::ActivarLector_CheckedChanged);
+			// 
+			// imageList1
+			// 
+			this->imageList1->ImageStream = (cli::safe_cast<System::Windows::Forms::ImageListStreamer^>(resources->GetObject(L"imageList1.ImageStream")));
+			this->imageList1->TransparentColor = System::Drawing::Color::Transparent;
+			this->imageList1->Images->SetKeyName(0, L"conenct.png");
+			this->imageList1->Images->SetKeyName(1, L"disconenct.png");
+			this->imageList1->Images->SetKeyName(2, L"noun_419253_cc.png");
+			this->imageList1->Images->SetKeyName(3, L"noun_6503_cc.png");
+			this->imageList1->Images->SetKeyName(4, L"noun_81754_cc.png");
+			this->imageList1->Images->SetKeyName(5, L"noun_81753_cc.png");
 			// 
 			// ActivarLogs
 			// 
 			this->ActivarLogs->Appearance = System::Windows::Forms::Appearance::Button;
 			this->ActivarLogs->AutoSize = true;
-			this->ActivarLogs->BackColor = System::Drawing::Color::IndianRed;
+			this->ActivarLogs->BackColor = System::Drawing::Color::Transparent;
+			this->ActivarLogs->FlatAppearance->BorderSize = 0;
 			this->ActivarLogs->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
-			this->ActivarLogs->Location = System::Drawing::Point(59, 3);
+			this->flowLayoutPanel2->SetFlowBreak(this->ActivarLogs, true);
+			this->ActivarLogs->ImageIndex = 4;
+			this->ActivarLogs->ImageList = this->imageList1;
+			this->ActivarLogs->Location = System::Drawing::Point(47, 3);
 			this->ActivarLogs->Name = L"ActivarLogs";
-			this->ActivarLogs->Size = System::Drawing::Size(40, 23);
+			this->ActivarLogs->Size = System::Drawing::Size(38, 38);
 			this->ActivarLogs->TabIndex = 1;
-			this->ActivarLogs->Text = L"Logs";
 			this->ActivarLogs->UseVisualStyleBackColor = false;
 			this->ActivarLogs->CheckedChanged += gcnew System::EventHandler(this, &Main::ActivarLogs_CheckedChanged);
 			// 
-			// button2
-			// 
-			this->button2->Location = System::Drawing::Point(105, 3);
-			this->button2->Name = L"button2";
-			this->button2->Size = System::Drawing::Size(72, 23);
-			this->button2->TabIndex = 2;
-			this->button2->Text = L"Directorio";
-			this->button2->UseVisualStyleBackColor = true;
-			this->button2->Click += gcnew System::EventHandler(this, &Main::button2_Click);
-			// 
-			// label3
-			// 
-			this->label3->AutoSize = true;
-			this->label3->Location = System::Drawing::Point(3, 29);
-			this->label3->Name = L"label3";
-			this->label3->Padding = System::Windows::Forms::Padding(0, 5, 0, 0);
-			this->label3->Size = System::Drawing::Size(42, 18);
-			this->label3->TabIndex = 3;
-			this->label3->Text = L"Mínimo";
-			// 
 			// Minimo
 			// 
-			this->Minimo->Location = System::Drawing::Point(51, 32);
+			this->Minimo->Location = System::Drawing::Point(51, 47);
 			this->Minimo->Name = L"Minimo";
 			this->Minimo->Size = System::Drawing::Size(120, 20);
 			this->Minimo->TabIndex = 4;
@@ -496,7 +534,7 @@ namespace FinalAppLidar {
 			// label5
 			// 
 			this->label5->AutoSize = true;
-			this->label5->Location = System::Drawing::Point(3, 55);
+			this->label5->Location = System::Drawing::Point(3, 70);
 			this->label5->Name = L"label5";
 			this->label5->Padding = System::Windows::Forms::Padding(0, 5, 0, 0);
 			this->label5->Size = System::Drawing::Size(43, 18);
@@ -505,7 +543,7 @@ namespace FinalAppLidar {
 			// 
 			// Maximo
 			// 
-			this->Maximo->Location = System::Drawing::Point(52, 58);
+			this->Maximo->Location = System::Drawing::Point(52, 73);
 			this->Maximo->Name = L"Maximo";
 			this->Maximo->Size = System::Drawing::Size(119, 20);
 			this->Maximo->TabIndex = 6;
@@ -514,7 +552,7 @@ namespace FinalAppLidar {
 			// label6
 			// 
 			this->label6->AutoSize = true;
-			this->label6->Location = System::Drawing::Point(3, 81);
+			this->label6->Location = System::Drawing::Point(3, 96);
 			this->label6->Name = L"label6";
 			this->label6->Padding = System::Windows::Forms::Padding(0, 5, 0, 0);
 			this->label6->Size = System::Drawing::Size(14, 18);
@@ -523,7 +561,7 @@ namespace FinalAppLidar {
 			// 
 			// textBox5
 			// 
-			this->textBox5->Location = System::Drawing::Point(23, 84);
+			this->textBox5->Location = System::Drawing::Point(23, 99);
 			this->textBox5->Name = L"textBox5";
 			this->textBox5->Size = System::Drawing::Size(55, 20);
 			this->textBox5->TabIndex = 8;
@@ -532,7 +570,7 @@ namespace FinalAppLidar {
 			// label7
 			// 
 			this->label7->AutoSize = true;
-			this->label7->Location = System::Drawing::Point(84, 81);
+			this->label7->Location = System::Drawing::Point(84, 96);
 			this->label7->Name = L"label7";
 			this->label7->Padding = System::Windows::Forms::Padding(0, 5, 0, 0);
 			this->label7->Size = System::Drawing::Size(15, 18);
@@ -541,7 +579,7 @@ namespace FinalAppLidar {
 			// 
 			// textBox6
 			// 
-			this->textBox6->Location = System::Drawing::Point(105, 84);
+			this->textBox6->Location = System::Drawing::Point(105, 99);
 			this->textBox6->Name = L"textBox6";
 			this->textBox6->Size = System::Drawing::Size(55, 20);
 			this->textBox6->TabIndex = 10;
@@ -550,7 +588,7 @@ namespace FinalAppLidar {
 			// label8
 			// 
 			this->label8->AutoSize = true;
-			this->label8->Location = System::Drawing::Point(3, 107);
+			this->label8->Location = System::Drawing::Point(3, 122);
 			this->label8->Name = L"label8";
 			this->label8->Padding = System::Windows::Forms::Padding(0, 5, 0, 0);
 			this->label8->Size = System::Drawing::Size(14, 18);
@@ -559,7 +597,7 @@ namespace FinalAppLidar {
 			// 
 			// textBox7
 			// 
-			this->textBox7->Location = System::Drawing::Point(23, 110);
+			this->textBox7->Location = System::Drawing::Point(23, 125);
 			this->textBox7->Name = L"textBox7";
 			this->textBox7->Size = System::Drawing::Size(55, 20);
 			this->textBox7->TabIndex = 12;
@@ -568,7 +606,7 @@ namespace FinalAppLidar {
 			// label9
 			// 
 			this->label9->AutoSize = true;
-			this->label9->Location = System::Drawing::Point(84, 107);
+			this->label9->Location = System::Drawing::Point(84, 122);
 			this->label9->Name = L"label9";
 			this->label9->Padding = System::Windows::Forms::Padding(0, 5, 0, 0);
 			this->label9->Size = System::Drawing::Size(14, 18);
@@ -577,7 +615,7 @@ namespace FinalAppLidar {
 			// 
 			// textBox8
 			// 
-			this->textBox8->Location = System::Drawing::Point(104, 110);
+			this->textBox8->Location = System::Drawing::Point(104, 125);
 			this->textBox8->Name = L"textBox8";
 			this->textBox8->Size = System::Drawing::Size(56, 20);
 			this->textBox8->TabIndex = 14;
@@ -586,7 +624,7 @@ namespace FinalAppLidar {
 			// label10
 			// 
 			this->label10->AutoSize = true;
-			this->label10->Location = System::Drawing::Point(3, 133);
+			this->label10->Location = System::Drawing::Point(3, 148);
 			this->label10->Name = L"label10";
 			this->label10->Padding = System::Windows::Forms::Padding(0, 5, 0, 0);
 			this->label10->Size = System::Drawing::Size(14, 18);
@@ -595,7 +633,7 @@ namespace FinalAppLidar {
 			// 
 			// textBox9
 			// 
-			this->textBox9->Location = System::Drawing::Point(23, 136);
+			this->textBox9->Location = System::Drawing::Point(23, 151);
 			this->textBox9->Name = L"textBox9";
 			this->textBox9->Size = System::Drawing::Size(55, 20);
 			this->textBox9->TabIndex = 16;
@@ -603,7 +641,7 @@ namespace FinalAppLidar {
 			// 
 			// label11
 			// 
-			this->label11->Location = System::Drawing::Point(84, 133);
+			this->label11->Location = System::Drawing::Point(84, 148);
 			this->label11->Name = L"label11";
 			this->label11->Padding = System::Windows::Forms::Padding(0, 5, 0, 0);
 			this->label11->Size = System::Drawing::Size(14, 18);
@@ -612,7 +650,7 @@ namespace FinalAppLidar {
 			// 
 			// textBox10
 			// 
-			this->textBox10->Location = System::Drawing::Point(104, 136);
+			this->textBox10->Location = System::Drawing::Point(104, 151);
 			this->textBox10->Name = L"textBox10";
 			this->textBox10->Size = System::Drawing::Size(56, 20);
 			this->textBox10->TabIndex = 18;
@@ -624,7 +662,7 @@ namespace FinalAppLidar {
 			this->groupBox1->Dock = System::Windows::Forms::DockStyle::Top;
 			this->groupBox1->Location = System::Drawing::Point(3, 3);
 			this->groupBox1->Name = L"groupBox1";
-			this->groupBox1->Size = System::Drawing::Size(186, 107);
+			this->groupBox1->Size = System::Drawing::Size(186, 117);
 			this->groupBox1->TabIndex = 0;
 			this->groupBox1->TabStop = false;
 			this->groupBox1->Text = L"Conexión";
@@ -635,11 +673,11 @@ namespace FinalAppLidar {
 			this->flowLayoutPanel1->Controls->Add(this->textBox1);
 			this->flowLayoutPanel1->Controls->Add(this->label2);
 			this->flowLayoutPanel1->Controls->Add(this->textBox2);
-			this->flowLayoutPanel1->Controls->Add(this->button1);
+			this->flowLayoutPanel1->Controls->Add(this->tableLayoutPanel1);
 			this->flowLayoutPanel1->Dock = System::Windows::Forms::DockStyle::Fill;
 			this->flowLayoutPanel1->Location = System::Drawing::Point(3, 16);
 			this->flowLayoutPanel1->Name = L"flowLayoutPanel1";
-			this->flowLayoutPanel1->Size = System::Drawing::Size(180, 88);
+			this->flowLayoutPanel1->Size = System::Drawing::Size(180, 98);
 			this->flowLayoutPanel1->TabIndex = 0;
 			// 
 			// label1
@@ -658,7 +696,7 @@ namespace FinalAppLidar {
 			this->textBox1->Name = L"textBox1";
 			this->textBox1->Size = System::Drawing::Size(127, 20);
 			this->textBox1->TabIndex = 1;
-			this->textBox1->Text = L"192.168.1.201";
+			this->textBox1->Text = L"192.168.0.201";
 			// 
 			// label2
 			// 
@@ -678,14 +716,36 @@ namespace FinalAppLidar {
 			this->textBox2->TabIndex = 3;
 			this->textBox2->Text = L"2368";
 			// 
+			// tableLayoutPanel1
+			// 
+			this->tableLayoutPanel1->ColumnCount = 3;
+			this->tableLayoutPanel1->ColumnStyles->Add((gcnew System::Windows::Forms::ColumnStyle(System::Windows::Forms::SizeType::Percent,
+				25)));
+			this->tableLayoutPanel1->ColumnStyles->Add((gcnew System::Windows::Forms::ColumnStyle(System::Windows::Forms::SizeType::Percent,
+				50)));
+			this->tableLayoutPanel1->ColumnStyles->Add((gcnew System::Windows::Forms::ColumnStyle(System::Windows::Forms::SizeType::Percent,
+				25)));
+			this->tableLayoutPanel1->Controls->Add(this->button1, 1, 0);
+			this->tableLayoutPanel1->Location = System::Drawing::Point(3, 55);
+			this->tableLayoutPanel1->Name = L"tableLayoutPanel1";
+			this->tableLayoutPanel1->RowCount = 1;
+			this->tableLayoutPanel1->RowStyles->Add((gcnew System::Windows::Forms::RowStyle(System::Windows::Forms::SizeType::Percent, 100)));
+			this->tableLayoutPanel1->Size = System::Drawing::Size(174, 40);
+			this->tableLayoutPanel1->TabIndex = 4;
+			// 
 			// button1
 			// 
-			this->button1->Location = System::Drawing::Point(3, 55);
+			this->button1->BackgroundImageLayout = System::Windows::Forms::ImageLayout::Center;
+			this->button1->Dock = System::Windows::Forms::DockStyle::Fill;
+			this->button1->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
+			this->button1->ForeColor = System::Drawing::Color::Transparent;
+			this->button1->ImageIndex = 1;
+			this->button1->ImageList = this->imageList1;
+			this->button1->Location = System::Drawing::Point(46, 3);
 			this->button1->Name = L"button1";
-			this->button1->Size = System::Drawing::Size(174, 23);
+			this->button1->Size = System::Drawing::Size(81, 34);
 			this->button1->TabIndex = 4;
-			this->button1->Text = L"Conectar";
-			this->button1->UseVisualStyleBackColor = true;
+			this->button1->UseVisualStyleBackColor = false;
 			this->button1->Click += gcnew System::EventHandler(this, &Main::button1_Click);
 			// 
 			// tabPage2
@@ -721,6 +781,20 @@ namespace FinalAppLidar {
 			this->timer1->Enabled = true;
 			this->timer1->Tick += gcnew System::EventHandler(this, &Main::timer1_Tick);
 			// 
+			// timer2
+			// 
+			this->timer2->Tick += gcnew System::EventHandler(this, &Main::timer2_Tick);
+			// 
+			// label3
+			// 
+			this->label3->AutoSize = true;
+			this->label3->Location = System::Drawing::Point(3, 44);
+			this->label3->Name = L"label3";
+			this->label3->Padding = System::Windows::Forms::Padding(0, 5, 0, 0);
+			this->label3->Size = System::Drawing::Size(42, 18);
+			this->label3->TabIndex = 3;
+			this->label3->Text = L"Mínimo";
+			// 
 			// Main
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
@@ -754,6 +828,7 @@ namespace FinalAppLidar {
 			this->groupBox1->ResumeLayout(false);
 			this->flowLayoutPanel1->ResumeLayout(false);
 			this->flowLayoutPanel1->PerformLayout();
+			this->tableLayoutPanel1->ResumeLayout(false);
 			this->ResumeLayout(false);
 			this->PerformLayout();
 
@@ -770,8 +845,7 @@ namespace FinalAppLidar {
 			Controlador->ArrayDataReader[PCALIBRATE_R] = Convert::ToDouble(textBox6->Text);
 			Controlador->ArrayDataReader[PCALIBRATE_P] = Convert::ToDouble(textBox8->Text);
 			Controlador->ArrayDataReader[PCALIBRATE_W] = Convert::ToDouble(textBox10->Text);
-
-			ActivarLector->BackColor = System::Drawing::Color::PaleGreen;
+			
 			if (!Iniciado) {
 				Controlador->Iniciar();
 				Iniciado = true;
@@ -783,9 +857,10 @@ namespace FinalAppLidar {
 			groupBox3->Enabled = false;
 			groupBox4->Enabled = false;
 			groupBox5->Enabled = false;
+			ActivarLector->ImageIndex = 3;
 		}
 		else {
-			ActivarLector->BackColor = System::Drawing::Color::IndianRed;
+			ActivarLector->ImageIndex = 2;
 			groupBox3->Enabled = true;
 			groupBox4->Enabled = true;
 			groupBox5->Enabled = true;
@@ -796,11 +871,19 @@ namespace FinalAppLidar {
 	}
 	private: System::Void ActivarLogs_CheckedChanged(System::Object^  sender, System::EventArgs^  e) {
 		if (ActivarLogs->Checked) {
-			ActivarLogs->BackColor = System::Drawing::Color::PaleGreen;
-			Controlador->Flags[FlagLogOn] = true;
+			ActivarLogs->ImageIndex = 5;
+			folderBrowserDialog1->ShowDialog();
+			if (folderBrowserDialog1->SelectedPath != "") {
+				Controlador->ArrayDataReader[Ppath] = folderBrowserDialog1->SelectedPath;
+				Controlador->Flags[FlagLogOn] = true;
+			}
+			else {
+				ActivarLogs->Checked = false;
+				ActivarLogs->ImageIndex = 4;
+			}
 		}
 		else {
-			ActivarLogs->BackColor = System::Drawing::Color::IndianRed;
+			ActivarLogs->ImageIndex = 4;
 			Controlador->Flags[FlagLogOn] = false;
 		}
 		//TODO: MANDAR A CONTROL //TODO: MANDAR A CONTROL 
@@ -837,32 +920,43 @@ namespace FinalAppLidar {
 	}
 
 	private: System::Void button2_Click(System::Object^  sender, System::EventArgs^  e) {
-		System::Windows::Forms::DialogResult result = folderBrowserDialog1->ShowDialog();
+		folderBrowserDialog1->ShowDialog();
 		Controlador->ArrayDataReader[Ppath] = folderBrowserDialog1->SelectedPath;
 	}
 	private: System::Void button1_Click(System::Object^  sender, System::EventArgs^  e) {
 		try
 		{
-			IPAddress^ lidarIP = IPAddress::Parse(textBox1->Text);
-			IPEndPoint^ Connect = gcnew IPEndPoint(IPAddress::Any, Convert::ToInt32(textBox2->Text));//0xC901A8C0   IPAddress::Any
-			Controlador->ArrayDataReader[Ip] = Connect;
-			UdpClient^ Client = gcnew UdpClient(Connect);
-			if (true) {//Client->Available > 0
-				button1->BackColor = System::Drawing::Color::PaleGreen;
-				groupBox5->Visible = true;
-				groupBox4->Visible = true;
-				groupBox3->Visible = true;
-				groupBox2->Visible = true;
+			if (button1->ImageIndex == 1) {
+				IPAddress^ lidarIP = IPAddress::Parse(textBox1->Text);
+				IPEndPoint^ Connect = gcnew IPEndPoint(IPAddress::Any, Convert::ToInt32(textBox2->Text));//0xC901A8C0   IPAddress::Any
+				Controlador->ArrayDataReader[Ip] = Connect;
+				UdpClient^ Client = gcnew UdpClient(Connect);
+				if (true) {//Client->Available > 0
+					groupBox5->Visible = true;
+					groupBox4->Visible = true;
+					groupBox3->Visible = true;
+					groupBox2->Visible = true;
+					button1->ImageIndex = 0;
+				}
+				else {
+					MessageBox::Show("Error al conectar con el laser", "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
+				}
+				Client->Close();
+				delete Client;
 			}
 			else {
-				button1->BackColor = System::Drawing::Color::IndianRed;
+				button1->ImageIndex = 1;
+				groupBox5->Visible = false;
+				groupBox4->Visible = false;
+				groupBox3->Visible = false;
+				groupBox2->Visible = false;
+				Controlador->Parar();
 			}
-			Client->Close();
-			delete Client;
 		}
 		catch (Exception^ e)
 		{
 			System::Windows::Forms::MessageBox::Show(e->ToString());
+			MessageBox::Show("Error en el proceso de conexión:\r\n"+ e->ToString(), "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
 		}
 
 	}
@@ -889,5 +983,10 @@ namespace FinalAppLidar {
 			Controlador->EscribirInforme();
 		}
 	}
+
+	private: System::Void timer2_Tick(System::Object^  sender, System::EventArgs^  e) {
+		toolStripLabel1->Text = "12";
+	}
+
 	};
 }
