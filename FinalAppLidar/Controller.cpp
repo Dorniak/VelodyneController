@@ -67,12 +67,13 @@ void Controller::Iniciar()
 
 void Controller::IniciarThreads()
 {
+	pin_ptr<String^> pointertoInforme = &Informe;
 	Flags[FlagPausa] = false;
 	if (FlagOpenGlOn) {
-		Reader->ReadData(Puntos, ArrayDataReader, Flags, Threads, Dibujador);
+		Reader->ReadData(Puntos, ArrayDataReader, Flags, Threads, pointertoInforme, Dibujador);
 	}
-	else Reader->ReadData(Puntos, ArrayDataReader, Flags, Threads);
-	pin_ptr<String^> pointertoInforme = &Informe;
+	else Reader->ReadData(Puntos, ArrayDataReader, Flags, Threads, pointertoInforme);
+	
 	if (Flags[FlagAnalisysOn]) {
 		if (FlagOpenGlOn) {
 			Analisys->Analisys(Puntos, Obstaculos, ArrayDataAnalisys, Conclusiones, Flags, Threads, pointertoInforme, Dibujador);

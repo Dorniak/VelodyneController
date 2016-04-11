@@ -38,10 +38,11 @@ DataReader::~DataReader()
 /// ClientLIDAR elimina la cabecera de 42 bytes </para>
 /// </summary>
 
-void DataReader::ReadData(List<Punto3D^>^ puntosController, cli::array<Object^>^ ParamReader, cli::array<bool>^ Flags, cli::array<Thread^>^ Threads, OpenGl^ Dibujador)
+void DataReader::ReadData(List<Punto3D^>^ puntosController, cli::array<Object^>^ ParamReader, cli::array<bool>^ Flags, cli::array<Thread^>^ Threads, String^* Informe, OpenGl^ Dibujador)
 {
 	try
 	{
+		this->Informe = Informe;
 		this->Threads = Threads;
 		this->Flags = Flags;
 		ArrayDataReader = ParamReader;
@@ -58,10 +59,11 @@ void DataReader::ReadData(List<Punto3D^>^ puntosController, cli::array<Object^>^
 		System::Windows::Forms::MessageBox::Show(e->ToString());
 	}
 }
-void DataReader::ReadData(List<Punto3D^>^ puntosController, cli::array<Object^>^ ParamReader, cli::array<bool>^ Flags, cli::array<Thread^>^ Threads)
+void DataReader::ReadData(List<Punto3D^>^ puntosController, cli::array<Object^>^ ParamReader, cli::array<bool>^ Flags, cli::array<Thread^>^ Threads, String^* Informe)
 {
 	try
 	{
+		this->Informe = Informe;
 		this->Threads = Threads;
 		this->Flags = Flags;
 		ArrayDataReader = ParamReader;

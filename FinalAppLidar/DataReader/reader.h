@@ -12,8 +12,8 @@ public:
 	DataReader(IPEndPoint^ LaserIpEndPoint);
 	~DataReader();
 
-	void ReadData(List<Punto3D^>^ puntosController, cli::array<Object^>^ ParamReader, cli::array<bool>^ Flags, cli::array<Thread^>^ Threads, OpenGl^ Dibujador);
-	void ReadData(List<Punto3D^>^ puntosController, cli::array<Object^>^ ParamReader, cli::array<bool>^ Flags, cli::array<Thread^>^ Threads);
+	void ReadData(List<Punto3D^>^ puntosController, cli::array<Object^>^ ParamReader, cli::array<bool>^ Flags, cli::array<Thread^>^ Threads, String^* Informe, OpenGl^ Dibujador);
+	void ReadData(List<Punto3D^>^ puntosController, cli::array<Object^>^ ParamReader, cli::array<bool>^ Flags, cli::array<Thread^>^ Threads, String^* Informe);
 	void ReadDataThread();
 	void Kill();
 
@@ -27,6 +27,7 @@ public:
 
 
 private:
+	String^* Informe;
 	OpenGl^ Dibujador;
 	void copiarPuntos();
 
