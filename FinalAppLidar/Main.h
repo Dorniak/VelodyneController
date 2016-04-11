@@ -120,6 +120,7 @@ namespace FinalAppLidar {
 	private: System::Windows::Forms::ImageList^  imageList1;
 private: System::Windows::Forms::TableLayoutPanel^  tableLayoutPanel1;
 private: System::Windows::Forms::Label^  label3;
+private: System::Windows::Forms::Label^  label14;
 
 
 
@@ -151,10 +152,11 @@ private: System::Windows::Forms::Label^  label3;
 			this->toolStripLabel5 = (gcnew System::Windows::Forms::ToolStripLabel());
 			this->tabControl1 = (gcnew System::Windows::Forms::TabControl());
 			this->tabPage1 = (gcnew System::Windows::Forms::TabPage());
+			this->button3 = (gcnew System::Windows::Forms::Button());
+			this->imageList1 = (gcnew System::Windows::Forms::ImageList(this->components));
 			this->groupBox5 = (gcnew System::Windows::Forms::GroupBox());
 			this->flowLayoutPanel5 = (gcnew System::Windows::Forms::FlowLayoutPanel());
 			this->ActivarOpenGl = (gcnew System::Windows::Forms::CheckBox());
-			this->imageList1 = (gcnew System::Windows::Forms::ImageList(this->components));
 			this->groupBox4 = (gcnew System::Windows::Forms::GroupBox());
 			this->flowLayoutPanel4 = (gcnew System::Windows::Forms::FlowLayoutPanel());
 			this->ActivarGPS = (gcnew System::Windows::Forms::CheckBox());
@@ -197,9 +199,9 @@ private: System::Windows::Forms::Label^  label3;
 			this->tabPage2 = (gcnew System::Windows::Forms::TabPage());
 			this->folderBrowserDialog1 = (gcnew System::Windows::Forms::FolderBrowserDialog());
 			this->Consola = (gcnew System::Windows::Forms::TextBox());
-			this->button3 = (gcnew System::Windows::Forms::Button());
 			this->timer1 = (gcnew System::Windows::Forms::Timer(this->components));
 			this->timer2 = (gcnew System::Windows::Forms::Timer(this->components));
+			this->label14 = (gcnew System::Windows::Forms::Label());
 			this->toolStrip1->SuspendLayout();
 			this->tabControl1->SuspendLayout();
 			this->tabPage1->SuspendLayout();
@@ -224,9 +226,9 @@ private: System::Windows::Forms::Label^  label3;
 				this->toolStripLabel1,
 					this->toolStripLabel2, this->toolStripLabel3, this->toolStripLabel4, this->toolStripLabel5
 			});
-			this->toolStrip1->Location = System::Drawing::Point(0, 595);
+			this->toolStrip1->Location = System::Drawing::Point(0, 764);
 			this->toolStrip1->Name = L"toolStrip1";
-			this->toolStrip1->Size = System::Drawing::Size(1131, 25);
+			this->toolStrip1->Size = System::Drawing::Size(1222, 25);
 			this->toolStrip1->TabIndex = 1;
 			this->toolStrip1->Text = L"toolStrip1";
 			// 
@@ -268,11 +270,13 @@ private: System::Windows::Forms::Label^  label3;
 			this->tabControl1->Location = System::Drawing::Point(0, 0);
 			this->tabControl1->Name = L"tabControl1";
 			this->tabControl1->SelectedIndex = 0;
-			this->tabControl1->Size = System::Drawing::Size(200, 595);
+			this->tabControl1->Size = System::Drawing::Size(200, 764);
 			this->tabControl1->TabIndex = 2;
 			// 
 			// tabPage1
 			// 
+			this->tabPage1->Controls->Add(this->label14);
+			this->tabPage1->Controls->Add(this->button3);
 			this->tabPage1->Controls->Add(this->groupBox5);
 			this->tabPage1->Controls->Add(this->groupBox4);
 			this->tabPage1->Controls->Add(this->groupBox3);
@@ -281,10 +285,40 @@ private: System::Windows::Forms::Label^  label3;
 			this->tabPage1->Location = System::Drawing::Point(4, 22);
 			this->tabPage1->Name = L"tabPage1";
 			this->tabPage1->Padding = System::Windows::Forms::Padding(3);
-			this->tabPage1->Size = System::Drawing::Size(192, 569);
+			this->tabPage1->Size = System::Drawing::Size(192, 738);
 			this->tabPage1->TabIndex = 0;
 			this->tabPage1->Text = L"Lidar";
 			this->tabPage1->UseVisualStyleBackColor = true;
+			// 
+			// button3
+			// 
+			this->button3->BackColor = System::Drawing::Color::Transparent;
+			this->button3->Dock = System::Windows::Forms::DockStyle::Top;
+			this->button3->FlatAppearance->BorderSize = 0;
+			this->button3->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
+			this->button3->ImageIndex = 9;
+			this->button3->ImageList = this->imageList1;
+			this->button3->Location = System::Drawing::Point(3, 666);
+			this->button3->Name = L"button3";
+			this->button3->Size = System::Drawing::Size(186, 40);
+			this->button3->TabIndex = 4;
+			this->button3->UseVisualStyleBackColor = false;
+			this->button3->Click += gcnew System::EventHandler(this, &Main::button3_Click);
+			// 
+			// imageList1
+			// 
+			this->imageList1->ImageStream = (cli::safe_cast<System::Windows::Forms::ImageListStreamer^>(resources->GetObject(L"imageList1.ImageStream")));
+			this->imageList1->TransparentColor = System::Drawing::Color::Transparent;
+			this->imageList1->Images->SetKeyName(0, L"conenct.png");
+			this->imageList1->Images->SetKeyName(1, L"disconenct.png");
+			this->imageList1->Images->SetKeyName(2, L"noun_419262_cc.png");
+			this->imageList1->Images->SetKeyName(3, L"noun_122890_cc.png");
+			this->imageList1->Images->SetKeyName(4, L"noun_111371_cc.png");
+			this->imageList1->Images->SetKeyName(5, L"fhfg.png");
+			this->imageList1->Images->SetKeyName(6, L"noun_216295_cc.png");
+			this->imageList1->Images->SetKeyName(7, L"noun_216296_cc.png");
+			this->imageList1->Images->SetKeyName(8, L"noun_18974_cc.png");
+			this->imageList1->Images->SetKeyName(9, L"noun_7991_cc.png");
 			// 
 			// groupBox5
 			// 
@@ -321,20 +355,6 @@ private: System::Windows::Forms::Label^  label3;
 			this->ActivarOpenGl->TabIndex = 1;
 			this->ActivarOpenGl->UseVisualStyleBackColor = false;
 			this->ActivarOpenGl->CheckedChanged += gcnew System::EventHandler(this, &Main::ActivarOpenGl_CheckedChanged);
-			// 
-			// imageList1
-			// 
-			this->imageList1->ImageStream = (cli::safe_cast<System::Windows::Forms::ImageListStreamer^>(resources->GetObject(L"imageList1.ImageStream")));
-			this->imageList1->TransparentColor = System::Drawing::Color::Transparent;
-			this->imageList1->Images->SetKeyName(0, L"conenct.png");
-			this->imageList1->Images->SetKeyName(1, L"disconenct.png");
-			this->imageList1->Images->SetKeyName(2, L"noun_419262_cc.png");
-			this->imageList1->Images->SetKeyName(3, L"noun_122890_cc.png");
-			this->imageList1->Images->SetKeyName(4, L"noun_81754_cc.png");
-			this->imageList1->Images->SetKeyName(5, L"noun_81753_cc.png");
-			this->imageList1->Images->SetKeyName(6, L"noun_216295_cc.png");
-			this->imageList1->Images->SetKeyName(7, L"noun_216296_cc.png");
-			this->imageList1->Images->SetKeyName(8, L"noun_18974_cc.png");
 			// 
 			// groupBox4
 			// 
@@ -774,28 +794,18 @@ private: System::Windows::Forms::Label^  label3;
 			this->tabPage2->Location = System::Drawing::Point(4, 22);
 			this->tabPage2->Name = L"tabPage2";
 			this->tabPage2->Padding = System::Windows::Forms::Padding(3);
-			this->tabPage2->Size = System::Drawing::Size(192, 675);
+			this->tabPage2->Size = System::Drawing::Size(192, 738);
 			this->tabPage2->TabIndex = 1;
 			this->tabPage2->Text = L"Visor";
 			this->tabPage2->UseVisualStyleBackColor = true;
 			// 
 			// Consola
 			// 
-			this->Consola->Location = System::Drawing::Point(430, 64);
+			this->Consola->Location = System::Drawing::Point(218, 25);
 			this->Consola->Multiline = true;
 			this->Consola->Name = L"Consola";
-			this->Consola->Size = System::Drawing::Size(352, 235);
+			this->Consola->Size = System::Drawing::Size(373, 463);
 			this->Consola->TabIndex = 3;
-			// 
-			// button3
-			// 
-			this->button3->Location = System::Drawing::Point(299, 66);
-			this->button3->Name = L"button3";
-			this->button3->Size = System::Drawing::Size(75, 23);
-			this->button3->TabIndex = 4;
-			this->button3->Text = L"button3";
-			this->button3->UseVisualStyleBackColor = true;
-			this->button3->Click += gcnew System::EventHandler(this, &Main::button3_Click);
 			// 
 			// timer1
 			// 
@@ -806,12 +816,22 @@ private: System::Windows::Forms::Label^  label3;
 			// 
 			this->timer2->Tick += gcnew System::EventHandler(this, &Main::timer2_Tick);
 			// 
+			// label14
+			// 
+			this->label14->AutoSize = true;
+			this->label14->Dock = System::Windows::Forms::DockStyle::Top;
+			this->label14->Location = System::Drawing::Point(3, 706);
+			this->label14->Name = L"label14";
+			this->label14->Padding = System::Windows::Forms::Padding(35, 0, 0, 0);
+			this->label14->Size = System::Drawing::Size(152, 13);
+			this->label14->TabIndex = 4;
+			this->label14->Text = L"Procesado de Archivos";
+			// 
 			// Main
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
-			this->ClientSize = System::Drawing::Size(1131, 620);
-			this->Controls->Add(this->button3);
+			this->ClientSize = System::Drawing::Size(1222, 789);
 			this->Controls->Add(this->Consola);
 			this->Controls->Add(this->tabControl1);
 			this->Controls->Add(this->toolStrip1);
@@ -823,6 +843,7 @@ private: System::Windows::Forms::Label^  label3;
 			this->toolStrip1->PerformLayout();
 			this->tabControl1->ResumeLayout(false);
 			this->tabPage1->ResumeLayout(false);
+			this->tabPage1->PerformLayout();
 			this->groupBox5->ResumeLayout(false);
 			this->flowLayoutPanel5->ResumeLayout(false);
 			this->flowLayoutPanel5->PerformLayout();
@@ -943,6 +964,7 @@ private: System::Windows::Forms::Label^  label3;
 				Controlador->ArrayDataReader[Ip] = Connect;
 				UdpClient^ Client = gcnew UdpClient(Connect);
 				if (true) {//Client->Available > 0
+					button3->Visible = false;
 					groupBox5->Visible = true;
 					groupBox4->Visible = true;
 					groupBox3->Visible = true;
@@ -956,6 +978,7 @@ private: System::Windows::Forms::Label^  label3;
 				delete Client;
 			}
 			else {
+				button3->Visible = true;
 				button1->ImageIndex = 1;
 				groupBox5->Visible = false;
 				groupBox4->Visible = false;
@@ -996,6 +1019,8 @@ private: System::Windows::Forms::Label^  label3;
 	}
 
 	private: System::Void timer2_Tick(System::Object^  sender, System::EventArgs^  e) {
+
+		//PARA CARGAR EL ESTADO DE TODO EN LA INTERFAZ
 		toolStripLabel1->Text = "12";
 	}
 
