@@ -122,6 +122,7 @@ private: System::Windows::Forms::TableLayoutPanel^  tableLayoutPanel1;
 private: System::Windows::Forms::Label^  label3;
 
 
+
 	private: System::ComponentModel::IContainer^  components;
 
 
@@ -153,6 +154,7 @@ private: System::Windows::Forms::Label^  label3;
 			this->groupBox5 = (gcnew System::Windows::Forms::GroupBox());
 			this->flowLayoutPanel5 = (gcnew System::Windows::Forms::FlowLayoutPanel());
 			this->ActivarOpenGl = (gcnew System::Windows::Forms::CheckBox());
+			this->imageList1 = (gcnew System::Windows::Forms::ImageList(this->components));
 			this->groupBox4 = (gcnew System::Windows::Forms::GroupBox());
 			this->flowLayoutPanel4 = (gcnew System::Windows::Forms::FlowLayoutPanel());
 			this->ActivarGPS = (gcnew System::Windows::Forms::CheckBox());
@@ -167,8 +169,8 @@ private: System::Windows::Forms::Label^  label3;
 			this->groupBox2 = (gcnew System::Windows::Forms::GroupBox());
 			this->flowLayoutPanel2 = (gcnew System::Windows::Forms::FlowLayoutPanel());
 			this->ActivarLector = (gcnew System::Windows::Forms::CheckBox());
-			this->imageList1 = (gcnew System::Windows::Forms::ImageList(this->components));
 			this->ActivarLogs = (gcnew System::Windows::Forms::CheckBox());
+			this->label3 = (gcnew System::Windows::Forms::Label());
 			this->Minimo = (gcnew System::Windows::Forms::TextBox());
 			this->label5 = (gcnew System::Windows::Forms::Label());
 			this->Maximo = (gcnew System::Windows::Forms::TextBox());
@@ -198,7 +200,6 @@ private: System::Windows::Forms::Label^  label3;
 			this->button3 = (gcnew System::Windows::Forms::Button());
 			this->timer1 = (gcnew System::Windows::Forms::Timer(this->components));
 			this->timer2 = (gcnew System::Windows::Forms::Timer(this->components));
-			this->label3 = (gcnew System::Windows::Forms::Label());
 			this->toolStrip1->SuspendLayout();
 			this->tabControl1->SuspendLayout();
 			this->tabPage1->SuspendLayout();
@@ -223,9 +224,9 @@ private: System::Windows::Forms::Label^  label3;
 				this->toolStripLabel1,
 					this->toolStripLabel2, this->toolStripLabel3, this->toolStripLabel4, this->toolStripLabel5
 			});
-			this->toolStrip1->Location = System::Drawing::Point(0, 701);
+			this->toolStrip1->Location = System::Drawing::Point(0, 595);
 			this->toolStrip1->Name = L"toolStrip1";
-			this->toolStrip1->Size = System::Drawing::Size(1294, 25);
+			this->toolStrip1->Size = System::Drawing::Size(1131, 25);
 			this->toolStrip1->TabIndex = 1;
 			this->toolStrip1->Text = L"toolStrip1";
 			// 
@@ -267,7 +268,7 @@ private: System::Windows::Forms::Label^  label3;
 			this->tabControl1->Location = System::Drawing::Point(0, 0);
 			this->tabControl1->Name = L"tabControl1";
 			this->tabControl1->SelectedIndex = 0;
-			this->tabControl1->Size = System::Drawing::Size(200, 701);
+			this->tabControl1->Size = System::Drawing::Size(200, 595);
 			this->tabControl1->TabIndex = 2;
 			// 
 			// tabPage1
@@ -280,7 +281,7 @@ private: System::Windows::Forms::Label^  label3;
 			this->tabPage1->Location = System::Drawing::Point(4, 22);
 			this->tabPage1->Name = L"tabPage1";
 			this->tabPage1->Padding = System::Windows::Forms::Padding(3);
-			this->tabPage1->Size = System::Drawing::Size(192, 675);
+			this->tabPage1->Size = System::Drawing::Size(192, 569);
 			this->tabPage1->TabIndex = 0;
 			this->tabPage1->Text = L"Lidar";
 			this->tabPage1->UseVisualStyleBackColor = true;
@@ -289,7 +290,7 @@ private: System::Windows::Forms::Label^  label3;
 			// 
 			this->groupBox5->Controls->Add(this->flowLayoutPanel5);
 			this->groupBox5->Dock = System::Windows::Forms::DockStyle::Top;
-			this->groupBox5->Location = System::Drawing::Point(3, 553);
+			this->groupBox5->Location = System::Drawing::Point(3, 566);
 			this->groupBox5->Name = L"groupBox5";
 			this->groupBox5->Size = System::Drawing::Size(186, 100);
 			this->groupBox5->TabIndex = 4;
@@ -309,21 +310,37 @@ private: System::Windows::Forms::Label^  label3;
 			// 
 			this->ActivarOpenGl->Appearance = System::Windows::Forms::Appearance::Button;
 			this->ActivarOpenGl->AutoSize = true;
-			this->ActivarOpenGl->BackColor = System::Drawing::Color::IndianRed;
+			this->ActivarOpenGl->BackColor = System::Drawing::Color::Transparent;
+			this->ActivarOpenGl->FlatAppearance->BorderSize = 0;
 			this->ActivarOpenGl->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
+			this->ActivarOpenGl->ImageIndex = 7;
+			this->ActivarOpenGl->ImageList = this->imageList1;
 			this->ActivarOpenGl->Location = System::Drawing::Point(3, 3);
 			this->ActivarOpenGl->Name = L"ActivarOpenGl";
-			this->ActivarOpenGl->Size = System::Drawing::Size(50, 23);
+			this->ActivarOpenGl->Size = System::Drawing::Size(38, 38);
 			this->ActivarOpenGl->TabIndex = 1;
-			this->ActivarOpenGl->Text = L"Activar";
 			this->ActivarOpenGl->UseVisualStyleBackColor = false;
 			this->ActivarOpenGl->CheckedChanged += gcnew System::EventHandler(this, &Main::ActivarOpenGl_CheckedChanged);
+			// 
+			// imageList1
+			// 
+			this->imageList1->ImageStream = (cli::safe_cast<System::Windows::Forms::ImageListStreamer^>(resources->GetObject(L"imageList1.ImageStream")));
+			this->imageList1->TransparentColor = System::Drawing::Color::Transparent;
+			this->imageList1->Images->SetKeyName(0, L"conenct.png");
+			this->imageList1->Images->SetKeyName(1, L"disconenct.png");
+			this->imageList1->Images->SetKeyName(2, L"noun_419262_cc.png");
+			this->imageList1->Images->SetKeyName(3, L"noun_122890_cc.png");
+			this->imageList1->Images->SetKeyName(4, L"noun_81754_cc.png");
+			this->imageList1->Images->SetKeyName(5, L"noun_81753_cc.png");
+			this->imageList1->Images->SetKeyName(6, L"noun_216295_cc.png");
+			this->imageList1->Images->SetKeyName(7, L"noun_216296_cc.png");
+			this->imageList1->Images->SetKeyName(8, L"noun_18974_cc.png");
 			// 
 			// groupBox4
 			// 
 			this->groupBox4->Controls->Add(this->flowLayoutPanel4);
 			this->groupBox4->Dock = System::Windows::Forms::DockStyle::Top;
-			this->groupBox4->Location = System::Drawing::Point(3, 453);
+			this->groupBox4->Location = System::Drawing::Point(3, 466);
 			this->groupBox4->Name = L"groupBox4";
 			this->groupBox4->Size = System::Drawing::Size(186, 100);
 			this->groupBox4->TabIndex = 3;
@@ -343,13 +360,15 @@ private: System::Windows::Forms::Label^  label3;
 			// 
 			this->ActivarGPS->Appearance = System::Windows::Forms::Appearance::Button;
 			this->ActivarGPS->AutoSize = true;
-			this->ActivarGPS->BackColor = System::Drawing::Color::IndianRed;
+			this->ActivarGPS->BackColor = System::Drawing::Color::Transparent;
+			this->ActivarGPS->FlatAppearance->BorderSize = 0;
 			this->ActivarGPS->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
+			this->ActivarGPS->ImageIndex = 7;
+			this->ActivarGPS->ImageList = this->imageList1;
 			this->ActivarGPS->Location = System::Drawing::Point(3, 3);
 			this->ActivarGPS->Name = L"ActivarGPS";
-			this->ActivarGPS->Size = System::Drawing::Size(50, 23);
+			this->ActivarGPS->Size = System::Drawing::Size(38, 38);
 			this->ActivarGPS->TabIndex = 1;
-			this->ActivarGPS->Text = L"Activar";
 			this->ActivarGPS->UseVisualStyleBackColor = false;
 			this->ActivarGPS->CheckedChanged += gcnew System::EventHandler(this, &Main::ActivarGPS_CheckedChanged);
 			// 
@@ -359,7 +378,7 @@ private: System::Windows::Forms::Label^  label3;
 			this->groupBox3->Dock = System::Windows::Forms::DockStyle::Top;
 			this->groupBox3->Location = System::Drawing::Point(3, 317);
 			this->groupBox3->Name = L"groupBox3";
-			this->groupBox3->Size = System::Drawing::Size(186, 136);
+			this->groupBox3->Size = System::Drawing::Size(186, 149);
 			this->groupBox3->TabIndex = 2;
 			this->groupBox3->TabStop = false;
 			this->groupBox3->Text = L"Análisis";
@@ -375,36 +394,39 @@ private: System::Windows::Forms::Label^  label3;
 			this->flowLayoutPanel3->Dock = System::Windows::Forms::DockStyle::Fill;
 			this->flowLayoutPanel3->Location = System::Drawing::Point(3, 16);
 			this->flowLayoutPanel3->Name = L"flowLayoutPanel3";
-			this->flowLayoutPanel3->Size = System::Drawing::Size(180, 117);
+			this->flowLayoutPanel3->Size = System::Drawing::Size(180, 130);
 			this->flowLayoutPanel3->TabIndex = 0;
 			// 
 			// ActivarAnalisys
 			// 
 			this->ActivarAnalisys->Appearance = System::Windows::Forms::Appearance::Button;
 			this->ActivarAnalisys->AutoSize = true;
-			this->ActivarAnalisys->BackColor = System::Drawing::Color::IndianRed;
+			this->ActivarAnalisys->BackColor = System::Drawing::Color::Transparent;
+			this->ActivarAnalisys->FlatAppearance->BorderSize = 0;
 			this->ActivarAnalisys->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
+			this->ActivarAnalisys->ImageIndex = 7;
+			this->ActivarAnalisys->ImageList = this->imageList1;
 			this->ActivarAnalisys->Location = System::Drawing::Point(3, 3);
 			this->ActivarAnalisys->Name = L"ActivarAnalisys";
-			this->ActivarAnalisys->Size = System::Drawing::Size(50, 23);
+			this->ActivarAnalisys->Size = System::Drawing::Size(38, 38);
 			this->ActivarAnalisys->TabIndex = 1;
-			this->ActivarAnalisys->Text = L"Activar";
 			this->ActivarAnalisys->UseVisualStyleBackColor = false;
 			this->ActivarAnalisys->CheckedChanged += gcnew System::EventHandler(this, &Main::ActivarAnalisys_CheckedChanged);
 			// 
 			// label4
 			// 
 			this->label4->AutoSize = true;
-			this->label4->Location = System::Drawing::Point(59, 0);
+			this->label4->Location = System::Drawing::Point(47, 0);
 			this->label4->Name = L"label4";
-			this->label4->Padding = System::Windows::Forms::Padding(0, 8, 0, 0);
-			this->label4->Size = System::Drawing::Size(63, 21);
+			this->label4->Padding = System::Windows::Forms::Padding(0, 16, 0, 0);
+			this->label4->Size = System::Drawing::Size(63, 29);
 			this->label4->TabIndex = 3;
 			this->label4->Text = L"Frecuencia:";
 			// 
 			// textBox4
 			// 
-			this->textBox4->Location = System::Drawing::Point(128, 3);
+			this->textBox4->Location = System::Drawing::Point(116, 10);
+			this->textBox4->Margin = System::Windows::Forms::Padding(3, 10, 3, 3);
 			this->textBox4->Name = L"textBox4";
 			this->textBox4->Size = System::Drawing::Size(28, 20);
 			this->textBox4->TabIndex = 4;
@@ -412,7 +434,7 @@ private: System::Windows::Forms::Label^  label3;
 			// label12
 			// 
 			this->label12->AutoSize = true;
-			this->label12->Location = System::Drawing::Point(3, 29);
+			this->label12->Location = System::Drawing::Point(3, 44);
 			this->label12->Name = L"label12";
 			this->label12->Padding = System::Windows::Forms::Padding(0, 5, 0, 0);
 			this->label12->Size = System::Drawing::Size(57, 18);
@@ -422,7 +444,7 @@ private: System::Windows::Forms::Label^  label3;
 			// trackBar1
 			// 
 			this->trackBar1->BackColor = System::Drawing::SystemColors::ButtonHighlight;
-			this->trackBar1->Location = System::Drawing::Point(3, 50);
+			this->trackBar1->Location = System::Drawing::Point(3, 65);
 			this->trackBar1->Maximum = 100;
 			this->trackBar1->Name = L"trackBar1";
 			this->trackBar1->Size = System::Drawing::Size(174, 45);
@@ -434,7 +456,7 @@ private: System::Windows::Forms::Label^  label3;
 			// label13
 			// 
 			this->label13->AutoSize = true;
-			this->label13->Location = System::Drawing::Point(3, 98);
+			this->label13->Location = System::Drawing::Point(3, 113);
 			this->label13->Name = L"label13";
 			this->label13->Padding = System::Windows::Forms::Padding(10, 0, 0, 0);
 			this->label13->Size = System::Drawing::Size(40, 13);
@@ -495,17 +517,6 @@ private: System::Windows::Forms::Label^  label3;
 			this->ActivarLector->UseVisualStyleBackColor = false;
 			this->ActivarLector->CheckedChanged += gcnew System::EventHandler(this, &Main::ActivarLector_CheckedChanged);
 			// 
-			// imageList1
-			// 
-			this->imageList1->ImageStream = (cli::safe_cast<System::Windows::Forms::ImageListStreamer^>(resources->GetObject(L"imageList1.ImageStream")));
-			this->imageList1->TransparentColor = System::Drawing::Color::Transparent;
-			this->imageList1->Images->SetKeyName(0, L"conenct.png");
-			this->imageList1->Images->SetKeyName(1, L"disconenct.png");
-			this->imageList1->Images->SetKeyName(2, L"noun_419253_cc.png");
-			this->imageList1->Images->SetKeyName(3, L"noun_6503_cc.png");
-			this->imageList1->Images->SetKeyName(4, L"noun_81754_cc.png");
-			this->imageList1->Images->SetKeyName(5, L"noun_81753_cc.png");
-			// 
 			// ActivarLogs
 			// 
 			this->ActivarLogs->Appearance = System::Windows::Forms::Appearance::Button;
@@ -522,6 +533,16 @@ private: System::Windows::Forms::Label^  label3;
 			this->ActivarLogs->TabIndex = 1;
 			this->ActivarLogs->UseVisualStyleBackColor = false;
 			this->ActivarLogs->CheckedChanged += gcnew System::EventHandler(this, &Main::ActivarLogs_CheckedChanged);
+			// 
+			// label3
+			// 
+			this->label3->AutoSize = true;
+			this->label3->Location = System::Drawing::Point(3, 44);
+			this->label3->Name = L"label3";
+			this->label3->Padding = System::Windows::Forms::Padding(0, 5, 0, 0);
+			this->label3->Size = System::Drawing::Size(42, 18);
+			this->label3->TabIndex = 3;
+			this->label3->Text = L"Mínimo";
 			// 
 			// Minimo
 			// 
@@ -763,7 +784,7 @@ private: System::Windows::Forms::Label^  label3;
 			this->Consola->Location = System::Drawing::Point(430, 64);
 			this->Consola->Multiline = true;
 			this->Consola->Name = L"Consola";
-			this->Consola->Size = System::Drawing::Size(598, 235);
+			this->Consola->Size = System::Drawing::Size(352, 235);
 			this->Consola->TabIndex = 3;
 			// 
 			// button3
@@ -785,21 +806,11 @@ private: System::Windows::Forms::Label^  label3;
 			// 
 			this->timer2->Tick += gcnew System::EventHandler(this, &Main::timer2_Tick);
 			// 
-			// label3
-			// 
-			this->label3->AutoSize = true;
-			this->label3->Location = System::Drawing::Point(3, 44);
-			this->label3->Name = L"label3";
-			this->label3->Padding = System::Windows::Forms::Padding(0, 5, 0, 0);
-			this->label3->Size = System::Drawing::Size(42, 18);
-			this->label3->TabIndex = 3;
-			this->label3->Text = L"Mínimo";
-			// 
 			// Main
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
-			this->ClientSize = System::Drawing::Size(1294, 726);
+			this->ClientSize = System::Drawing::Size(1131, 620);
 			this->Controls->Add(this->button3);
 			this->Controls->Add(this->Consola);
 			this->Controls->Add(this->tabControl1);
@@ -890,31 +901,31 @@ private: System::Windows::Forms::Label^  label3;
 	}
 	private: System::Void ActivarGPS_CheckedChanged(System::Object^  sender, System::EventArgs^  e) {
 		if (ActivarGPS->Checked)
-			ActivarGPS->BackColor = System::Drawing::Color::PaleGreen;
+			ActivarGPS->ImageIndex = 6;
 		else
-			ActivarGPS->BackColor = System::Drawing::Color::IndianRed;
+			ActivarGPS->ImageIndex = 7;
 		//TODO: MANDAR A CONTROL 
 	}
 	private: System::Void ActivarAnalisys_CheckedChanged(System::Object^  sender, System::EventArgs^  e) {
 		if (ActivarAnalisys->Checked)
 		{
-			ActivarAnalisys->BackColor = System::Drawing::Color::PaleGreen;
+			ActivarAnalisys->ImageIndex = 6;
 			Controlador->Flags[FlagAnalisysOn] = true;
 		}
 		else
 		{
-			ActivarAnalisys->BackColor = System::Drawing::Color::IndianRed;
+			ActivarAnalisys->ImageIndex = 7;
 			Controlador->Flags[FlagAnalisysOn] = true;
 		}
 		//TODO: MANDAR A CONTROL 
 	}
 	private: System::Void ActivarOpenGl_CheckedChanged(System::Object^  sender, System::EventArgs^  e) {
 		if (ActivarOpenGl->Checked) {
-			ActivarOpenGl->BackColor = System::Drawing::Color::PaleGreen;
+			ActivarOpenGl->ImageIndex = 6;
 			Controlador->Flags[FlagOpenGlOn] = true;
 		}
 		else {
-			ActivarOpenGl->BackColor = System::Drawing::Color::IndianRed;
+			ActivarOpenGl->ImageIndex = 7;
 			Controlador->Flags[FlagOpenGlOn] = false;
 		}
 	}
