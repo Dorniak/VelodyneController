@@ -49,15 +49,16 @@ void DataAnalisys::Analisys(List<Punto3D^>^ puntosController, List<Obstaculo^>^ 
 //List<Punto3D^>^ matriz, double resolucionAngular,double Vcoche, double &consigna_velocidad, double &consigna_volante, double apertura
 void DataAnalisys::AnalisysThread()
 {
-	*Informe = "Iniciando Analisis";
-	System::Windows::Forms::MessageBox::Show("Prueba");
+	Informar("Iniciando Thread Analisis");
 	//En caso de que se desactive y se reactive despues hay que limpiar los objetos
 	ObstaculosvAnt->Clear();
 	while (Flags[FlagAnalisysOn] && !Flags[FlagWarning] && !Flags[FlagPausa])
 	{
+		Informar("Interior del while");
 		try
 		{
 			if (!Flags[FlagTratamiento]) {
+				Informar("Tratamiento");
 				//matriz = Controllerador->Puntos;  La matriz es siempre igual a la matriz de puntos
 				resolutionH = Convert::ToDouble(parametros[posResolucionH]);//Resolucion
 				resolutionV = Convert::ToDouble(parametros[posResolucionV]);//Resolucion
@@ -68,23 +69,32 @@ void DataAnalisys::AnalisysThread()
 				//Trabajo
 
 				if (VCOCHE > 5) {
+					Informar("Velocidad minima tratamiento");
 					if (!comprobarBloqueo(matriz))
 					{
-						*Informe += "[" + DateTime::Now.ToString("HH - mm - ss") + "] Inicio de la segmentacion\r\n";
+						Informar("No hay bloqueo");
+						Informar("Segmentacion");
 						Segmentacion(matriz, apertura);
-						*Informe += "[" + DateTime::Now.ToString("HH - mm - ss") + "] Fin de la segmentacion\r\n";
+						Informar("Fin Segmentacion");
 						//TODO::Identificar tipo de obstaculo
+						Informar("Eliminar obstaculos no validos");
 						EliminarObstaculos();
+						Informar("Preparar obstaculos");
 						prepararObstaculos();
+						Informar("Relacionar obstaculos");
 						RelacionarObstaculos();
 						//TODO::Calcular TTC y actualizar consignas
 					}
-					else consigna_velocidad = 0.0;
+					else {
+						Informar("Error VMT");
+						consigna_velocidad = 0.0;
+					}
 				}
 
 				//Fin tratamiento
 
 				//Copiar el vector de obstaculos obtenido en Controller y comprueba colisiones
+				Informar("Copiar Obstaculos");
 				copiarObstaculos();
 
 				//Actualizar consignas en el vector de conclusiones
@@ -107,16 +117,23 @@ void DataAnalisys::Kill()
 	thread_analysis->Abort();
 }
 
+void DataAnalisys::Informar(String ^ Entrada)
+{
+	*Informe += "																	[" + DateTime::Now.ToString("HH - mm - ss") + "]"+Entrada+"\r\n";
+}
+
 void DataAnalisys::copiarObstaculos()
 {
 	ObstaculosvAnt->Clear();
 	ObstaculosvAnt->AddRange(Obstaculos);
 	if (Flags[FlagOpenGlOn]) {
+		Informar("Obstaculos->OpenGl");
 		Dibujador->modificarObstaculos(ObstaculosvAnt);
 	}
 	//Controller de collision
 	if (Flags[FlagTratamiento] == 1) {
 		Flags[FlagWarning] = 1;
+		Informar("Error de Colision");
 		//mensaje pantalla
 	}
 	Flags[FlagTratamiento] = 1;

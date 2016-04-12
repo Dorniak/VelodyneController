@@ -18,6 +18,7 @@ public:
 	void Kill();
 
 private:
+	void Informar(String^ Entrada);
 	String^* Informe;
 	OpenGl^ Dibujador;
 	double tolerancia;

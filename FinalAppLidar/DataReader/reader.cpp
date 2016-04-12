@@ -307,6 +307,11 @@ cli::array<Double>^ DataReader::ExtractIntensities(cli::array<Byte>^ &ReceiveByt
 	return intensities;
 }
 
+void DataReader::Informar(String ^ Entrada)
+{
+	*Informe += "[" + DateTime::Now.ToString("HH - mm - ss") + "]" + Entrada + "\r\n";
+}
+
 void DataReader::copiarPuntos()
 {
 	puntosController->Clear();

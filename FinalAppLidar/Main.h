@@ -152,6 +152,7 @@ private: System::Windows::Forms::Label^  label14;
 			this->toolStripLabel5 = (gcnew System::Windows::Forms::ToolStripLabel());
 			this->tabControl1 = (gcnew System::Windows::Forms::TabControl());
 			this->tabPage1 = (gcnew System::Windows::Forms::TabPage());
+			this->label14 = (gcnew System::Windows::Forms::Label());
 			this->button3 = (gcnew System::Windows::Forms::Button());
 			this->imageList1 = (gcnew System::Windows::Forms::ImageList(this->components));
 			this->groupBox5 = (gcnew System::Windows::Forms::GroupBox());
@@ -201,7 +202,6 @@ private: System::Windows::Forms::Label^  label14;
 			this->Consola = (gcnew System::Windows::Forms::TextBox());
 			this->timer1 = (gcnew System::Windows::Forms::Timer(this->components));
 			this->timer2 = (gcnew System::Windows::Forms::Timer(this->components));
-			this->label14 = (gcnew System::Windows::Forms::Label());
 			this->toolStrip1->SuspendLayout();
 			this->tabControl1->SuspendLayout();
 			this->tabPage1->SuspendLayout();
@@ -226,7 +226,7 @@ private: System::Windows::Forms::Label^  label14;
 				this->toolStripLabel1,
 					this->toolStripLabel2, this->toolStripLabel3, this->toolStripLabel4, this->toolStripLabel5
 			});
-			this->toolStrip1->Location = System::Drawing::Point(0, 764);
+			this->toolStrip1->Location = System::Drawing::Point(0, 708);
 			this->toolStrip1->Name = L"toolStrip1";
 			this->toolStrip1->Size = System::Drawing::Size(1222, 25);
 			this->toolStrip1->TabIndex = 1;
@@ -270,7 +270,7 @@ private: System::Windows::Forms::Label^  label14;
 			this->tabControl1->Location = System::Drawing::Point(0, 0);
 			this->tabControl1->Name = L"tabControl1";
 			this->tabControl1->SelectedIndex = 0;
-			this->tabControl1->Size = System::Drawing::Size(200, 764);
+			this->tabControl1->Size = System::Drawing::Size(200, 708);
 			this->tabControl1->TabIndex = 2;
 			// 
 			// tabPage1
@@ -285,10 +285,21 @@ private: System::Windows::Forms::Label^  label14;
 			this->tabPage1->Location = System::Drawing::Point(4, 22);
 			this->tabPage1->Name = L"tabPage1";
 			this->tabPage1->Padding = System::Windows::Forms::Padding(3);
-			this->tabPage1->Size = System::Drawing::Size(192, 738);
+			this->tabPage1->Size = System::Drawing::Size(192, 682);
 			this->tabPage1->TabIndex = 0;
 			this->tabPage1->Text = L"Lidar";
 			this->tabPage1->UseVisualStyleBackColor = true;
+			// 
+			// label14
+			// 
+			this->label14->AutoSize = true;
+			this->label14->Dock = System::Windows::Forms::DockStyle::Top;
+			this->label14->Location = System::Drawing::Point(3, 706);
+			this->label14->Name = L"label14";
+			this->label14->Padding = System::Windows::Forms::Padding(35, 0, 0, 0);
+			this->label14->Size = System::Drawing::Size(152, 13);
+			this->label14->TabIndex = 4;
+			this->label14->Text = L"Procesado de Archivos";
 			// 
 			// button3
 			// 
@@ -804,7 +815,7 @@ private: System::Windows::Forms::Label^  label14;
 			this->Consola->Location = System::Drawing::Point(218, 25);
 			this->Consola->Multiline = true;
 			this->Consola->Name = L"Consola";
-			this->Consola->Size = System::Drawing::Size(373, 463);
+			this->Consola->Size = System::Drawing::Size(590, 405);
 			this->Consola->TabIndex = 3;
 			// 
 			// timer1
@@ -816,22 +827,11 @@ private: System::Windows::Forms::Label^  label14;
 			// 
 			this->timer2->Tick += gcnew System::EventHandler(this, &Main::timer2_Tick);
 			// 
-			// label14
-			// 
-			this->label14->AutoSize = true;
-			this->label14->Dock = System::Windows::Forms::DockStyle::Top;
-			this->label14->Location = System::Drawing::Point(3, 706);
-			this->label14->Name = L"label14";
-			this->label14->Padding = System::Windows::Forms::Padding(35, 0, 0, 0);
-			this->label14->Size = System::Drawing::Size(152, 13);
-			this->label14->TabIndex = 4;
-			this->label14->Text = L"Procesado de Archivos";
-			// 
 			// Main
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
-			this->ClientSize = System::Drawing::Size(1222, 789);
+			this->ClientSize = System::Drawing::Size(1222, 733);
 			this->Controls->Add(this->Consola);
 			this->Controls->Add(this->tabControl1);
 			this->Controls->Add(this->toolStrip1);

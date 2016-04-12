@@ -35,6 +35,11 @@ int window_height = 600;
 char *window_title = "Sample OpenGL FreeGlut App";
 
 
+void OpenGl::Informar(String ^ Entrada)
+{
+	*Informe += "																					[" + DateTime::Now.ToString("HH - mm - ss") + "]" + Entrada + "\r\n";
+}
+
 void OpenGl::threadconstructor()
 {
 	iniciarPuntos();
@@ -51,7 +56,7 @@ void OpenGl::threadconstructor()
 //-------------------------------------------------------------------------
 //  Program Main method.
 //-------------------------------------------------------------------------
-void OpenGl::constructor(cli::array<Thread^>^ Threads,String^ Informe)
+void OpenGl::constructor(cli::array<Thread^>^ Threads,String^* Informe)
 {
 	try
 	{

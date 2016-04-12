@@ -27,6 +27,7 @@ public:
 
 
 private:
+	void Informar(String^ Entrada);
 	String^* Informe;
 	OpenGl^ Dibujador;
 	void copiarPuntos();

@@ -67,6 +67,7 @@ void Controller::Iniciar()
 
 void Controller::IniciarThreads()
 {
+	Informe = "DataReader			DataAnalisys			OpenGl\r\n";
 	pin_ptr<String^> pointertoInforme = &Informe;
 	Flags[FlagPausa] = false;
 	if (FlagOpenGlOn) {
@@ -81,7 +82,7 @@ void Controller::IniciarThreads()
 		else Analisys->Analisys(Puntos, Obstaculos, ArrayDataAnalisys, Conclusiones, Flags, Threads, pointertoInforme);
 	}
 	if (Flags[FlagOpenGlOn]) {
-		Dibujador->constructor(Threads, Informe);
+		Dibujador->constructor(Threads, pointertoInforme);
 	}
 }
 
@@ -105,7 +106,6 @@ void Controller::ThreadInterpretarConclusiones()
 
 void Controller::EscribirInforme()
 {
-	Informe += "";
 	Consola->AppendText(Informe);
-	Informe = "[" + DateTime::Now.ToString("HH - mm - ss") + "] Escritura\r\n";
+	Informe = "";
 }
