@@ -1,12 +1,5 @@
-﻿  DataAnalisys.cpp
-DataAnalisys\DataAnalisys.cpp(90): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
-DataAnalisys\DataAnalisys.cpp(91): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
-DataAnalisys\DataAnalisys.cpp(95): warning C4101: 'e': unreferenced local variable
-DataAnalisys\DataAnalisys.cpp(132): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
-DataAnalisys\DataAnalisys.cpp(211): warning C4101: 'VarX': unreferenced local variable
-DataAnalisys\DataAnalisys.cpp(211): warning C4101: 'VarY': unreferenced local variable
-DataAnalisys\DataAnalisys.cpp(217): warning C4101: 'Obs': unreferenced local variable
-DataAnalisys\DataAnalisys.cpp(296): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
+﻿  reader.cpp
+d:\documentos\github\finalapplidar\finalapplidar\datareader\reader.cpp(375): warning C4715: 'DataReader::getAngle': not all control paths return a value
   Controller.obj : /DEBUG:FASTLINK is not supported when managed code is present; restarting link with /DEBUG:FULL
   FinalAppLidar.vcxproj -> D:\Documentos\GitHub\FinalAppLidar\Debug\FinalAppLidar.exe
   FinalAppLidar.vcxproj -> D:\Documentos\GitHub\FinalAppLidar\Debug\FinalAppLidar.pdb (Partial PDB)

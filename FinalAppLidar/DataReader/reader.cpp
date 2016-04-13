@@ -56,6 +56,7 @@ void DataReader::ReadData(List<Punto3D^>^ puntosController, cli::array<Object^>^
 	}
 	catch (Exception^ e)
 	{
+		Informar("Excepcion ReadData 1");
 		System::Windows::Forms::MessageBox::Show(e->ToString());
 	}
 }
@@ -76,13 +77,16 @@ void DataReader::ReadData(List<Punto3D^>^ puntosController, cli::array<Object^>^
 	}
 	catch (Exception^ e)
 	{
+		Informar("Excepcion ReadData 2");
 		System::Windows::Forms::MessageBox::Show(e->ToString());
 	}
 }
 void DataReader::ReadDataThread()
 {
+	Informar("Inicio");
 	setlocale(LC_NUMERIC, "es_ES");
 	if (Flags[FlagLogOn]) {
+		Informar("Log activo");
 		path = (String^)ArrayDataReader[Ppath] + "\\" + DateTime::Now.ToString("dd - MMMM - yyyy - HH - mm - ss");
 		Directory::CreateDirectory(path);
 		frame = 0;
@@ -91,8 +95,10 @@ void DataReader::ReadDataThread()
 		log = true;
 	}
 	else {
+		Informar("Log apagado");
 		log = false;
 	}
+	Informar("Calibracion");
 	double CALIBRATE_X, CALIBRATE_Y, CALIBRATE_Z, CALIBRATE_R, CALIBRATE_P, CALIBRATE_W, max, min;
 	CALIBRATE_X = Convert::ToDouble(ArrayDataReader[PCALIBRATE_X]);
 	CALIBRATE_Y = Convert::ToDouble(ArrayDataReader[PCALIBRATE_Y]);
@@ -119,29 +125,31 @@ void DataReader::ReadDataThread()
 	while (!Flags[FlagWarning] && !Flags[FlagPausa]) {
 		try
 		{
-
+			Informar("Interior del while");
 			ReceiveBytes = ClientLIDAR->Receive(LaserIpEndPoint);
-
+			Informar("Puntos Recibidos");
 			azimuths = InterpolateAzimuth(ReceiveBytes, &corte, &azi);
 			distances = ExtractDistances(ReceiveBytes);
 			intensities = ExtractIntensities(ReceiveBytes);
-
+			Informar("Inicio de bloque");
 			for (int block = 0; block < 12; block++) {
 				for (int i = 0; i < NUMBER_OF_CHANNELS; i++) {
 					//Corte de vuelta
-					if (azimuth_index > 0 && (azimuths[azimuth_index] - azimuths[azimuth_index - 1]) < -1) {
+					if (azimuth_index > 0 && (azimuths[azimuth_index] - azimuths[azimuth_index - 1]) < -2) {
 						copiarPuntos();
 						QueryPerformanceCounter(&t2); //parar
 						//compute and print the elapsed time in millisec
 						elapsedTime = (t2.QuadPart - t1.QuadPart) * 1000.0 / frequency.QuadPart;
+						Informar(elapsedTime.ToString());
 						QueryPerformanceCounter(&t1); //iniciar
 						frame++;
 					}
-					else if (azimuth_index == 0 && (azimuths[azimuth_index + 1] - azimuths[azimuth_index]) < -1) {
+					else if (azimuth_index == 0 && (azimuths[azimuth_index + 1] - azimuths[azimuth_index]) < -2) {
 						copiarPuntos();
 						QueryPerformanceCounter(&t2); //parar
 						//compute and print the elapsed time in millisec
 						elapsedTime = (t2.QuadPart - t1.QuadPart) * 1000.0 / frequency.QuadPart;
+						Informar(elapsedTime.ToString());
 						QueryPerformanceCounter(&t1); //iniciar
 						frame++;
 					}
@@ -309,16 +317,20 @@ cli::array<Double>^ DataReader::ExtractIntensities(cli::array<Byte>^ &ReceiveByt
 
 void DataReader::Informar(String ^ Entrada)
 {
-	*Informe += "[" + DateTime::Now.ToString("HH - mm - ss") + "]" + Entrada + "\r\n";
+	if ((*Informe)->CompareTo(""))
+		*Informe = "[" + DateTime::Now.ToString("HH - mm - ss") + "]" + Entrada + "\r\n";
+	else
+		*Informe += "[" + DateTime::Now.ToString("HH - mm - ss") + "]" + Entrada + "\r\n";
 }
 
 void DataReader::copiarPuntos()
 {
+	Informar("Copiar puntos");
 	puntosController->Clear();
-	Sleep(50);////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	puntosController->AddRange(Puntos);
 
 	if (Flags[FlagOpenGlOn]) {
+		Informar("OpenGl activo");
 		if (puntosController->Count > 2000) {
 			Dibujador->modificarPuntos(puntosController);
 			Dibujador->listo = true;
@@ -326,7 +338,8 @@ void DataReader::copiarPuntos()
 	}
 	//Controller de colision
 	if (!Flags[FlagTratamiento] && Flags[FlagAnalisysOn]) {
-		Flags[FlagWarning] = 1;
+		Informar("Warning");
+		Flags[FlagWarning] = true;
 		//mensaje pantalla
 	}
 	Flags[FlagTratamiento] = false;

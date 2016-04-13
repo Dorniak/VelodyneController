@@ -100,15 +100,14 @@ void DataAnalisys::AnalisysThread()
 				//Actualizar consignas en el vector de conclusiones
 				Conclusiones[0] = consigna_velocidad;
 				Conclusiones[1] = consigna_volante;
-				Flags[FlagTratamiento] = true;
 			}
 		}
 		catch (Exception^ e)
 		{
+			Informar("Excepcion");
 			Flags[FlagWarning] = true;
-			//	System::Windows::Forms::MessageBox::Show(e->ToString());
 		}
-		Sleep(10);
+		Sleep(200);
 	}
 }
 
@@ -119,24 +118,27 @@ void DataAnalisys::Kill()
 
 void DataAnalisys::Informar(String ^ Entrada)
 {
-	*Informe += "																	[" + DateTime::Now.ToString("HH - mm - ss") + "]"+Entrada+"\r\n";
+	if (Informe!=nullptr)
+		*Informe += "																	[" + DateTime::Now.ToString("HH - mm - ss") + "]" + Entrada + "\r\n";
 }
 
 void DataAnalisys::copiarObstaculos()
 {
+	//Controller de collision
+	if (Flags[FlagTratamiento]) {
+		Flags[FlagWarning] = true;
+		Informar("Error de Colision");
+		//mensaje pantalla
+	}
+	Flags[FlagTratamiento] = true;
+
 	ObstaculosvAnt->Clear();
 	ObstaculosvAnt->AddRange(Obstaculos);
 	if (Flags[FlagOpenGlOn]) {
 		Informar("Obstaculos->OpenGl");
 		Dibujador->modificarObstaculos(ObstaculosvAnt);
 	}
-	//Controller de collision
-	if (Flags[FlagTratamiento] == 1) {
-		Flags[FlagWarning] = 1;
-		Informar("Error de Colision");
-		//mensaje pantalla
-	}
-	Flags[FlagTratamiento] = 1;
+	
 }
 
 void DataAnalisys::Segmentacion(List<Punto3D^>^ matrix, double apertura)
