@@ -33,6 +33,7 @@ Controller::Controller(System::Windows::Forms::TextBox ^ Consola)
 	Flags[FlagTratamiento] = true;
 	ArrayDataAnalisys = gcnew cli::array<Object^>(numParametrosAnalisys);
 	ArrayDataReader = gcnew cli::array<Object^>(numParametrosReader);
+	ArrayGps = gcnew cli::array<Object^>(GPS_SIZE);
 }
 //Es el encargado de poner el flag de fin de tratamiento a 1 a la vez 
 // que llama a la funcion de interpretar conclusiones

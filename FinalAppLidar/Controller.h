@@ -3,6 +3,7 @@
 #include "DataAnalisys.h"
 #include "OpenGl.h"
 #include "stdlib.h"
+#include "Gps.h"
 
 ref class Controller {
 public:
@@ -22,6 +23,7 @@ public:
 	//Conjunto de parametros que necesita el DataAnalisys en tiempo de ejecucion
 	cli::array<Object^>^ ArrayDataAnalisys;
 	cli::array<Object^>^ ArrayDataReader;
+	cli::array<Object^>^ ArrayGps;
 	//Pone el flag de conclusion a 1 para que la aplicacion que lo recoja sepa que las conclusiones estan listas
 	void setFlagTratamiento();
 	void Iniciar();

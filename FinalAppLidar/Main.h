@@ -21,6 +21,7 @@ namespace FinalAppLidar {
 		{
 			InitializeComponent();
 			Controlador = gcnew Controller(Consola);
+			gps = gcnew	Gps();
 			groupBox2->Visible = false;
 			groupBox3->Visible = false;
 			groupBox4->Visible = false;
@@ -45,19 +46,9 @@ namespace FinalAppLidar {
 
 	private:
 		bool Iniciado = false;
-		Image^ image;
-		Graphics^ p;
+		
 
-
-
-
-
-
-
-
-
-
-
+	private: Gps^ gps;
 	private: Controller^ Controlador;
 	private: System::Windows::Forms::ToolStrip^  toolStrip1;
 
@@ -121,6 +112,7 @@ namespace FinalAppLidar {
 private: System::Windows::Forms::TableLayoutPanel^  tableLayoutPanel1;
 private: System::Windows::Forms::Label^  label3;
 private: System::Windows::Forms::Label^  label14;
+private: System::Windows::Forms::ComboBox^  comboBox1;
 
 
 
@@ -161,6 +153,7 @@ private: System::Windows::Forms::Label^  label14;
 			this->groupBox4 = (gcnew System::Windows::Forms::GroupBox());
 			this->flowLayoutPanel4 = (gcnew System::Windows::Forms::FlowLayoutPanel());
 			this->ActivarGPS = (gcnew System::Windows::Forms::CheckBox());
+			this->comboBox1 = (gcnew System::Windows::Forms::ComboBox());
 			this->groupBox3 = (gcnew System::Windows::Forms::GroupBox());
 			this->flowLayoutPanel3 = (gcnew System::Windows::Forms::FlowLayoutPanel());
 			this->ActivarAnalisys = (gcnew System::Windows::Forms::CheckBox());
@@ -381,6 +374,7 @@ private: System::Windows::Forms::Label^  label14;
 			// flowLayoutPanel4
 			// 
 			this->flowLayoutPanel4->Controls->Add(this->ActivarGPS);
+			this->flowLayoutPanel4->Controls->Add(this->comboBox1);
 			this->flowLayoutPanel4->Dock = System::Windows::Forms::DockStyle::Fill;
 			this->flowLayoutPanel4->Location = System::Drawing::Point(3, 16);
 			this->flowLayoutPanel4->Name = L"flowLayoutPanel4";
@@ -402,6 +396,15 @@ private: System::Windows::Forms::Label^  label14;
 			this->ActivarGPS->TabIndex = 1;
 			this->ActivarGPS->UseVisualStyleBackColor = false;
 			this->ActivarGPS->CheckedChanged += gcnew System::EventHandler(this, &Main::ActivarGPS_CheckedChanged);
+			// 
+			// comboBox1
+			// 
+			this->comboBox1->FormattingEnabled = true;
+			this->comboBox1->Location = System::Drawing::Point(47, 3);
+			this->comboBox1->Name = L"comboBox1";
+			this->comboBox1->Size = System::Drawing::Size(121, 21);
+			this->comboBox1->TabIndex = 2;
+			this->comboBox1->SelectedIndexChanged += gcnew System::EventHandler(this, &Main::comboBox1_SelectedIndexChanged);
 			// 
 			// groupBox3
 			// 
@@ -805,7 +808,7 @@ private: System::Windows::Forms::Label^  label14;
 			this->tabPage2->Location = System::Drawing::Point(4, 22);
 			this->tabPage2->Name = L"tabPage2";
 			this->tabPage2->Padding = System::Windows::Forms::Padding(3);
-			this->tabPage2->Size = System::Drawing::Size(192, 738);
+			this->tabPage2->Size = System::Drawing::Size(192, 682);
 			this->tabPage2->TabIndex = 1;
 			this->tabPage2->Text = L"Visor";
 			this->tabPage2->UseVisualStyleBackColor = true;
@@ -921,10 +924,23 @@ private: System::Windows::Forms::Label^  label14;
 		//TODO: MANDAR A CONTROL //TODO: MANDAR A CONTROL 
 	}
 	private: System::Void ActivarGPS_CheckedChanged(System::Object^  sender, System::EventArgs^  e) {
-		if (ActivarGPS->Checked)
+		if (ActivarGPS->Checked) {
 			ActivarGPS->ImageIndex = 6;
-		else
+			comboBox1->BeginUpdate();
+			cli::array<String^>^ coms = gps->serialPort->GetPortNames();
+			comboBox1->Items->Clear();
+			for (int i = 0; i < coms->Length; i++)
+			{
+				comboBox1->Items->Add(coms[i]);
+			}
+			comboBox1->SelectedItem = comboBox1->Items[0];
+			comboBox1->EndUpdate();
+		}
+		else{ 
+			comboBox1->Items->Clear();
 			ActivarGPS->ImageIndex = 7;
+		}
+			
 		//TODO: MANDAR A CONTROL 
 	}
 	private: System::Void ActivarAnalisys_CheckedChanged(System::Object^  sender, System::EventArgs^  e) {
@@ -1024,5 +1040,8 @@ private: System::Windows::Forms::Label^  label14;
 		toolStripLabel1->Text = "12";
 	}
 
-	};
+	private: System::Void comboBox1_SelectedIndexChanged(System::Object^  sender, System::EventArgs^  e) {
+		Controlador->ArrayGps[TIPO_TRAMA] = comboBox1->SelectedItem->ToString();
+	}
+};
 }

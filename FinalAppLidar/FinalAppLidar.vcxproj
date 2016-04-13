@@ -136,6 +136,7 @@
     <ClCompile Include="Controller.cpp" />
     <ClCompile Include="DataAnalisys\DataAnalisys.cpp" />
     <ClCompile Include="DataReader\reader.cpp" />
+    <ClCompile Include="Gps.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Obstaculo\Obstaculo.cpp" />
     <ClCompile Include="OpenGl\OpenGl.cpp" />
@@ -147,6 +148,7 @@
     <ClInclude Include="DataAnalisys\DataAnalisys.h" />
     <ClInclude Include="DataReader\reader.h" />
     <ClInclude Include="Flags\Parametros.h" />
+    <ClInclude Include="Gps.h" />
     <ClInclude Include="Main.h">
       <FileType>CppForm</FileType>
     </ClInclude>

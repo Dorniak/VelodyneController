@@ -54,6 +54,9 @@
 //Constantes OpenGl
 #define NUM_OBSTACULOS 10
 
+//Constantes GPS
+#define GPS_SIZE 2
+#define TIPO_TRAMA 0
 //Includes para las clases Controller Reader DataAnalisys y OpenGl
 using namespace std;
 using namespace System;
