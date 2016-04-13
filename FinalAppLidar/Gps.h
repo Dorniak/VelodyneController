@@ -13,6 +13,5 @@ public:
 	SerialPort^ serialPort;
 private:
 	cli::array<Object^>^ parametros;
-	
 };
 

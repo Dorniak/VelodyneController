@@ -12,6 +12,7 @@ void Gps::Read() {
 	serialPort->Open();
 	while (Convert::ToBoolean(parametros[START])) {
 		String^ data = serialPort->ReadLine();
+		if (data->Contains(parametros[TIPO_TRAMA]->ToString()))
 		parametros[TRAMA] = data;
 	}
 	serialPort->Close();

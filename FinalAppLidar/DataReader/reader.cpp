@@ -7,7 +7,7 @@
 /// ClientLIDAR es el sockect que se utiliza para la comunicación con el LIDAR.
 /// </summary>
 /// <param name="LIp">The Lidar IP.</param>
-DataReader::DataReader(IPEndPoint^ LIp)//SerialPort^ p
+DataReader::DataReader(IPEndPoint^ LIp)
 {
 	try
 	{
@@ -90,7 +90,7 @@ void DataReader::ReadDataThread()
 		path = (String^)ArrayDataReader[Ppath] + "\\" + DateTime::Now.ToString("dd - MMMM - yyyy - HH - mm - ss");
 		Directory::CreateDirectory(path);
 		frame = 0;
-		loger = gcnew StreamWriter(path + "\\log.log", false, Encoding::ASCII, 4096);
+		loger = gcnew StreamWriter(path + "\\log.log", false, Encoding::UTF8, 4096);
 		loger->AutoFlush = false;
 		log = true;
 	}

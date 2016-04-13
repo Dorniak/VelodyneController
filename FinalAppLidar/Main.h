@@ -121,6 +121,9 @@ private: System::Windows::Forms::ComboBox^  comboBox1;
 	private: System::Windows::Forms::Button^  button2;
 	private: System::Windows::Forms::TextBox^  textBox3;
 	private: System::Windows::Forms::Timer^  timer3;
+private: System::Windows::Forms::Label^  label15;
+private: System::Windows::Forms::Label^  label16;
+private: System::Windows::Forms::ComboBox^  comboBox2;
 
 
 
@@ -206,6 +209,9 @@ private: System::Windows::Forms::ComboBox^  comboBox1;
 			this->button2 = (gcnew System::Windows::Forms::Button());
 			this->textBox3 = (gcnew System::Windows::Forms::TextBox());
 			this->timer3 = (gcnew System::Windows::Forms::Timer(this->components));
+			this->comboBox2 = (gcnew System::Windows::Forms::ComboBox());
+			this->label15 = (gcnew System::Windows::Forms::Label());
+			this->label16 = (gcnew System::Windows::Forms::Label());
 			this->toolStrip1->SuspendLayout();
 			this->tabControl1->SuspendLayout();
 			this->tabPage1->SuspendLayout();
@@ -385,7 +391,10 @@ private: System::Windows::Forms::ComboBox^  comboBox1;
 			// flowLayoutPanel4
 			// 
 			this->flowLayoutPanel4->Controls->Add(this->ActivarGPS);
+			this->flowLayoutPanel4->Controls->Add(this->label15);
 			this->flowLayoutPanel4->Controls->Add(this->comboBox1);
+			this->flowLayoutPanel4->Controls->Add(this->label16);
+			this->flowLayoutPanel4->Controls->Add(this->comboBox2);
 			this->flowLayoutPanel4->Dock = System::Windows::Forms::DockStyle::Fill;
 			this->flowLayoutPanel4->Location = System::Drawing::Point(3, 16);
 			this->flowLayoutPanel4->Name = L"flowLayoutPanel4";
@@ -411,9 +420,10 @@ private: System::Windows::Forms::ComboBox^  comboBox1;
 			// comboBox1
 			// 
 			this->comboBox1->FormattingEnabled = true;
-			this->comboBox1->Location = System::Drawing::Point(47, 3);
+			this->comboBox1->Location = System::Drawing::Point(91, 6);
+			this->comboBox1->Margin = System::Windows::Forms::Padding(3, 6, 3, 3);
 			this->comboBox1->Name = L"comboBox1";
-			this->comboBox1->Size = System::Drawing::Size(121, 21);
+			this->comboBox1->Size = System::Drawing::Size(77, 21);
 			this->comboBox1->TabIndex = 2;
 			this->comboBox1->SelectedIndexChanged += gcnew System::EventHandler(this, &Main::comboBox1_SelectedIndexChanged);
 			// 
@@ -864,6 +874,37 @@ private: System::Windows::Forms::ComboBox^  comboBox1;
 			this->timer3->Interval = 500;
 			this->timer3->Tick += gcnew System::EventHandler(this, &Main::timer3_Tick);
 			// 
+			// comboBox2
+			// 
+			this->comboBox2->FormattingEnabled = true;
+			this->comboBox2->Items->AddRange(gcnew cli::array< System::Object^  >(3) { L"GPGGA", L"GPRMC", L"GPVTG" });
+			this->comboBox2->Location = System::Drawing::Point(40, 47);
+			this->comboBox2->Name = L"comboBox2";
+			this->comboBox2->Size = System::Drawing::Size(75, 21);
+			this->comboBox2->TabIndex = 3;
+			this->comboBox2->SelectedIndexChanged += gcnew System::EventHandler(this, &Main::comboBox2_SelectedIndexChanged);
+			// 
+			// label15
+			// 
+			this->label15->AutoSize = true;
+			this->label15->Location = System::Drawing::Point(47, 0);
+			this->label15->Name = L"label15";
+			this->label15->Padding = System::Windows::Forms::Padding(0, 13, 0, 0);
+			this->label15->Size = System::Drawing::Size(38, 26);
+			this->label15->TabIndex = 4;
+			this->label15->Text = L"Puerto";
+			// 
+			// label16
+			// 
+			this->label16->AutoSize = true;
+			this->label16->Location = System::Drawing::Point(0, 44);
+			this->label16->Margin = System::Windows::Forms::Padding(0, 0, 0, 0);
+			this->label16->Name = L"label16";
+			this->label16->Padding = System::Windows::Forms::Padding(0, 10, 0, 0);
+			this->label16->Size = System::Drawing::Size(37, 23);
+			this->label16->TabIndex = 5;
+			this->label16->Text = L"Trama";
+			// 
 			// Main
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
@@ -1084,7 +1125,10 @@ private: System::Void button2_Click_1(System::Object^  sender, System::EventArgs
 	timer3->Enabled = true;
 }
 private: System::Void timer3_Tick(System::Object^  sender, System::EventArgs^  e) {
-	textBox3->AppendText(Controlador->ArrayGps[TRAMA]->ToString());
+	textBox3->AppendText(Controlador->ArrayGps[TRAMA]->ToString()+ "\n");
+}
+private: System::Void comboBox2_SelectedIndexChanged(System::Object^  sender, System::EventArgs^  e) {
+	Controlador->ArrayGps[TIPO_TRAMA] = comboBox2->SelectedItem->ToString();
 }
 };
 }
