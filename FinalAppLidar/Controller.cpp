@@ -13,6 +13,7 @@ Controller::Controller()
 	Flags[FlagTratamiento] = true;
 	ArrayDataAnalisys = gcnew cli::array<Object^>(numParametrosAnalisys);
 	ArrayDataReader = gcnew cli::array<Object^>(numParametrosReader);
+	ArrayGps = gcnew cli::array<Object^>(GPS_SIZE);
 	for (int i = 0; i < numParametrosAnalisys - 1; i++)
 	{
 		ArrayDataAnalisys[i] = 0;

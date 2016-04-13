@@ -21,7 +21,12 @@ namespace FinalAppLidar {
 		{
 			InitializeComponent();
 			Controlador = gcnew Controller(Consola);
-			gps = gcnew	Gps();
+			Controlador->ArrayGps[START] = false;
+			Controlador->ArrayGps[TIPO_TRAMA] = "";
+			Controlador->ArrayGps[TRAMA] = "";
+			Controlador->ArrayGps[COM] = "COM1";
+
+			gps = gcnew	Gps(Controlador->ArrayGps);
 			groupBox2->Visible = false;
 			groupBox3->Visible = false;
 			groupBox4->Visible = false;
@@ -113,6 +118,9 @@ private: System::Windows::Forms::TableLayoutPanel^  tableLayoutPanel1;
 private: System::Windows::Forms::Label^  label3;
 private: System::Windows::Forms::Label^  label14;
 private: System::Windows::Forms::ComboBox^  comboBox1;
+	private: System::Windows::Forms::Button^  button2;
+	private: System::Windows::Forms::TextBox^  textBox3;
+	private: System::Windows::Forms::Timer^  timer3;
 
 
 
@@ -195,6 +203,9 @@ private: System::Windows::Forms::ComboBox^  comboBox1;
 			this->Consola = (gcnew System::Windows::Forms::TextBox());
 			this->timer1 = (gcnew System::Windows::Forms::Timer(this->components));
 			this->timer2 = (gcnew System::Windows::Forms::Timer(this->components));
+			this->button2 = (gcnew System::Windows::Forms::Button());
+			this->textBox3 = (gcnew System::Windows::Forms::TextBox());
+			this->timer3 = (gcnew System::Windows::Forms::Timer(this->components));
 			this->toolStrip1->SuspendLayout();
 			this->tabControl1->SuspendLayout();
 			this->tabPage1->SuspendLayout();
@@ -830,11 +841,36 @@ private: System::Windows::Forms::ComboBox^  comboBox1;
 			// 
 			this->timer2->Tick += gcnew System::EventHandler(this, &Main::timer2_Tick);
 			// 
+			// button2
+			// 
+			this->button2->Location = System::Drawing::Point(842, 432);
+			this->button2->Name = L"button2";
+			this->button2->Size = System::Drawing::Size(75, 23);
+			this->button2->TabIndex = 4;
+			this->button2->Text = L"GPS";
+			this->button2->UseVisualStyleBackColor = true;
+			this->button2->Click += gcnew System::EventHandler(this, &Main::button2_Click_1);
+			// 
+			// textBox3
+			// 
+			this->textBox3->Location = System::Drawing::Point(218, 477);
+			this->textBox3->Multiline = true;
+			this->textBox3->Name = L"textBox3";
+			this->textBox3->Size = System::Drawing::Size(968, 168);
+			this->textBox3->TabIndex = 5;
+			// 
+			// timer3
+			// 
+			this->timer3->Interval = 500;
+			this->timer3->Tick += gcnew System::EventHandler(this, &Main::timer3_Tick);
+			// 
 			// Main
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
 			this->ClientSize = System::Drawing::Size(1222, 733);
+			this->Controls->Add(this->textBox3);
+			this->Controls->Add(this->button2);
 			this->Controls->Add(this->Consola);
 			this->Controls->Add(this->tabControl1);
 			this->Controls->Add(this->toolStrip1);
@@ -1011,7 +1047,7 @@ private: System::Windows::Forms::ComboBox^  comboBox1;
 
 	}
 	private: System::Void Main_FormClosing(System::Object^  sender, System::Windows::Forms::FormClosingEventArgs^  e) {
-
+		gps->serialPort->Close();
 		for (int i = 0; i < Controlador->Threads->Length; i++)
 		{
 			if (Controlador->Threads[i])
@@ -1041,7 +1077,14 @@ private: System::Windows::Forms::ComboBox^  comboBox1;
 	}
 
 	private: System::Void comboBox1_SelectedIndexChanged(System::Object^  sender, System::EventArgs^  e) {
-		Controlador->ArrayGps[TIPO_TRAMA] = comboBox1->SelectedItem->ToString();
+		Controlador->ArrayGps[COM] = comboBox1->SelectedItem->ToString();
 	}
+private: System::Void button2_Click_1(System::Object^  sender, System::EventArgs^  e) {
+	Controlador->ArrayGps[START] = true;
+	timer3->Enabled = true;
+}
+private: System::Void timer3_Tick(System::Object^  sender, System::EventArgs^  e) {
+	textBox3->AppendText(Controlador->ArrayGps[TRAMA]->ToString());
+}
 };
 }
