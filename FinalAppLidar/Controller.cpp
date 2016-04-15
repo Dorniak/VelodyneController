@@ -53,52 +53,6 @@ void Controller::interpretarConclusiones()
 	Threads[2] = thread_Conclusiones;
 }
 
-void Controller::Iniciar()
-{
-	if (Flags[FlagAnalisysOn]) {
-		//Crear objeto DataAnalisys
-		Analisys = gcnew DataAnalisys();
-	}
-	if (Flags[FlagOpenGlOn]) {
-		//Crear objeto OpenGl
-		Dibujador = gcnew OpenGl();
-	}
-	//Crear objeto DataReader
-	Reader = gcnew DataReader((IPEndPoint^)ArrayDataReader[Ip]);
-	//IniciarThreads();
-}
-
-void Controller::IniciarThreads()
-{
-	Informe = "DataReader			DataAnalisys			OpenGl\r\n";
-	pin_ptr<String^> pointertoInforme = &Informe;
-	Flags[FlagPausa] = false;
-	if (FlagOpenGlOn) {
-		Reader->ReadData(Puntos, ArrayDataReader, Flags, Threads, pointertoInforme, Dibujador);
-	}
-	else Reader->ReadData(Puntos, ArrayDataReader, Flags, Threads, pointertoInforme);
-	
-	if (Flags[FlagAnalisysOn]) {
-		if (FlagOpenGlOn) {
-			Analisys->Analisys(Puntos, Obstaculos, ArrayDataAnalisys, Conclusiones, Flags, Threads, pointertoInforme, Dibujador);
-		}
-		else Analisys->Analisys(Puntos, Obstaculos, ArrayDataAnalisys, Conclusiones, Flags, Threads, pointertoInforme);
-	}
-	if (Flags[FlagOpenGlOn]) {
-		Dibujador->constructor(Threads, pointertoInforme);
-	}
-}
-
-void Controller::reActivar()
-{
-	IniciarThreads();
-}
-
-void Controller::Parar()
-{
-	Flags[FlagPausa] = true;
-}
-
 void Controller::ThreadInterpretarConclusiones()
 {
 	while (true)

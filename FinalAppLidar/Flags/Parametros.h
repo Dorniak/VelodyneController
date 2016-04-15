@@ -15,7 +15,7 @@
 #define numParametrosAnalisys 6
 //Posicion parametros array Reader
 #define Ppath 0
-#define Ip 1
+#define IP 1
 #define PCALIBRATE_X 2
 #define PCALIBRATE_Y 3
 #define PCALIBRATE_Z 4
@@ -24,6 +24,7 @@
 #define PCALIBRATE_W 7
 #define Pmax 8
 #define Pmin 9
+#define INFORME 10
 
 
 #define NUMBER_OF_BLOCKS 12

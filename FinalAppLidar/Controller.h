@@ -26,9 +26,6 @@ public:
 	cli::array<Object^>^ ArrayGps;
 	//Pone el flag de conclusion a 1 para que la aplicacion que lo recoja sepa que las conclusiones estan listas
 	void setFlagTratamiento();
-	void Iniciar();
-	void reActivar();
-	void Parar();
 	//Array de threads para apagarlos y encenderlos
 	cli::array<Thread^>^ Threads = gcnew cli::array<Thread^>(3); 
 	//Thread de interpretar conclusiones
@@ -41,11 +38,8 @@ private:
 	//Objeto DataAnalisys
 	DataAnalisys^ Analisys;
 	//Objeto OpenGl
-	OpenGl^ Dibujador;
 	//Objeto DataReader
- 	DataReader^ Reader;
 	//Funcion final de la que se sacan las conclusiones del vehiculo
 	void interpretarConclusiones();
 	//Funcion que inicia cada objeto con todos los parametros necesarios
-	void IniciarThreads();
 };

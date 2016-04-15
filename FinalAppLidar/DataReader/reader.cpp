@@ -7,19 +7,27 @@
 /// ClientLIDAR es el sockect que se utiliza para la comunicación con el LIDAR.
 /// </summary>
 /// <param name="LIp">The Lidar IP.</param>
-DataReader::DataReader(IPEndPoint^ LIp)
+DataReader::DataReader(List<Punto3D^>^ puntosController_in, cli::array<Object^>^ ParamReader_in, cli::array<bool>^ Flags_in, cli::array<Thread^>^ Threads_in, OpenGl^ Dibujador_in, cli::array<Object^>^ gps_in)
 {
-	try
-	{
-		Threads = gcnew cli::array<Thread^>(3);
-		LaserIpEndPoint = LIp;
-		ClientLIDAR = gcnew UdpClient(LaserIpEndPoint);
-		read = true;
-	}
+	/*try
+	{*/
+		this->Threads = Threads_in;
+		this->Flags = Flags_in;
+		ArrayDataReader = ParamReader_in;
+		ArrayDataReader[INFORME] = "";
+		ArrayGps = gps_in;
+		this->puntosController = puntosController_in;
+		this->Dibujador = Dibujador_in;
+		if (!thread_reader) {
+			thread_reader = gcnew Thread(gcnew ThreadStart(this, &DataReader::Esperar));
+		}
+		thread_reader->Start();
+		this->Threads[0] = thread_reader;
+	/*}
 	catch (Exception^ e)
 	{
 		System::Windows::Forms::MessageBox::Show(e->ToString());
-	}
+	}*/
 }
 
 /// <summary>
@@ -38,51 +46,11 @@ DataReader::~DataReader()
 /// ClientLIDAR elimina la cabecera de 42 bytes </para>
 /// </summary>
 
-void DataReader::ReadData(List<Punto3D^>^ puntosController, cli::array<Object^>^ ParamReader, cli::array<bool>^ Flags, cli::array<Thread^>^ Threads, String^* Informe, OpenGl^ Dibujador)
+void DataReader::Read()
 {
-	try
-	{
-		this->Informe = Informe;
-		this->Threads = Threads;
-		this->Flags = Flags;
-		ArrayDataReader = ParamReader;
-		this->puntosController = puntosController;
-		this->Dibujador = Dibujador;
-		if (!thread_reader) {
-			thread_reader = gcnew Thread(gcnew ThreadStart(this, &DataReader::ReadDataThread));
-		}
-		thread_reader->Start();
-		this->Threads[0] = thread_reader;
-	}
-	catch (Exception^ e)
-	{
-		Informar("Excepcion ReadData 1");
-		System::Windows::Forms::MessageBox::Show(e->ToString());
-	}
-}
-void DataReader::ReadData(List<Punto3D^>^ puntosController, cli::array<Object^>^ ParamReader, cli::array<bool>^ Flags, cli::array<Thread^>^ Threads, String^* Informe)
-{
-	try
-	{
-		this->Informe = Informe;
-		this->Threads = Threads;
-		this->Flags = Flags;
-		ArrayDataReader = ParamReader;
-		this->puntosController = puntosController;
-		if (!thread_reader) {
-			thread_reader = gcnew Thread(gcnew ThreadStart(this, &DataReader::ReadDataThread));
-		}
-		thread_reader->Start();
-		this->Threads[0] = thread_reader;
-	}
-	catch (Exception^ e)
-	{
-		Informar("Excepcion ReadData 2");
-		System::Windows::Forms::MessageBox::Show(e->ToString());
-	}
-}
-void DataReader::ReadDataThread()
-{
+
+	LaserIpEndPoint = (IPEndPoint^)ArrayDataReader[IP];
+	ClientLIDAR = gcnew UdpClient(LaserIpEndPoint);
 	Informar("Inicio");
 	setlocale(LC_NUMERIC, "es_ES");
 	if (Flags[FlagLogOn]) {
@@ -99,7 +67,6 @@ void DataReader::ReadDataThread()
 		log = false;
 	}
 	Informar("Calibracion");
-	double CALIBRATE_X, CALIBRATE_Y, CALIBRATE_Z, CALIBRATE_R, CALIBRATE_P, CALIBRATE_W, max, min;
 	CALIBRATE_X = Convert::ToDouble(ArrayDataReader[PCALIBRATE_X]);
 	CALIBRATE_Y = Convert::ToDouble(ArrayDataReader[PCALIBRATE_Y]);
 	CALIBRATE_Z = Convert::ToDouble(ArrayDataReader[PCALIBRATE_Z]);
@@ -108,7 +75,9 @@ void DataReader::ReadDataThread()
 	CALIBRATE_W = Convert::ToDouble(ArrayDataReader[PCALIBRATE_W]);
 	max = Convert::ToDouble(ArrayDataReader[Pmax]);
 	min = Convert::ToDouble(ArrayDataReader[Pmin]);
-	int azimuth_index = 0, distance_index = 0, intensity_index = 0;
+	azimuth_index = 0;
+	distance_index = 0;
+	intensity_index = 0;
 	cli::array<Byte>^ ReceiveBytes;
 	cli::array<Double>^ azimuths;
 	cli::array<Double>^ distances;
@@ -160,7 +129,7 @@ void DataReader::ReadDataThread()
 						Puntos->Add(p);
 						if (log) {
 							//Azimuth, X, Y, Z, Distance;
-							loger->WriteLine(frame + "," + p->visualize());
+							loger->WriteLine(frame + "," + p->visualize() + ArrayGps[TRAMA]->ToString());
 						}
 					}
 					else {
@@ -185,8 +154,21 @@ void DataReader::ReadDataThread()
 		}
 
 	}//while
+	ClientLIDAR->Close();
+	if (log)
+		loger->Close();
+	Esperar();
 }
-
+void DataReader::Esperar()
+{
+	Informar("ESTOY EN ESPERA");
+	while (Flags[FlagWarning] || Flags[FlagPausa]) {
+		if (Flags[FlagWarning])
+			Kill();
+		Sleep(250);
+	}
+	Read();
+}
 void DataReader::Kill()
 {
 	thread_reader->Abort();
@@ -317,10 +299,7 @@ cli::array<Double>^ DataReader::ExtractIntensities(cli::array<Byte>^ &ReceiveByt
 
 void DataReader::Informar(String ^ Entrada)
 {
-	if ((*Informe)->CompareTo(""))
-		*Informe = "[" + DateTime::Now.ToString("HH - mm - ss") + "]" + Entrada + "\r\n";
-	else
-		*Informe += "[" + DateTime::Now.ToString("HH - mm - ss") + "]" + Entrada + "\r\n";
+	ArrayDataReader[INFORME] += DateTime::Now.ToString("HH - mm - ss") + "]" + Entrada + "\r\n";
 }
 
 void DataReader::copiarPuntos()
@@ -345,6 +324,7 @@ void DataReader::copiarPuntos()
 	Flags[FlagTratamiento] = false;
 	Puntos->Clear();
 }
+
 
 /// <summary>
 /// Gets the angle.

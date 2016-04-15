@@ -37,11 +37,12 @@ char *window_title = "Sample OpenGL FreeGlut App";
 
 void OpenGl::Informar(String ^ Entrada)
 {
-	*Informe += "																					[" + DateTime::Now.ToString("HH - mm - ss") + "]" + Entrada + "\r\n";
+	Informe += "\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t[" + DateTime::Now.ToString("HH - mm - ss") + "]" + Entrada + "\r\n";
 }
 
 void OpenGl::threadconstructor()
 {
+	Informar("THREAD OPENGL");
 	iniciarPuntos();
 	iniciarObstaculos();
 	int argc = 0;
@@ -56,12 +57,13 @@ void OpenGl::threadconstructor()
 //-------------------------------------------------------------------------
 //  Program Main method.
 //-------------------------------------------------------------------------
-void OpenGl::constructor(cli::array<Thread^>^ Threads,String^* Informe)
+OpenGl::OpenGl(cli::array<Thread^>^ Threads)
 {
 	try
 	{
 		this->Informe = Informe;
 		this->Threads = Threads;
+		Informar("CONSTRUCTOR OPENGL");
 		if (!ThreadDIO)
 			ThreadDIO = gcnew Thread(gcnew ThreadStart(this, &OpenGl::threadconstructor));
 		ThreadDIO->Start();
@@ -74,6 +76,7 @@ void OpenGl::constructor(cli::array<Thread^>^ Threads,String^* Informe)
 }
 void OpenGl::modificarPuntos(List<Punto3D^>^ listEntradaPuntos)
 {
+	Informar("MODIFICAR PUNTOS"+ listEntradaPuntos->Count);
 	listo = false;
 	if (listEntradaPuntos->Count < puntos->Count) {
 		limpiarListas(listEntradaPuntos->Count);

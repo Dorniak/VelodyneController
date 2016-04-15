@@ -25,8 +25,9 @@ namespace FinalAppLidar {
 			Controlador->ArrayGps[TIPO_TRAMA] = "";
 			Controlador->ArrayGps[TRAMA] = "";
 			Controlador->ArrayGps[COM] = "COM1";
-
 			gps = gcnew	Gps(Controlador->ArrayGps);
+			Dibujador = gcnew OpenGl(Controlador->Threads);
+			Reader = gcnew DataReader(Controlador->Puntos,Controlador->ArrayDataReader,Controlador->Flags,Controlador->Threads,Dibujador, Controlador->ArrayGps);
 			groupBox2->Visible = false;
 			groupBox3->Visible = false;
 			groupBox4->Visible = false;
@@ -54,7 +55,9 @@ namespace FinalAppLidar {
 		
 
 	private: Gps^ gps;
+	private: DataReader^ Reader;
 	private: Controller^ Controlador;
+	private: OpenGl^ Dibujador;
 	private: System::Windows::Forms::ToolStrip^  toolStrip1;
 
 	private: System::Windows::Forms::TabControl^  tabControl1;
@@ -106,7 +109,7 @@ namespace FinalAppLidar {
 	private: System::Windows::Forms::TrackBar^  trackBar1;
 	private: System::Windows::Forms::Label^  label12;
 	private: System::Windows::Forms::Label^  label13;
-	private: System::Windows::Forms::Timer^  timer1;
+
 	private: System::Windows::Forms::ToolStripLabel^  toolStripLabel1;
 	private: System::Windows::Forms::ToolStripLabel^  toolStripLabel2;
 	private: System::Windows::Forms::ToolStripLabel^  toolStripLabel3;
@@ -164,7 +167,10 @@ private: System::Windows::Forms::ComboBox^  comboBox2;
 			this->groupBox4 = (gcnew System::Windows::Forms::GroupBox());
 			this->flowLayoutPanel4 = (gcnew System::Windows::Forms::FlowLayoutPanel());
 			this->ActivarGPS = (gcnew System::Windows::Forms::CheckBox());
+			this->label15 = (gcnew System::Windows::Forms::Label());
 			this->comboBox1 = (gcnew System::Windows::Forms::ComboBox());
+			this->label16 = (gcnew System::Windows::Forms::Label());
+			this->comboBox2 = (gcnew System::Windows::Forms::ComboBox());
 			this->groupBox3 = (gcnew System::Windows::Forms::GroupBox());
 			this->flowLayoutPanel3 = (gcnew System::Windows::Forms::FlowLayoutPanel());
 			this->ActivarAnalisys = (gcnew System::Windows::Forms::CheckBox());
@@ -204,14 +210,10 @@ private: System::Windows::Forms::ComboBox^  comboBox2;
 			this->tabPage2 = (gcnew System::Windows::Forms::TabPage());
 			this->folderBrowserDialog1 = (gcnew System::Windows::Forms::FolderBrowserDialog());
 			this->Consola = (gcnew System::Windows::Forms::TextBox());
-			this->timer1 = (gcnew System::Windows::Forms::Timer(this->components));
 			this->timer2 = (gcnew System::Windows::Forms::Timer(this->components));
 			this->button2 = (gcnew System::Windows::Forms::Button());
 			this->textBox3 = (gcnew System::Windows::Forms::TextBox());
 			this->timer3 = (gcnew System::Windows::Forms::Timer(this->components));
-			this->comboBox2 = (gcnew System::Windows::Forms::ComboBox());
-			this->label15 = (gcnew System::Windows::Forms::Label());
-			this->label16 = (gcnew System::Windows::Forms::Label());
 			this->toolStrip1->SuspendLayout();
 			this->tabControl1->SuspendLayout();
 			this->tabPage1->SuspendLayout();
@@ -417,6 +419,16 @@ private: System::Windows::Forms::ComboBox^  comboBox2;
 			this->ActivarGPS->UseVisualStyleBackColor = false;
 			this->ActivarGPS->CheckedChanged += gcnew System::EventHandler(this, &Main::ActivarGPS_CheckedChanged);
 			// 
+			// label15
+			// 
+			this->label15->AutoSize = true;
+			this->label15->Location = System::Drawing::Point(47, 0);
+			this->label15->Name = L"label15";
+			this->label15->Padding = System::Windows::Forms::Padding(0, 13, 0, 0);
+			this->label15->Size = System::Drawing::Size(38, 26);
+			this->label15->TabIndex = 4;
+			this->label15->Text = L"Puerto";
+			// 
 			// comboBox1
 			// 
 			this->comboBox1->FormattingEnabled = true;
@@ -426,6 +438,27 @@ private: System::Windows::Forms::ComboBox^  comboBox2;
 			this->comboBox1->Size = System::Drawing::Size(77, 21);
 			this->comboBox1->TabIndex = 2;
 			this->comboBox1->SelectedIndexChanged += gcnew System::EventHandler(this, &Main::comboBox1_SelectedIndexChanged);
+			// 
+			// label16
+			// 
+			this->label16->AutoSize = true;
+			this->label16->Location = System::Drawing::Point(0, 44);
+			this->label16->Margin = System::Windows::Forms::Padding(0);
+			this->label16->Name = L"label16";
+			this->label16->Padding = System::Windows::Forms::Padding(0, 10, 0, 0);
+			this->label16->Size = System::Drawing::Size(37, 23);
+			this->label16->TabIndex = 5;
+			this->label16->Text = L"Trama";
+			// 
+			// comboBox2
+			// 
+			this->comboBox2->FormattingEnabled = true;
+			this->comboBox2->Items->AddRange(gcnew cli::array< System::Object^  >(3) { L"GPGGA", L"GPRMC", L"GPVTG" });
+			this->comboBox2->Location = System::Drawing::Point(40, 47);
+			this->comboBox2->Name = L"comboBox2";
+			this->comboBox2->Size = System::Drawing::Size(75, 21);
+			this->comboBox2->TabIndex = 3;
+			this->comboBox2->SelectedIndexChanged += gcnew System::EventHandler(this, &Main::comboBox2_SelectedIndexChanged);
 			// 
 			// groupBox3
 			// 
@@ -842,13 +875,9 @@ private: System::Windows::Forms::ComboBox^  comboBox2;
 			this->Consola->Size = System::Drawing::Size(590, 405);
 			this->Consola->TabIndex = 3;
 			// 
-			// timer1
-			// 
-			this->timer1->Enabled = true;
-			this->timer1->Tick += gcnew System::EventHandler(this, &Main::timer1_Tick);
-			// 
 			// timer2
 			// 
+			this->timer2->Enabled = true;
 			this->timer2->Tick += gcnew System::EventHandler(this, &Main::timer2_Tick);
 			// 
 			// button2
@@ -873,37 +902,6 @@ private: System::Windows::Forms::ComboBox^  comboBox2;
 			// 
 			this->timer3->Interval = 500;
 			this->timer3->Tick += gcnew System::EventHandler(this, &Main::timer3_Tick);
-			// 
-			// comboBox2
-			// 
-			this->comboBox2->FormattingEnabled = true;
-			this->comboBox2->Items->AddRange(gcnew cli::array< System::Object^  >(3) { L"GPGGA", L"GPRMC", L"GPVTG" });
-			this->comboBox2->Location = System::Drawing::Point(40, 47);
-			this->comboBox2->Name = L"comboBox2";
-			this->comboBox2->Size = System::Drawing::Size(75, 21);
-			this->comboBox2->TabIndex = 3;
-			this->comboBox2->SelectedIndexChanged += gcnew System::EventHandler(this, &Main::comboBox2_SelectedIndexChanged);
-			// 
-			// label15
-			// 
-			this->label15->AutoSize = true;
-			this->label15->Location = System::Drawing::Point(47, 0);
-			this->label15->Name = L"label15";
-			this->label15->Padding = System::Windows::Forms::Padding(0, 13, 0, 0);
-			this->label15->Size = System::Drawing::Size(38, 26);
-			this->label15->TabIndex = 4;
-			this->label15->Text = L"Puerto";
-			// 
-			// label16
-			// 
-			this->label16->AutoSize = true;
-			this->label16->Location = System::Drawing::Point(0, 44);
-			this->label16->Margin = System::Windows::Forms::Padding(0, 0, 0, 0);
-			this->label16->Name = L"label16";
-			this->label16->Padding = System::Windows::Forms::Padding(0, 10, 0, 0);
-			this->label16->Size = System::Drawing::Size(37, 23);
-			this->label16->TabIndex = 5;
-			this->label16->Text = L"Trama";
 			// 
 			// Main
 			// 
@@ -958,11 +956,7 @@ private: System::Windows::Forms::ComboBox^  comboBox2;
 			Controlador->ArrayDataReader[PCALIBRATE_P] = Convert::ToDouble(textBox8->Text);
 			Controlador->ArrayDataReader[PCALIBRATE_W] = Convert::ToDouble(textBox10->Text);
 			
-			if (!Iniciado) {
-				Controlador->Iniciar();
-				Iniciado = true;
-			}
-			Controlador->reActivar();
+			Controlador->Flags[FlagPausa] = false;
 
 			//Bloquear botones al pulsar el activar
 			ActivarOpenGl->Enabled = false;
@@ -972,11 +966,11 @@ private: System::Windows::Forms::ComboBox^  comboBox2;
 			ActivarLector->ImageIndex = 3;
 		}
 		else {
+			Controlador->Flags[FlagPausa] = true;
 			ActivarLector->ImageIndex = 2;
 			groupBox3->Enabled = true;
 			groupBox4->Enabled = true;
 			groupBox5->Enabled = true;
-			Controlador->Parar();
 		}
 		//TODO: MANDAR A CONTROL 
 
@@ -1052,9 +1046,8 @@ private: System::Windows::Forms::ComboBox^  comboBox2;
 		try
 		{
 			if (button1->ImageIndex == 1) {
-				IPAddress^ lidarIP = IPAddress::Parse(textBox1->Text);
 				IPEndPoint^ Connect = gcnew IPEndPoint(IPAddress::Any, Convert::ToInt32(textBox2->Text));//0xC901A8C0   IPAddress::Any
-				Controlador->ArrayDataReader[Ip] = Connect;
+				Controlador->ArrayDataReader[IP] = Connect;
 				UdpClient^ Client = gcnew UdpClient(Connect);
 				if (true) {//Client->Available > 0
 					button3->Visible = false;
@@ -1065,7 +1058,7 @@ private: System::Windows::Forms::ComboBox^  comboBox2;
 					button1->ImageIndex = 0;
 				}
 				else {
-					MessageBox::Show("Error al conectar con el laser", "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
+					MessageBox::Show("Error al conectar con el laser" + Client->Available, "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
 				}
 				Client->Close();
 				delete Client;
@@ -1077,7 +1070,6 @@ private: System::Windows::Forms::ComboBox^  comboBox2;
 				groupBox4->Visible = false;
 				groupBox3->Visible = false;
 				groupBox2->Visible = false;
-				Controlador->Parar();
 			}
 		}
 		catch (Exception^ e)
@@ -1105,16 +1097,15 @@ private: System::Windows::Forms::ComboBox^  comboBox2;
 		Controlador->ArrayDataAnalisys[posTolerancia] = trackBar1->Value;
 		label13->Text = trackBar1->Value.ToString() + " %";
 	}
-	private: System::Void timer1_Tick(System::Object^  sender, System::EventArgs^  e) {
-		if (ActivarLector->Checked) {
-			Controlador->EscribirInforme();
-		}
-	}
 
 	private: System::Void timer2_Tick(System::Object^  sender, System::EventArgs^  e) {
 
 		//PARA CARGAR EL ESTADO DE TODO EN LA INTERFAZ
 		toolStripLabel1->Text = "12";
+		Consola->AppendText(Controlador->ArrayDataReader[INFORME]->ToString());
+		Controlador->ArrayDataReader[INFORME] = "";
+		textBox3->AppendText(Dibujador->Informe);
+		Dibujador->Informe = "";
 	}
 
 	private: System::Void comboBox1_SelectedIndexChanged(System::Object^  sender, System::EventArgs^  e) {
