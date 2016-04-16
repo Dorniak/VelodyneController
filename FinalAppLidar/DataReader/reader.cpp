@@ -1,16 +1,10 @@
 #include "reader.h"
 #include <locale.h>
 
-/// <summary>
-/// Initializes a new instance of the <see cref="DataReader"/> class.
-/// LaserIpEndPoint apunta a la dirección ip del laser (O a cualquier IP) escuchando solo al puerto 2368
-/// ClientLIDAR es el sockect que se utiliza para la comunicación con el LIDAR.
-/// </summary>
-/// <param name="LIp">The Lidar IP.</param>
 DataReader::DataReader(List<Punto3D^>^ puntosController_in, cli::array<Object^>^ ParamReader_in, cli::array<bool>^ Flags_in, cli::array<Thread^>^ Threads_in, OpenGl^ Dibujador_in, cli::array<Object^>^ gps_in)
 {
-	/*try
-	{*/
+	try
+	{
 		this->Threads = Threads_in;
 		this->Flags = Flags_in;
 		ArrayDataReader = ParamReader_in;
@@ -22,33 +16,23 @@ DataReader::DataReader(List<Punto3D^>^ puntosController_in, cli::array<Object^>^
 			thread_reader = gcnew Thread(gcnew ThreadStart(this, &DataReader::Esperar));
 		}
 		thread_reader->Start();
-		this->Threads[0] = thread_reader;
-	/*}
+		this->Threads[THREAD_READER] = thread_reader;
+	}
 	catch (Exception^ e)
 	{
 		System::Windows::Forms::MessageBox::Show(e->ToString());
-	}*/
+	}
 }
 
-/// <summary>
-/// Finalizes an instance of the <see cref="DataReader"/> class.
-/// </summary>
 DataReader::~DataReader()
 {
 	delete ClientLIDAR;
 	delete LaserIpEndPoint;
+	thread_reader->Abort();
 }
-
-/// <summary>
-/// Reads the stream data from the LIDAR.
-/// <para>Función que lee el stream de bytes del LIDAR y obtiene las propiedades del punto retornadas, así como se calculan aquellas
-/// que pueden inducirse de estas primeras. Con esta inforación se construye y almacena el punto Cada paquete consta de 1206 bytes
-/// ClientLIDAR elimina la cabecera de 42 bytes </para>
-/// </summary>
 
 void DataReader::Read()
 {
-
 	LaserIpEndPoint = (IPEndPoint^)ArrayDataReader[IP];
 	ClientLIDAR = gcnew UdpClient(LaserIpEndPoint);
 	Informar("Inicio");
@@ -60,11 +44,9 @@ void DataReader::Read()
 		frame = 0;
 		loger = gcnew StreamWriter(path + "\\log.log", false, Encoding::UTF8, 4096);
 		loger->AutoFlush = false;
-		log = true;
 	}
 	else {
 		Informar("Log apagado");
-		log = false;
 	}
 	Informar("Calibracion");
 	CALIBRATE_X = Convert::ToDouble(ArrayDataReader[PCALIBRATE_X]);
@@ -85,12 +67,6 @@ void DataReader::Read()
 	Punto3D^ p;
 	int corte = -1;
 	double azi = -1;
-	LARGE_INTEGER frequency;        // ticks per second
-	LARGE_INTEGER t1, t2;           // ticks
-	double elapsedTime;
-	QueryPerformanceFrequency(&frequency);
-	QueryPerformanceCounter(&t2);
-	QueryPerformanceCounter(&t1);
 	while (!Flags[FlagWarning] && !Flags[FlagPausa]) {
 		try
 		{
@@ -106,28 +82,17 @@ void DataReader::Read()
 					//Corte de vuelta
 					if (azimuth_index > 0 && (azimuths[azimuth_index] - azimuths[azimuth_index - 1]) < -2) {
 						copiarPuntos();
-						QueryPerformanceCounter(&t2); //parar
-						//compute and print the elapsed time in millisec
-						elapsedTime = (t2.QuadPart - t1.QuadPart) * 1000.0 / frequency.QuadPart;
-						Informar(elapsedTime.ToString());
-						QueryPerformanceCounter(&t1); //iniciar
 						frame++;
 					}
 					else if (azimuth_index == 0 && (azimuths[azimuth_index + 1] - azimuths[azimuth_index]) < -2) {
 						copiarPuntos();
-						QueryPerformanceCounter(&t2); //parar
-						//compute and print the elapsed time in millisec
-						elapsedTime = (t2.QuadPart - t1.QuadPart) * 1000.0 / frequency.QuadPart;
-						Informar(elapsedTime.ToString());
-						QueryPerformanceCounter(&t1); //iniciar
 						frame++;
 					}
-
 					if (distances[distance_index] >= min && distances[distance_index] <= max) {
 						p = gcnew Punto3D(distances[distance_index], intensities[intensity_index], azimuths[azimuth_index], getAngle(i));
 						p->CalculateCoordinates(CALIBRATE_X, CALIBRATE_Y, CALIBRATE_Z, CALIBRATE_P, CALIBRATE_R, CALIBRATE_Y);
 						Puntos->Add(p);
-						if (log) {
+						if (Flags[FlagLogOn]) {
 							//Azimuth, X, Y, Z, Distance;
 							loger->WriteLine(frame + "," + p->visualize() + ArrayGps[TRAMA]->ToString());
 						}
@@ -136,29 +101,34 @@ void DataReader::Read()
 						p = gcnew Punto3D();
 						Puntos->Add(p);
 					}
-
 					distance_index++;
 					intensity_index++;
 					azimuth_index++;
 				}
-				if (log) {
+				if (Flags[FlagLogOn]) {
 					loger->Flush();
 				}
 			}
 			azimuth_index = 0, distance_index = 0, intensity_index = 0;
-		}//Try
+		}
 		catch (Exception^ e)
 		{
 			Flags[FlagWarning] = true;
 			System::Windows::Forms::MessageBox::Show(e->ToString());
 		}
-
-	}//while
+	}
 	ClientLIDAR->Close();
-	if (log)
+	if (Flags[FlagLogOn])
 		loger->Close();
+	Puntos->Clear();
+	delete ReceiveBytes;
+	delete azimuths;
+	delete distances;
+	delete intensities;
+	delete p;
 	Esperar();
 }
+
 void DataReader::Esperar()
 {
 	Informar("ESTOY EN ESPERA");
@@ -169,26 +139,12 @@ void DataReader::Esperar()
 	}
 	Read();
 }
+
 void DataReader::Kill()
 {
 	thread_reader->Abort();
 }
 
-/// <summary>
-/// Gets the process time.
-/// </summary>
-/// <returns>process_Time</returns>
-
-/// <summary>
-/// Saves the process time.
-/// </summary>
-/// <param name="time">The time.</param>
-
-/// <summary>
-/// Extract and interpolates the azimuths.
-/// </summary>
-/// <param name="ReceiveBytes">The receive bytes.</param>
-/// <returns></returns>
 cli::array<Double>^ DataReader::InterpolateAzimuth(cli::array<Byte>^ &ReceiveBytes, int *corte, double *azi) {
 
 	if (ReceiveBytes->Length == 0)
@@ -240,11 +196,6 @@ cli::array<Double>^ DataReader::InterpolateAzimuth(cli::array<Byte>^ &ReceiveByt
 	return result;
 }
 
-/// <summary>
-/// Extracts the distances.
-/// </summary>
-/// <param name="ReceiveBytes">The receive bytes.</param>
-/// <returns></returns>
 cli::array<Double>^ DataReader::ExtractDistances(cli::array<Byte>^ &ReceiveBytes) {
 	if (ReceiveBytes->Length == 0)
 		throw gcnew Exception("Recibiendo 0 bytes...");
@@ -270,11 +221,6 @@ cli::array<Double>^ DataReader::ExtractDistances(cli::array<Byte>^ &ReceiveBytes
 	return distances;
 }
 
-/// <summary>
-/// Extracts the intensities.
-/// </summary>
-/// <param name="ReceiveBytes">The receive bytes.</param>
-/// <returns></returns>
 cli::array<Double>^ DataReader::ExtractIntensities(cli::array<Byte>^ &ReceiveBytes) {
 	if (ReceiveBytes->Length == 0)
 		throw gcnew Exception("Recibiendo 0 bytes...");
@@ -325,12 +271,6 @@ void DataReader::copiarPuntos()
 	Puntos->Clear();
 }
 
-
-/// <summary>
-/// Gets the angle.
-/// </summary>
-/// <param name="channel">The channel.</param>
-/// <returns></returns>
 double DataReader::getAngle(int channel)
 {
 	switch (channel)

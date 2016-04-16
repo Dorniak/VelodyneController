@@ -1,20 +1,38 @@
 #include "Gps.h"
 #include "Parametros.h"
 #include "OpenGl.h"
-Gps::Gps(cli::array<Object^>^ ArrayGps)
+Gps::Gps(cli::array<Object^>^ ArrayGps, cli::array<Thread^>^ Threads_in)
 {
 	parametros = ArrayGps;
 	serialPort = gcnew SerialPort();
 	Thread^ gps_thread = gcnew Thread(gcnew ThreadStart(this, &Gps::Esperar));
+	Threads_in[THREAD_GPS] = gps_thread;
 	gps_thread->Start();
 }
 void Gps::Read() {
+	serialPort->ReadTimeout = 2000;
 	serialPort->Open();
+	if (!serialPort->IsOpen)
+		MessageBox::Show("Error al conectar en el puerto" + parametros[COM], "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
+	String^ data;
 	while (Convert::ToBoolean(parametros[START])) {
-		String^ data = serialPort->ReadLine();
+		try
+		{
+			data = serialPort->ReadLine();
+		}
+		catch (Exception^ e)
+		{
+			parametros[START] = false;
+			serialPort->Close();
+			MessageBox::Show("No se reciben datos en el puerto" + parametros[COM], "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
+			Esperar();
+		}
+		if (data->Contains("GGA"))
+			ExtraerGGA(data);
 		if (data->Contains(parametros[TIPO_TRAMA]->ToString()))
-		parametros[TRAMA] = data;
+			parametros[TRAMA] = "," + data;
 	}
+	parametros[TRAMA] = "";
 	serialPort->Close();
 	Esperar();
 }
@@ -37,4 +55,15 @@ void Gps::Esperar() {
 		MessageBox::Show("Error en gps", "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
 	}
 	Read();
+}
+void Gps::ExtraerGGA(String^ data) {
+	cli::array<String^>^ partes = data->Split(',');
+	/*for (int i = 0; i < partes->Length; i++)
+	{
+		parametros[TRAMA] += "["+i+"]="+partes[i]+"  ";
+	}
+	parametros[TRAMA] += "\r\n";*/
+	parametros[QUALITY] = partes[6];
+	parametros[SATELITES] = partes[7];
+
 }

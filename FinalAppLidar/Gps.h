@@ -7,11 +7,12 @@ using namespace System::Windows::Forms;
 ref class Gps
 {
 public:
-	Gps(cli::array<Object^>^ ArrayGps);
+	Gps(cli::array<Object^>^ ArrayGps, cli::array<Thread^>^ Threads_in);
 	void Read();
 	void Gps::Esperar();
 	SerialPort^ serialPort;
 private:
 	cli::array<Object^>^ parametros;
+	void Gps::ExtraerGGA(String^ data);
 };
 

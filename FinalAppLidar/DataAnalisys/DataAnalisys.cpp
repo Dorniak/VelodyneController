@@ -27,7 +27,7 @@ void DataAnalisys::Analisys(List<Punto3D^>^ puntosController, List<Obstaculo^>^ 
 	}
 	thread_analysis->Start();
 	//Guarda el identificador de thread en el array de threads del Controllerador 
-	Threads[1] = thread_analysis;
+	Threads[THREAD_ANALISIS] = thread_analysis;
 }
 void DataAnalisys::Analisys(List<Punto3D^>^ puntosController, List<Obstaculo^>^ ObstaculosController, cli::array<Object^>^ ParamAnalisys, List<int>^ Conclusiones, cli::array<bool>^ Flags, cli::array<Thread^>^ Threads, String^* Informe)
 {

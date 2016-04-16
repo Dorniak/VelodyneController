@@ -25,9 +25,9 @@ namespace FinalAppLidar {
 			Controlador->ArrayGps[TIPO_TRAMA] = "";
 			Controlador->ArrayGps[TRAMA] = "";
 			Controlador->ArrayGps[COM] = "COM1";
-			gps = gcnew	Gps(Controlador->ArrayGps);
+			gps = gcnew	Gps(Controlador->ArrayGps, Controlador->Threads);
 			Dibujador = gcnew OpenGl(Controlador->Threads);
-			Reader = gcnew DataReader(Controlador->Puntos,Controlador->ArrayDataReader,Controlador->Flags,Controlador->Threads,Dibujador, Controlador->ArrayGps);
+			Reader = gcnew DataReader(Controlador->Puntos, Controlador->ArrayDataReader, Controlador->Flags, Controlador->Threads, Dibujador, Controlador->ArrayGps);
 			groupBox2->Visible = false;
 			groupBox3->Visible = false;
 			groupBox4->Visible = false;
@@ -52,7 +52,7 @@ namespace FinalAppLidar {
 
 	private:
 		bool Iniciado = false;
-		
+
 
 	private: Gps^ gps;
 	private: DataReader^ Reader;
@@ -68,8 +68,8 @@ namespace FinalAppLidar {
 	private: System::Windows::Forms::FlowLayoutPanel^  flowLayoutPanel2;
 	private: System::Windows::Forms::GroupBox^  groupBox1;
 	private: System::Windows::Forms::FlowLayoutPanel^  flowLayoutPanel1;
-	private: System::Windows::Forms::Label^  label1;
-	private: System::Windows::Forms::TextBox^  textBox1;
+
+
 	private: System::Windows::Forms::Label^  label2;
 	private: System::Windows::Forms::TextBox^  textBox2;
 	private: System::Windows::Forms::Button^  button1;
@@ -117,16 +117,18 @@ namespace FinalAppLidar {
 	private: System::Windows::Forms::ToolStripLabel^  toolStripLabel5;
 	private: System::Windows::Forms::Timer^  timer2;
 	private: System::Windows::Forms::ImageList^  imageList1;
-private: System::Windows::Forms::TableLayoutPanel^  tableLayoutPanel1;
-private: System::Windows::Forms::Label^  label3;
-private: System::Windows::Forms::Label^  label14;
-private: System::Windows::Forms::ComboBox^  comboBox1;
-	private: System::Windows::Forms::Button^  button2;
+	private: System::Windows::Forms::TableLayoutPanel^  tableLayoutPanel1;
+	private: System::Windows::Forms::Label^  label3;
+	private: System::Windows::Forms::Label^  label14;
+	private: System::Windows::Forms::ComboBox^  comboBox1;
+
 	private: System::Windows::Forms::TextBox^  textBox3;
 	private: System::Windows::Forms::Timer^  timer3;
-private: System::Windows::Forms::Label^  label15;
-private: System::Windows::Forms::Label^  label16;
-private: System::Windows::Forms::ComboBox^  comboBox2;
+	private: System::Windows::Forms::Label^  label15;
+	private: System::Windows::Forms::Label^  label16;
+	private: System::Windows::Forms::ComboBox^  comboBox2;
+	private: System::Windows::Forms::Button^  button4;
+	private: System::Windows::Forms::Label^  label1;
 
 
 
@@ -169,8 +171,10 @@ private: System::Windows::Forms::ComboBox^  comboBox2;
 			this->ActivarGPS = (gcnew System::Windows::Forms::CheckBox());
 			this->label15 = (gcnew System::Windows::Forms::Label());
 			this->comboBox1 = (gcnew System::Windows::Forms::ComboBox());
+			this->button4 = (gcnew System::Windows::Forms::Button());
 			this->label16 = (gcnew System::Windows::Forms::Label());
 			this->comboBox2 = (gcnew System::Windows::Forms::ComboBox());
+			this->label1 = (gcnew System::Windows::Forms::Label());
 			this->groupBox3 = (gcnew System::Windows::Forms::GroupBox());
 			this->flowLayoutPanel3 = (gcnew System::Windows::Forms::FlowLayoutPanel());
 			this->ActivarAnalisys = (gcnew System::Windows::Forms::CheckBox());
@@ -201,8 +205,6 @@ private: System::Windows::Forms::ComboBox^  comboBox2;
 			this->textBox10 = (gcnew System::Windows::Forms::TextBox());
 			this->groupBox1 = (gcnew System::Windows::Forms::GroupBox());
 			this->flowLayoutPanel1 = (gcnew System::Windows::Forms::FlowLayoutPanel());
-			this->label1 = (gcnew System::Windows::Forms::Label());
-			this->textBox1 = (gcnew System::Windows::Forms::TextBox());
 			this->label2 = (gcnew System::Windows::Forms::Label());
 			this->textBox2 = (gcnew System::Windows::Forms::TextBox());
 			this->tableLayoutPanel1 = (gcnew System::Windows::Forms::TableLayoutPanel());
@@ -211,7 +213,6 @@ private: System::Windows::Forms::ComboBox^  comboBox2;
 			this->folderBrowserDialog1 = (gcnew System::Windows::Forms::FolderBrowserDialog());
 			this->Consola = (gcnew System::Windows::Forms::TextBox());
 			this->timer2 = (gcnew System::Windows::Forms::Timer(this->components));
-			this->button2 = (gcnew System::Windows::Forms::Button());
 			this->textBox3 = (gcnew System::Windows::Forms::TextBox());
 			this->timer3 = (gcnew System::Windows::Forms::Timer(this->components));
 			this->toolStrip1->SuspendLayout();
@@ -306,7 +307,7 @@ private: System::Windows::Forms::ComboBox^  comboBox2;
 			// 
 			this->label14->AutoSize = true;
 			this->label14->Dock = System::Windows::Forms::DockStyle::Top;
-			this->label14->Location = System::Drawing::Point(3, 706);
+			this->label14->Location = System::Drawing::Point(3, 711);
 			this->label14->Name = L"label14";
 			this->label14->Padding = System::Windows::Forms::Padding(35, 0, 0, 0);
 			this->label14->Size = System::Drawing::Size(152, 13);
@@ -321,7 +322,7 @@ private: System::Windows::Forms::ComboBox^  comboBox2;
 			this->button3->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
 			this->button3->ImageIndex = 9;
 			this->button3->ImageList = this->imageList1;
-			this->button3->Location = System::Drawing::Point(3, 666);
+			this->button3->Location = System::Drawing::Point(3, 671);
 			this->button3->Name = L"button3";
 			this->button3->Size = System::Drawing::Size(186, 40);
 			this->button3->TabIndex = 4;
@@ -342,12 +343,16 @@ private: System::Windows::Forms::ComboBox^  comboBox2;
 			this->imageList1->Images->SetKeyName(7, L"noun_216296_cc.png");
 			this->imageList1->Images->SetKeyName(8, L"noun_18974_cc.png");
 			this->imageList1->Images->SetKeyName(9, L"noun_7991_cc.png");
+			this->imageList1->Images->SetKeyName(10, L"noun_5350_cc.png");
+			this->imageList1->Images->SetKeyName(11, L"signal0.png");
+			this->imageList1->Images->SetKeyName(12, L"signal1.png");
+			this->imageList1->Images->SetKeyName(13, L"signal2.png");
 			// 
 			// groupBox5
 			// 
 			this->groupBox5->Controls->Add(this->flowLayoutPanel5);
 			this->groupBox5->Dock = System::Windows::Forms::DockStyle::Top;
-			this->groupBox5->Location = System::Drawing::Point(3, 566);
+			this->groupBox5->Location = System::Drawing::Point(3, 571);
 			this->groupBox5->Name = L"groupBox5";
 			this->groupBox5->Size = System::Drawing::Size(186, 100);
 			this->groupBox5->TabIndex = 4;
@@ -383,9 +388,9 @@ private: System::Windows::Forms::ComboBox^  comboBox2;
 			// 
 			this->groupBox4->Controls->Add(this->flowLayoutPanel4);
 			this->groupBox4->Dock = System::Windows::Forms::DockStyle::Top;
-			this->groupBox4->Location = System::Drawing::Point(3, 466);
+			this->groupBox4->Location = System::Drawing::Point(3, 441);
 			this->groupBox4->Name = L"groupBox4";
-			this->groupBox4->Size = System::Drawing::Size(186, 100);
+			this->groupBox4->Size = System::Drawing::Size(186, 130);
 			this->groupBox4->TabIndex = 3;
 			this->groupBox4->TabStop = false;
 			this->groupBox4->Text = L"GPS";
@@ -395,12 +400,14 @@ private: System::Windows::Forms::ComboBox^  comboBox2;
 			this->flowLayoutPanel4->Controls->Add(this->ActivarGPS);
 			this->flowLayoutPanel4->Controls->Add(this->label15);
 			this->flowLayoutPanel4->Controls->Add(this->comboBox1);
+			this->flowLayoutPanel4->Controls->Add(this->button4);
 			this->flowLayoutPanel4->Controls->Add(this->label16);
 			this->flowLayoutPanel4->Controls->Add(this->comboBox2);
+			this->flowLayoutPanel4->Controls->Add(this->label1);
 			this->flowLayoutPanel4->Dock = System::Windows::Forms::DockStyle::Fill;
 			this->flowLayoutPanel4->Location = System::Drawing::Point(3, 16);
 			this->flowLayoutPanel4->Name = L"flowLayoutPanel4";
-			this->flowLayoutPanel4->Size = System::Drawing::Size(180, 81);
+			this->flowLayoutPanel4->Size = System::Drawing::Size(180, 111);
 			this->flowLayoutPanel4->TabIndex = 0;
 			// 
 			// ActivarGPS
@@ -439,10 +446,24 @@ private: System::Windows::Forms::ComboBox^  comboBox2;
 			this->comboBox1->TabIndex = 2;
 			this->comboBox1->SelectedIndexChanged += gcnew System::EventHandler(this, &Main::comboBox1_SelectedIndexChanged);
 			// 
+			// button4
+			// 
+			this->button4->AutoSize = true;
+			this->button4->FlatAppearance->BorderSize = 0;
+			this->button4->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
+			this->button4->ImageIndex = 10;
+			this->button4->ImageList = this->imageList1;
+			this->button4->Location = System::Drawing::Point(3, 47);
+			this->button4->Name = L"button4";
+			this->button4->Size = System::Drawing::Size(48, 38);
+			this->button4->TabIndex = 6;
+			this->button4->UseVisualStyleBackColor = true;
+			this->button4->Click += gcnew System::EventHandler(this, &Main::button4_Click);
+			// 
 			// label16
 			// 
 			this->label16->AutoSize = true;
-			this->label16->Location = System::Drawing::Point(0, 44);
+			this->label16->Location = System::Drawing::Point(54, 44);
 			this->label16->Margin = System::Windows::Forms::Padding(0);
 			this->label16->Name = L"label16";
 			this->label16->Padding = System::Windows::Forms::Padding(0, 10, 0, 0);
@@ -454,17 +475,26 @@ private: System::Windows::Forms::ComboBox^  comboBox2;
 			// 
 			this->comboBox2->FormattingEnabled = true;
 			this->comboBox2->Items->AddRange(gcnew cli::array< System::Object^  >(3) { L"GPGGA", L"GPRMC", L"GPVTG" });
-			this->comboBox2->Location = System::Drawing::Point(40, 47);
+			this->comboBox2->Location = System::Drawing::Point(94, 47);
 			this->comboBox2->Name = L"comboBox2";
 			this->comboBox2->Size = System::Drawing::Size(75, 21);
 			this->comboBox2->TabIndex = 3;
 			this->comboBox2->SelectedIndexChanged += gcnew System::EventHandler(this, &Main::comboBox2_SelectedIndexChanged);
 			// 
+			// label1
+			// 
+			this->label1->AutoSize = true;
+			this->label1->Location = System::Drawing::Point(3, 88);
+			this->label1->Name = L"label1";
+			this->label1->Size = System::Drawing::Size(53, 13);
+			this->label1->TabIndex = 7;
+			this->label1->Text = L"Satélites: ";
+			// 
 			// groupBox3
 			// 
 			this->groupBox3->Controls->Add(this->flowLayoutPanel3);
 			this->groupBox3->Dock = System::Windows::Forms::DockStyle::Top;
-			this->groupBox3->Location = System::Drawing::Point(3, 317);
+			this->groupBox3->Location = System::Drawing::Point(3, 292);
 			this->groupBox3->Name = L"groupBox3";
 			this->groupBox3->Size = System::Drawing::Size(186, 149);
 			this->groupBox3->TabIndex = 2;
@@ -555,7 +585,7 @@ private: System::Windows::Forms::ComboBox^  comboBox2;
 			// 
 			this->groupBox2->Controls->Add(this->flowLayoutPanel2);
 			this->groupBox2->Dock = System::Windows::Forms::DockStyle::Top;
-			this->groupBox2->Location = System::Drawing::Point(3, 120);
+			this->groupBox2->Location = System::Drawing::Point(3, 95);
 			this->groupBox2->Name = L"groupBox2";
 			this->groupBox2->Size = System::Drawing::Size(186, 197);
 			this->groupBox2->TabIndex = 1;
@@ -771,46 +801,26 @@ private: System::Windows::Forms::ComboBox^  comboBox2;
 			this->groupBox1->Dock = System::Windows::Forms::DockStyle::Top;
 			this->groupBox1->Location = System::Drawing::Point(3, 3);
 			this->groupBox1->Name = L"groupBox1";
-			this->groupBox1->Size = System::Drawing::Size(186, 117);
+			this->groupBox1->Size = System::Drawing::Size(186, 92);
 			this->groupBox1->TabIndex = 0;
 			this->groupBox1->TabStop = false;
 			this->groupBox1->Text = L"Conexión";
 			// 
 			// flowLayoutPanel1
 			// 
-			this->flowLayoutPanel1->Controls->Add(this->label1);
-			this->flowLayoutPanel1->Controls->Add(this->textBox1);
 			this->flowLayoutPanel1->Controls->Add(this->label2);
 			this->flowLayoutPanel1->Controls->Add(this->textBox2);
 			this->flowLayoutPanel1->Controls->Add(this->tableLayoutPanel1);
 			this->flowLayoutPanel1->Dock = System::Windows::Forms::DockStyle::Fill;
 			this->flowLayoutPanel1->Location = System::Drawing::Point(3, 16);
 			this->flowLayoutPanel1->Name = L"flowLayoutPanel1";
-			this->flowLayoutPanel1->Size = System::Drawing::Size(180, 98);
+			this->flowLayoutPanel1->Size = System::Drawing::Size(180, 73);
 			this->flowLayoutPanel1->TabIndex = 0;
-			// 
-			// label1
-			// 
-			this->label1->AutoSize = true;
-			this->label1->Location = System::Drawing::Point(3, 0);
-			this->label1->Name = L"label1";
-			this->label1->Padding = System::Windows::Forms::Padding(0, 5, 0, 0);
-			this->label1->Size = System::Drawing::Size(20, 18);
-			this->label1->TabIndex = 0;
-			this->label1->Text = L"IP:";
-			// 
-			// textBox1
-			// 
-			this->textBox1->Location = System::Drawing::Point(29, 3);
-			this->textBox1->Name = L"textBox1";
-			this->textBox1->Size = System::Drawing::Size(127, 20);
-			this->textBox1->TabIndex = 1;
-			this->textBox1->Text = L"192.168.0.201";
 			// 
 			// label2
 			// 
 			this->label2->AutoSize = true;
-			this->label2->Location = System::Drawing::Point(3, 26);
+			this->label2->Location = System::Drawing::Point(3, 0);
 			this->label2->Name = L"label2";
 			this->label2->Padding = System::Windows::Forms::Padding(0, 5, 0, 0);
 			this->label2->Size = System::Drawing::Size(41, 18);
@@ -819,7 +829,7 @@ private: System::Windows::Forms::ComboBox^  comboBox2;
 			// 
 			// textBox2
 			// 
-			this->textBox2->Location = System::Drawing::Point(50, 29);
+			this->textBox2->Location = System::Drawing::Point(50, 3);
 			this->textBox2->Name = L"textBox2";
 			this->textBox2->Size = System::Drawing::Size(100, 20);
 			this->textBox2->TabIndex = 3;
@@ -835,7 +845,7 @@ private: System::Windows::Forms::ComboBox^  comboBox2;
 			this->tableLayoutPanel1->ColumnStyles->Add((gcnew System::Windows::Forms::ColumnStyle(System::Windows::Forms::SizeType::Percent,
 				25)));
 			this->tableLayoutPanel1->Controls->Add(this->button1, 1, 0);
-			this->tableLayoutPanel1->Location = System::Drawing::Point(3, 55);
+			this->tableLayoutPanel1->Location = System::Drawing::Point(3, 29);
 			this->tableLayoutPanel1->Name = L"tableLayoutPanel1";
 			this->tableLayoutPanel1->RowCount = 1;
 			this->tableLayoutPanel1->RowStyles->Add((gcnew System::Windows::Forms::RowStyle(System::Windows::Forms::SizeType::Percent, 100)));
@@ -880,16 +890,6 @@ private: System::Windows::Forms::ComboBox^  comboBox2;
 			this->timer2->Enabled = true;
 			this->timer2->Tick += gcnew System::EventHandler(this, &Main::timer2_Tick);
 			// 
-			// button2
-			// 
-			this->button2->Location = System::Drawing::Point(842, 432);
-			this->button2->Name = L"button2";
-			this->button2->Size = System::Drawing::Size(75, 23);
-			this->button2->TabIndex = 4;
-			this->button2->Text = L"GPS";
-			this->button2->UseVisualStyleBackColor = true;
-			this->button2->Click += gcnew System::EventHandler(this, &Main::button2_Click_1);
-			// 
 			// textBox3
 			// 
 			this->textBox3->Location = System::Drawing::Point(218, 477);
@@ -909,7 +909,6 @@ private: System::Windows::Forms::ComboBox^  comboBox2;
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
 			this->ClientSize = System::Drawing::Size(1222, 733);
 			this->Controls->Add(this->textBox3);
-			this->Controls->Add(this->button2);
 			this->Controls->Add(this->Consola);
 			this->Controls->Add(this->tabControl1);
 			this->Controls->Add(this->toolStrip1);
@@ -955,7 +954,7 @@ private: System::Windows::Forms::ComboBox^  comboBox2;
 			Controlador->ArrayDataReader[PCALIBRATE_R] = Convert::ToDouble(textBox6->Text);
 			Controlador->ArrayDataReader[PCALIBRATE_P] = Convert::ToDouble(textBox8->Text);
 			Controlador->ArrayDataReader[PCALIBRATE_W] = Convert::ToDouble(textBox10->Text);
-			
+
 			Controlador->Flags[FlagPausa] = false;
 
 			//Bloquear botones al pulsar el activar
@@ -963,14 +962,33 @@ private: System::Windows::Forms::ComboBox^  comboBox2;
 			groupBox3->Enabled = false;
 			groupBox4->Enabled = false;
 			groupBox5->Enabled = false;
+			ActivarLogs->Enabled = false;
+			textBox5->Enabled = false;
+			textBox6->Enabled = false;
+			textBox7->Enabled = false;
+			textBox8->Enabled = false;
+			textBox9->Enabled = false;
+			textBox10->Enabled = false;
+			Maximo->Enabled = false;
+			Minimo->Enabled = false;
 			ActivarLector->ImageIndex = 3;
 		}
 		else {
 			Controlador->Flags[FlagPausa] = true;
 			ActivarLector->ImageIndex = 2;
+			ActivarOpenGl->Enabled = true;
 			groupBox3->Enabled = true;
 			groupBox4->Enabled = true;
 			groupBox5->Enabled = true;
+			ActivarLogs->Enabled = true;
+			Maximo->Enabled = true;
+			Minimo->Enabled = true;
+			textBox5->Enabled = true;
+			textBox6->Enabled = true;
+			textBox7->Enabled = true;
+			textBox8->Enabled = true;
+			textBox9->Enabled = true;
+			textBox10->Enabled = true;
 		}
 		//TODO: MANDAR A CONTROL 
 
@@ -1006,12 +1024,18 @@ private: System::Windows::Forms::ComboBox^  comboBox2;
 			}
 			comboBox1->SelectedItem = comboBox1->Items[0];
 			comboBox1->EndUpdate();
+			comboBox2->SelectedIndex = 1;
 		}
-		else{ 
+		else {
+			Controlador->ArrayGps[START] = false;
 			comboBox1->Items->Clear();
+			button4->ImageIndex = 10;
+			label1->Text = "Satélites:";
+			gps->serialPort->Close();
 			ActivarGPS->ImageIndex = 7;
+			timer3->Enabled = false;
 		}
-			
+
 		//TODO: MANDAR A CONTROL 
 	}
 	private: System::Void ActivarAnalisys_CheckedChanged(System::Object^  sender, System::EventArgs^  e) {
@@ -1075,7 +1099,7 @@ private: System::Windows::Forms::ComboBox^  comboBox2;
 		catch (Exception^ e)
 		{
 			System::Windows::Forms::MessageBox::Show(e->ToString());
-			MessageBox::Show("Error en el proceso de conexión:\r\n"+ e->ToString(), "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
+			MessageBox::Show("Error en el proceso de conexión:\r\n" + e->ToString(), "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
 		}
 
 	}
@@ -1086,6 +1110,9 @@ private: System::Windows::Forms::ComboBox^  comboBox2;
 			if (Controlador->Threads[i])
 				Controlador->Threads[i]->Abort();
 		}
+		delete Controlador;
+		delete timer2;
+		delete timer3;
 	}
 	private: System::Void button3_Click(System::Object^  sender, System::EventArgs^  e) {
 		PostProceso^ p = gcnew PostProceso();
@@ -1111,15 +1138,46 @@ private: System::Windows::Forms::ComboBox^  comboBox2;
 	private: System::Void comboBox1_SelectedIndexChanged(System::Object^  sender, System::EventArgs^  e) {
 		Controlador->ArrayGps[COM] = comboBox1->SelectedItem->ToString();
 	}
-private: System::Void button2_Click_1(System::Object^  sender, System::EventArgs^  e) {
-	Controlador->ArrayGps[START] = true;
-	timer3->Enabled = true;
-}
-private: System::Void timer3_Tick(System::Object^  sender, System::EventArgs^  e) {
-	textBox3->AppendText(Controlador->ArrayGps[TRAMA]->ToString()+ "\n");
-}
-private: System::Void comboBox2_SelectedIndexChanged(System::Object^  sender, System::EventArgs^  e) {
-	Controlador->ArrayGps[TIPO_TRAMA] = comboBox2->SelectedItem->ToString();
-}
-};
+	private: System::Void timer3_Tick(System::Object^  sender, System::EventArgs^  e) {
+		bool start = (bool)Controlador->ArrayGps[START];
+		if (start) {
+			String^ trama = Controlador->ArrayGps[TRAMA]->ToString();
+			int sig = Convert::ToInt32(Controlador->ArrayGps[QUALITY]);
+			int sat = Convert::ToInt32(Controlador->ArrayGps[SATELITES]);
+			if (trama->Length > 0)
+				textBox3->AppendText(trama + "\n");
+
+			switch (sig)
+			{
+			case 1: button4->ImageIndex = 12;label1->Text = "Satélites: " + sat;break;
+			case 2: button4->ImageIndex = 13;label1->Text = "Satélites: " + sat;break;
+			default:
+				button4->ImageIndex = 11;
+				label1->Text = "Satélites: Buscando...";
+				break;
+			}
+		}
+		else {
+			button4->ImageIndex = 10;
+			label1->Text = "Satélites:";
+		}
+	}
+	private: System::Void comboBox2_SelectedIndexChanged(System::Object^  sender, System::EventArgs^  e) {
+		Controlador->ArrayGps[TIPO_TRAMA] = comboBox2->SelectedItem->ToString();
+	}
+	private: System::Void button4_Click(System::Object^  sender, System::EventArgs^  e) {
+		if ((bool)Controlador->ArrayGps[START]) {
+			button4->ImageIndex = 10;
+			Controlador->ArrayGps[START] = false;
+			timer3->Enabled = false;
+		}
+		else
+		{
+			button4->ImageIndex = 11;
+			Controlador->ArrayGps[START] = true;
+			timer3->Enabled = true;
+		}
+
+	}
+	};
 }

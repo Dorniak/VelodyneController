@@ -56,11 +56,19 @@
 #define NUM_OBSTACULOS 10
 
 //Constantes GPS
-#define GPS_SIZE 4
+#define GPS_SIZE 6
 #define TIPO_TRAMA 0
 #define TRAMA 1
 #define START 2
 #define COM 3
+#define QUALITY 4
+#define SATELITES 5
+//THREADS
+#define NUMERO_THREADS 4 
+#define THREAD_READER 0
+#define THREAD_ANALISIS 1
+#define THREAD_OPENGL 2
+#define THREAD_GPS 3 
 //Includes para las clases Controller Reader DataAnalisys y OpenGl
 using namespace std;
 using namespace System;

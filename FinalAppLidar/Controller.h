@@ -27,7 +27,7 @@ public:
 	//Pone el flag de conclusion a 1 para que la aplicacion que lo recoja sepa que las conclusiones estan listas
 	void setFlagTratamiento();
 	//Array de threads para apagarlos y encenderlos
-	cli::array<Thread^>^ Threads = gcnew cli::array<Thread^>(3); 
+	cli::array<Thread^>^ Threads = gcnew cli::array<Thread^>(NUMERO_THREADS); 
 	//Thread de interpretar conclusiones
 	void ThreadInterpretarConclusiones();
 	//Consola

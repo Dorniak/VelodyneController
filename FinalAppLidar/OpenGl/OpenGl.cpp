@@ -67,7 +67,7 @@ OpenGl::OpenGl(cli::array<Thread^>^ Threads)
 		if (!ThreadDIO)
 			ThreadDIO = gcnew Thread(gcnew ThreadStart(this, &OpenGl::threadconstructor));
 		ThreadDIO->Start();
-		this->Threads[2] = ThreadDIO;
+		this->Threads[THREAD_OPENGL] = ThreadDIO;
 	}
 	catch (Exception^ e)
 	{
