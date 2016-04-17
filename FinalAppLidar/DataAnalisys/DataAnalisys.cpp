@@ -52,19 +52,19 @@ void DataAnalisys::AnalisysThread()
 	Informar("Iniciando Thread Analisis");
 	//En caso de que se desactive y se reactive despues hay que limpiar los objetos
 	ObstaculosvAnt->Clear();
-	while (Flags[FlagAnalisysOn] && !Flags[FlagWarning] && !Flags[FlagPausa])
+	while (Flags[FLAG_ANALISYS] && !Flags[FLAG_WARNING] && !Flags[FLAG_PAUSA])
 	{
 		Informar("Interior del while");
 		try
 		{
-			if (!Flags[FlagTratamiento]) {
+			if (!Flags[FLAG_TRATAMIENTO]) {
 				Informar("Tratamiento");
 				//matriz = Controllerador->Puntos;  La matriz es siempre igual a la matriz de puntos
-				resolutionH = Convert::ToDouble(parametros[posResolucionH]);//Resolucion
-				resolutionV = Convert::ToDouble(parametros[posResolucionV]);//Resolucion
-				VCOCHE = Convert::ToDouble(parametros[posApertura]);//Vcoche
-				apertura = Convert::ToDouble(parametros[posVcoche]);//Apertura
-				tolerancia = Convert::ToDouble(parametros[posTolerancia]);
+				resolutionH = Convert::ToDouble(parametros[HORIZONTAL_RESOLUTION]);//Resolucion
+				resolutionV = Convert::ToDouble(parametros[VERTICAL_RESOLUTION]);//Resolucion
+				VCOCHE = Convert::ToDouble(parametros[OPENING]);//Vcoche
+				apertura = Convert::ToDouble(parametros[CAR_VELOCITY]);//Apertura
+				tolerancia = Convert::ToDouble(parametros[TOLERANCE]);
 				NUMERO_COLUMNAS = matriz->Count / NUMERO_FILAS;
 				//Trabajo
 
@@ -105,7 +105,7 @@ void DataAnalisys::AnalisysThread()
 		catch (Exception^ e)
 		{
 			Informar("Excepcion");
-			Flags[FlagWarning] = true;
+			Flags[FLAG_WARNING] = true;
 		}
 		Sleep(200);
 	}
@@ -125,16 +125,16 @@ void DataAnalisys::Informar(String ^ Entrada)
 void DataAnalisys::copiarObstaculos()
 {
 	//Controller de collision
-	if (Flags[FlagTratamiento]) {
-		Flags[FlagWarning] = true;
+	if (Flags[FLAG_TRATAMIENTO]) {
+		Flags[FLAG_WARNING] = true;
 		Informar("Error de Colision");
 		//mensaje pantalla
 	}
-	Flags[FlagTratamiento] = true;
+	Flags[FLAG_TRATAMIENTO] = true;
 
 	ObstaculosvAnt->Clear();
 	ObstaculosvAnt->AddRange(Obstaculos);
-	if (Flags[FlagOpenGlOn]) {
+	if (Flags[FLAG_OPENGL]) {
 		Informar("Obstaculos->OpenGl");
 		Dibujador->modificarObstaculos(ObstaculosvAnt);
 	}
@@ -342,13 +342,13 @@ bool DataAnalisys::comprobarBloqueo(List<Punto3D^>^ matriz)
 bool DataAnalisys::puntosCercanosH(Punto3D^ p1, Punto3D^ p2)
 {
 	double tolerancia = p1->getDistance() * tan(resolutionV * PI / 180);
-	tolerancia = tolerancia * ((100 + ToleranciaHorizontal) / 100);
+	tolerancia = tolerancia * ((100 + HORIZONTAL_TOLERANCE) / 100);
 	return(tolerancia > p1->distanceToPoint(p2));
 }
 bool DataAnalisys::puntosCercanosV(Punto3D^ p1, Punto3D^ p2)
 {
 	double tolerancia = p1->getDistance() * tan(resolutionV  * PI / 180);
-	tolerancia = tolerancia * ((100 + ToleranciaVertical) / 100);
+	tolerancia = tolerancia * ((100 + VERTICAL_TOLERANCE) / 100);
 	return(tolerancia > p1->distanceToPoint(p2));
 }
 bool DataAnalisys::puntosCercanosD(Punto3D^ p1, Punto3D^ p2)
@@ -357,7 +357,7 @@ bool DataAnalisys::puntosCercanosD(Punto3D^ p1, Punto3D^ p2)
 	double toleranciaH = p1->getDistance() * tan(resolutionH  * PI / 180);
 	Punto3D ^a = gcnew Punto3D(toleranciaH, toleranciaV, 0);
 	double tolerancia = a->getModule();
-	tolerancia = tolerancia * ((100 + ToleranciaDiagonal) / 100);
+	tolerancia = tolerancia * ((100 + DIAGONAL_TOLERANCE) / 100);
 	return(tolerancia > p1->distanceToPoint(p2));
 }
 int DataAnalisys::convaPos(int columna, int fila) {

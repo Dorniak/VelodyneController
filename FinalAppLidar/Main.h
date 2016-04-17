@@ -20,7 +20,7 @@ namespace FinalAppLidar {
 		Main(void)
 		{
 			InitializeComponent();
-			Controlador = gcnew Controller(Consola);
+			Controlador = gcnew Controller();
 			Controlador->ArrayGps[START] = false;
 			Controlador->ArrayGps[TIPO_TRAMA] = "";
 			Controlador->ArrayGps[TRAMA] = "";
@@ -110,11 +110,11 @@ namespace FinalAppLidar {
 	private: System::Windows::Forms::Label^  label12;
 	private: System::Windows::Forms::Label^  label13;
 
-	private: System::Windows::Forms::ToolStripLabel^  toolStripLabel1;
-	private: System::Windows::Forms::ToolStripLabel^  toolStripLabel2;
-	private: System::Windows::Forms::ToolStripLabel^  toolStripLabel3;
-	private: System::Windows::Forms::ToolStripLabel^  toolStripLabel4;
-	private: System::Windows::Forms::ToolStripLabel^  toolStripLabel5;
+
+
+
+
+
 	private: System::Windows::Forms::Timer^  timer2;
 	private: System::Windows::Forms::ImageList^  imageList1;
 	private: System::Windows::Forms::TableLayoutPanel^  tableLayoutPanel1;
@@ -129,6 +129,11 @@ namespace FinalAppLidar {
 	private: System::Windows::Forms::ComboBox^  comboBox2;
 	private: System::Windows::Forms::Button^  button4;
 	private: System::Windows::Forms::Label^  label1;
+private: System::Windows::Forms::ToolStripLabel^  toolStripLabel1;
+private: System::Windows::Forms::ToolStripLabel^  toolStripLabel2;
+private: System::Windows::Forms::ToolStripLabel^  toolStripLabel3;
+private: System::Windows::Forms::ToolStripLabel^  toolStripLabel4;
+private: System::Windows::Forms::ToolStripSeparator^  toolStripSeparator1;
 
 
 
@@ -155,9 +160,6 @@ namespace FinalAppLidar {
 			this->toolStrip1 = (gcnew System::Windows::Forms::ToolStrip());
 			this->toolStripLabel1 = (gcnew System::Windows::Forms::ToolStripLabel());
 			this->toolStripLabel2 = (gcnew System::Windows::Forms::ToolStripLabel());
-			this->toolStripLabel3 = (gcnew System::Windows::Forms::ToolStripLabel());
-			this->toolStripLabel4 = (gcnew System::Windows::Forms::ToolStripLabel());
-			this->toolStripLabel5 = (gcnew System::Windows::Forms::ToolStripLabel());
 			this->tabControl1 = (gcnew System::Windows::Forms::TabControl());
 			this->tabPage1 = (gcnew System::Windows::Forms::TabPage());
 			this->label14 = (gcnew System::Windows::Forms::Label());
@@ -215,6 +217,9 @@ namespace FinalAppLidar {
 			this->timer2 = (gcnew System::Windows::Forms::Timer(this->components));
 			this->textBox3 = (gcnew System::Windows::Forms::TextBox());
 			this->timer3 = (gcnew System::Windows::Forms::Timer(this->components));
+			this->toolStripLabel3 = (gcnew System::Windows::Forms::ToolStripLabel());
+			this->toolStripLabel4 = (gcnew System::Windows::Forms::ToolStripLabel());
+			this->toolStripSeparator1 = (gcnew System::Windows::Forms::ToolStripSeparator());
 			this->toolStrip1->SuspendLayout();
 			this->tabControl1->SuspendLayout();
 			this->tabPage1->SuspendLayout();
@@ -237,7 +242,7 @@ namespace FinalAppLidar {
 			this->toolStrip1->Dock = System::Windows::Forms::DockStyle::Bottom;
 			this->toolStrip1->Items->AddRange(gcnew cli::array< System::Windows::Forms::ToolStripItem^  >(5) {
 				this->toolStripLabel1,
-					this->toolStripLabel2, this->toolStripLabel3, this->toolStripLabel4, this->toolStripLabel5
+					this->toolStripLabel2, this->toolStripLabel3, this->toolStripLabel4, this->toolStripSeparator1
 			});
 			this->toolStrip1->Location = System::Drawing::Point(0, 708);
 			this->toolStrip1->Name = L"toolStrip1";
@@ -248,32 +253,14 @@ namespace FinalAppLidar {
 			// toolStripLabel1
 			// 
 			this->toolStripLabel1->Name = L"toolStripLabel1";
-			this->toolStripLabel1->Size = System::Drawing::Size(86, 22);
-			this->toolStripLabel1->Text = L"toolStripLabel1";
+			this->toolStripLabel1->Size = System::Drawing::Size(93, 22);
+			this->toolStripLabel1->Text = L"Frecuencia: 0 Hz";
 			// 
 			// toolStripLabel2
 			// 
 			this->toolStripLabel2->Name = L"toolStripLabel2";
-			this->toolStripLabel2->Size = System::Drawing::Size(86, 22);
-			this->toolStripLabel2->Text = L"toolStripLabel2";
-			// 
-			// toolStripLabel3
-			// 
-			this->toolStripLabel3->Name = L"toolStripLabel3";
-			this->toolStripLabel3->Size = System::Drawing::Size(86, 22);
-			this->toolStripLabel3->Text = L"toolStripLabel3";
-			// 
-			// toolStripLabel4
-			// 
-			this->toolStripLabel4->Name = L"toolStripLabel4";
-			this->toolStripLabel4->Size = System::Drawing::Size(86, 22);
-			this->toolStripLabel4->Text = L"toolStripLabel4";
-			// 
-			// toolStripLabel5
-			// 
-			this->toolStripLabel5->Name = L"toolStripLabel5";
-			this->toolStripLabel5->Size = System::Drawing::Size(86, 22);
-			this->toolStripLabel5->Text = L"toolStripLabel5";
+			this->toolStripLabel2->Size = System::Drawing::Size(71, 22);
+			this->toolStripLabel2->Text = L"Lector: 0 ms";
 			// 
 			// tabControl1
 			// 
@@ -903,6 +890,22 @@ namespace FinalAppLidar {
 			this->timer3->Interval = 500;
 			this->timer3->Tick += gcnew System::EventHandler(this, &Main::timer3_Tick);
 			// 
+			// toolStripLabel3
+			// 
+			this->toolStripLabel3->Name = L"toolStripLabel3";
+			this->toolStripLabel3->Size = System::Drawing::Size(78, 22);
+			this->toolStripLabel3->Text = L"Análisis: 0 ms";
+			// 
+			// toolStripLabel4
+			// 
+			this->toolStripLabel4->Name = L"toolStripLabel4";
+			this->toolStripLabel4->Size = System::Drawing::Size(0, 22);
+			// 
+			// toolStripSeparator1
+			// 
+			this->toolStripSeparator1->Name = L"toolStripSeparator1";
+			this->toolStripSeparator1->Size = System::Drawing::Size(6, 25);
+			// 
 			// Main
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
@@ -946,8 +949,8 @@ namespace FinalAppLidar {
 
 	private: System::Void ActivarLector_CheckedChanged(System::Object^  sender, System::EventArgs^  e) {
 		if (ActivarLector->Checked) {
-			Controlador->ArrayDataReader[Pmin] = Convert::ToDouble(Minimo->Text);
-			Controlador->ArrayDataReader[Pmax] = Convert::ToDouble(Maximo->Text);
+			Controlador->ArrayDataReader[MIN_DISTANCE] = Convert::ToDouble(Minimo->Text);
+			Controlador->ArrayDataReader[MAX_DISTANCE] = Convert::ToDouble(Maximo->Text);
 			Controlador->ArrayDataReader[PCALIBRATE_X] = Convert::ToDouble(textBox5->Text);
 			Controlador->ArrayDataReader[PCALIBRATE_Y] = Convert::ToDouble(textBox7->Text);
 			Controlador->ArrayDataReader[PCALIBRATE_Z] = Convert::ToDouble(textBox9->Text);
@@ -955,7 +958,7 @@ namespace FinalAppLidar {
 			Controlador->ArrayDataReader[PCALIBRATE_P] = Convert::ToDouble(textBox8->Text);
 			Controlador->ArrayDataReader[PCALIBRATE_W] = Convert::ToDouble(textBox10->Text);
 
-			Controlador->Flags[FlagPausa] = false;
+			Controlador->Flags[FLAG_PAUSA] = false;
 
 			//Bloquear botones al pulsar el activar
 			ActivarOpenGl->Enabled = false;
@@ -974,7 +977,7 @@ namespace FinalAppLidar {
 			ActivarLector->ImageIndex = 3;
 		}
 		else {
-			Controlador->Flags[FlagPausa] = true;
+			Controlador->Flags[FLAG_PAUSA] = true;
 			ActivarLector->ImageIndex = 2;
 			ActivarOpenGl->Enabled = true;
 			groupBox3->Enabled = true;
@@ -998,8 +1001,8 @@ namespace FinalAppLidar {
 			ActivarLogs->ImageIndex = 5;
 			folderBrowserDialog1->ShowDialog();
 			if (folderBrowserDialog1->SelectedPath != "") {
-				Controlador->ArrayDataReader[Ppath] = folderBrowserDialog1->SelectedPath;
-				Controlador->Flags[FlagLogOn] = true;
+				Controlador->ArrayDataReader[PATH_LOG] = folderBrowserDialog1->SelectedPath;
+				Controlador->Flags[FLAG_LOG] = true;
 			}
 			else {
 				ActivarLogs->Checked = false;
@@ -1008,7 +1011,7 @@ namespace FinalAppLidar {
 		}
 		else {
 			ActivarLogs->ImageIndex = 4;
-			Controlador->Flags[FlagLogOn] = false;
+			Controlador->Flags[FLAG_LOG] = false;
 		}
 		//TODO: MANDAR A CONTROL //TODO: MANDAR A CONTROL 
 	}
@@ -1042,29 +1045,28 @@ namespace FinalAppLidar {
 		if (ActivarAnalisys->Checked)
 		{
 			ActivarAnalisys->ImageIndex = 6;
-			Controlador->Flags[FlagAnalisysOn] = true;
+			Controlador->Flags[FLAG_ANALISYS] = true;
 		}
 		else
 		{
 			ActivarAnalisys->ImageIndex = 7;
-			Controlador->Flags[FlagAnalisysOn] = true;
+			Controlador->Flags[FLAG_ANALISYS] = true;
 		}
-		//TODO: MANDAR A CONTROL 
 	}
 	private: System::Void ActivarOpenGl_CheckedChanged(System::Object^  sender, System::EventArgs^  e) {
 		if (ActivarOpenGl->Checked) {
 			ActivarOpenGl->ImageIndex = 6;
-			Controlador->Flags[FlagOpenGlOn] = true;
+			Controlador->Flags[FLAG_OPENGL] = true;
 		}
 		else {
 			ActivarOpenGl->ImageIndex = 7;
-			Controlador->Flags[FlagOpenGlOn] = false;
+			Controlador->Flags[FLAG_OPENGL] = false;
 		}
 	}
 
 	private: System::Void button2_Click(System::Object^  sender, System::EventArgs^  e) {
 		folderBrowserDialog1->ShowDialog();
-		Controlador->ArrayDataReader[Ppath] = folderBrowserDialog1->SelectedPath;
+		Controlador->ArrayDataReader[PATH_LOG] = folderBrowserDialog1->SelectedPath;
 	}
 	private: System::Void button1_Click(System::Object^  sender, System::EventArgs^  e) {
 		try
@@ -1121,18 +1123,25 @@ namespace FinalAppLidar {
 	private: System::Void trackBar1_Scroll(System::Object^  sender, System::EventArgs^  e) {
 		if (trackBar1->Value < 10)
 			trackBar1->Value = 10;
-		Controlador->ArrayDataAnalisys[posTolerancia] = trackBar1->Value;
+		Controlador->ArrayDataAnalisys[TOLERANCE] = trackBar1->Value;
 		label13->Text = trackBar1->Value.ToString() + " %";
 	}
 
 	private: System::Void timer2_Tick(System::Object^  sender, System::EventArgs^  e) {
 
-		//PARA CARGAR EL ESTADO DE TODO EN LA INTERFAZ
-		toolStripLabel1->Text = "12";
-		Consola->AppendText(Controlador->ArrayDataReader[INFORME]->ToString());
+		int fr = Convert::ToInt32(Controlador->ArrayDataReader[FRECUENCY_TIME]);
+		int lec = Convert::ToInt32(Controlador->ArrayDataReader[PROCESS_TIME]);
+		String ^ info = Controlador->ArrayDataReader[INFORME]->ToString();
 		Controlador->ArrayDataReader[INFORME] = "";
-		textBox3->AppendText(Dibujador->Informe);
-		Dibujador->Informe = "";
+		if (fr > 0)
+		{
+			toolStripLabel1->Text = "Frecuencia: " + (1 / fr) * 1000 + " Hz";
+		}
+		else {
+			toolStripLabel1->Text = "Frecuencia: 0 Hz";
+		}
+		toolStripLabel2->Text = "Lector: " + lec + " ms";
+		Consola->AppendText(info);
 	}
 
 	private: System::Void comboBox1_SelectedIndexChanged(System::Object^  sender, System::EventArgs^  e) {

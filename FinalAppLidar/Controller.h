@@ -8,38 +8,46 @@
 ref class Controller {
 public:
 	
-	String^ Informe;
-	//Constructor
+	/// <summary>
+	/// Constructor de la clase Controller. Actúa como capa controladora del resto de componentes. Inicializa todos los componentes necesarios para la comunicación entre 
+	/// clases.
+	/// </summary>
 	Controller();
-	Controller(System::Windows::Forms::TextBox^  Consola);
-	//Lista de Obstaculos
+
+	/// <summary>
+	/// Lista  de obstáculos.
+	/// </summary>
 	List<Obstaculo^>^ Obstaculos;
-	//Lista de puntos
+
+	/// <summary>
+	/// Lista de puntos.
+	/// </summary>
 	List<Punto3D^>^ Puntos;
-	//Lista de conclusiones
-	List<int>^ Conclusiones;
-	//Array de flags que sincroniza los threads
+
+	/// <summary>
+	/// Array de flags del sistema.
+	/// </summary>
 	cli::array<bool>^ Flags;
-	//Conjunto de parametros que necesita el DataAnalisys en tiempo de ejecucion
+
+	/// <summary>
+	/// Array de parámetros de la clase <see cref="DataAnalisys"/>.
+	/// </summary>
 	cli::array<Object^>^ ArrayDataAnalisys;
+
+	/// <summary>
+	/// Array de parámetros de la clase <see cref="reader"/>.
+	/// </summary>
 	cli::array<Object^>^ ArrayDataReader;
+
+	/// <summary>
+	/// Array de parámetros de la clase <see cref="Gps"/>.
+	/// </summary>
 	cli::array<Object^>^ ArrayGps;
-	//Pone el flag de conclusion a 1 para que la aplicacion que lo recoja sepa que las conclusiones estan listas
-	void setFlagTratamiento();
-	//Array de threads para apagarlos y encenderlos
-	cli::array<Thread^>^ Threads = gcnew cli::array<Thread^>(NUMERO_THREADS); 
-	//Thread de interpretar conclusiones
-	void ThreadInterpretarConclusiones();
-	//Consola
-	System::Windows::Forms::TextBox^  Consola;
-	void EscribirInforme();
+
+	/// <summary>
+	/// Array que contiene todos los threads.
+	/// </summary>
+	cli::array<Thread^>^ Threads;
 private:
-	Thread^ thread_Conclusiones;
-	//Objeto DataAnalisys
-	DataAnalisys^ Analisys;
-	//Objeto OpenGl
-	//Objeto DataReader
-	//Funcion final de la que se sacan las conclusiones del vehiculo
-	void interpretarConclusiones();
-	//Funcion que inicia cada objeto con todos los parametros necesarios
+
 };

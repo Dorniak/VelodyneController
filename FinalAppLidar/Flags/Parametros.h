@@ -1,20 +1,20 @@
 #pragma once
 //Posicion parametros array Flags
-#define ARRAYFlags_SIZE 6
+#define SIZE_ARRAY_FLAGS 6
 
-#define FlagTratamiento 0
-#define FlagLogOn 1
-#define FlagWarning 2
-#define FlagPausa 3
-#define FlagAnalisysOn 4
-#define FlagOpenGlOn 5
+#define FLAG_TRATAMIENTO 0
+#define FLAG_LOG 1
+#define FLAG_WARNING 2
+#define FLAG_PAUSA 3
+#define FLAG_ANALISYS 4
+#define FLAG_OPENGL 5
 
 
 //Numero de parametros de los arrays
-#define numParametrosReader 11
-#define numParametrosAnalisys 6
+#define SIZE_ARRAY_READER 13
+#define SIZE_ARRAY_ANALISYS 6
 //Posicion parametros array Reader
-#define Ppath 0
+#define PATH_LOG 0
 #define IP 1
 #define PCALIBRATE_X 2
 #define PCALIBRATE_Y 3
@@ -22,9 +22,11 @@
 #define PCALIBRATE_R 5
 #define PCALIBRATE_P 6
 #define PCALIBRATE_W 7
-#define Pmax 8
-#define Pmin 9
+#define MAX_DISTANCE 8
+#define MIN_DISTANCE 9
 #define INFORME 10
+#define FRECUENCY_TIME 11
+#define PROCESS_TIME 12
 
 
 #define NUMBER_OF_BLOCKS 12
@@ -32,18 +34,18 @@
 
 
 //Analisys puntos
-#define ToleranciaVertical 10
-#define ToleranciaDiagonal 10
-#define ToleranciaHorizontal 10
+#define VERTICAL_TOLERANCE 10
+#define DIAGONAL_TOLERANCE 10
+#define HORIZONTAL_TOLERANCE 10
 
 
 //Posicion parametros array DataAnalisys
-#define posResolucionH 0
-#define posResolucionV 1
-#define posApertura 2
-#define posVcoche 3
-#define posInforme 4
-#define posTolerancia 5
+#define HORIZONTAL_RESOLUTION 0
+#define VERTICAL_RESOLUTION 1
+#define OPENING 2
+#define CAR_VELOCITY 3
+#define INFORME_ANALISYS 4
+#define TOLERANCE 5
 
 //Constantes DataAnalisys
 #define NUMERO_FILAS 16 //Coincide con el numero de canales
@@ -56,7 +58,7 @@
 #define NUM_OBSTACULOS 10
 
 //Constantes GPS
-#define GPS_SIZE 6
+#define SIZE_ARRAY_GPS 6
 #define TIPO_TRAMA 0
 #define TRAMA 1
 #define START 2
@@ -79,6 +81,7 @@ using namespace System::IO;
 using namespace System::Text;
 using namespace System::Threading;
 using namespace System::Collections::Generic;
+using namespace System::Diagnostics;
 
 
 
