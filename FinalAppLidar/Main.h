@@ -28,6 +28,7 @@ namespace FinalAppLidar {
 			gps = gcnew	Gps(Controlador->ArrayGps, Controlador->Threads);
 			Dibujador = gcnew OpenGl(Controlador->Threads);
 			Reader = gcnew DataReader(Controlador->Puntos, Controlador->ArrayDataReader, Controlador->Flags, Controlador->Threads, Dibujador, Controlador->ArrayGps);
+			Analisys = gcnew DataAnalisys(Controlador->Puntos,Controlador->Obstaculos,Controlador->ArrayDataAnalisys,Controlador->Conclusiones, Controlador->Flags, Controlador->Threads,Dibujador);
 			groupBox2->Visible = false;
 			groupBox3->Visible = false;
 			groupBox4->Visible = false;
@@ -56,8 +57,11 @@ namespace FinalAppLidar {
 
 	private: Gps^ gps;
 	private: DataReader^ Reader;
+	private: DataAnalisys^ Analisys;
 	private: Controller^ Controlador;
 	private: OpenGl^ Dibujador;
+	private: String ^ info;
+	private: String ^ info2;
 	private: System::Windows::Forms::ToolStrip^  toolStrip1;
 
 	private: System::Windows::Forms::TabControl^  tabControl1;
@@ -134,6 +138,9 @@ private: System::Windows::Forms::ToolStripLabel^  toolStripLabel2;
 private: System::Windows::Forms::ToolStripLabel^  toolStripLabel3;
 private: System::Windows::Forms::ToolStripLabel^  toolStripLabel4;
 private: System::Windows::Forms::ToolStripSeparator^  toolStripSeparator1;
+private: System::Windows::Forms::TextBox^  ConsolaA;
+private: System::Windows::Forms::TextBox^  textBox1;
+
 
 
 
@@ -160,6 +167,9 @@ private: System::Windows::Forms::ToolStripSeparator^  toolStripSeparator1;
 			this->toolStrip1 = (gcnew System::Windows::Forms::ToolStrip());
 			this->toolStripLabel1 = (gcnew System::Windows::Forms::ToolStripLabel());
 			this->toolStripLabel2 = (gcnew System::Windows::Forms::ToolStripLabel());
+			this->toolStripLabel3 = (gcnew System::Windows::Forms::ToolStripLabel());
+			this->toolStripLabel4 = (gcnew System::Windows::Forms::ToolStripLabel());
+			this->toolStripSeparator1 = (gcnew System::Windows::Forms::ToolStripSeparator());
 			this->tabControl1 = (gcnew System::Windows::Forms::TabControl());
 			this->tabPage1 = (gcnew System::Windows::Forms::TabPage());
 			this->label14 = (gcnew System::Windows::Forms::Label());
@@ -217,9 +227,8 @@ private: System::Windows::Forms::ToolStripSeparator^  toolStripSeparator1;
 			this->timer2 = (gcnew System::Windows::Forms::Timer(this->components));
 			this->textBox3 = (gcnew System::Windows::Forms::TextBox());
 			this->timer3 = (gcnew System::Windows::Forms::Timer(this->components));
-			this->toolStripLabel3 = (gcnew System::Windows::Forms::ToolStripLabel());
-			this->toolStripLabel4 = (gcnew System::Windows::Forms::ToolStripLabel());
-			this->toolStripSeparator1 = (gcnew System::Windows::Forms::ToolStripSeparator());
+			this->ConsolaA = (gcnew System::Windows::Forms::TextBox());
+			this->textBox1 = (gcnew System::Windows::Forms::TextBox());
 			this->toolStrip1->SuspendLayout();
 			this->tabControl1->SuspendLayout();
 			this->tabPage1->SuspendLayout();
@@ -261,6 +270,22 @@ private: System::Windows::Forms::ToolStripSeparator^  toolStripSeparator1;
 			this->toolStripLabel2->Name = L"toolStripLabel2";
 			this->toolStripLabel2->Size = System::Drawing::Size(71, 22);
 			this->toolStripLabel2->Text = L"Lector: 0 ms";
+			// 
+			// toolStripLabel3
+			// 
+			this->toolStripLabel3->Name = L"toolStripLabel3";
+			this->toolStripLabel3->Size = System::Drawing::Size(78, 22);
+			this->toolStripLabel3->Text = L"Análisis: 0 ms";
+			// 
+			// toolStripLabel4
+			// 
+			this->toolStripLabel4->Name = L"toolStripLabel4";
+			this->toolStripLabel4->Size = System::Drawing::Size(0, 22);
+			// 
+			// toolStripSeparator1
+			// 
+			this->toolStripSeparator1->Name = L"toolStripSeparator1";
+			this->toolStripSeparator1->Size = System::Drawing::Size(6, 25);
 			// 
 			// tabControl1
 			// 
@@ -869,7 +894,7 @@ private: System::Windows::Forms::ToolStripSeparator^  toolStripSeparator1;
 			this->Consola->Location = System::Drawing::Point(218, 25);
 			this->Consola->Multiline = true;
 			this->Consola->Name = L"Consola";
-			this->Consola->Size = System::Drawing::Size(590, 405);
+			this->Consola->Size = System::Drawing::Size(590, 116);
 			this->Consola->TabIndex = 3;
 			// 
 			// timer2
@@ -890,27 +915,29 @@ private: System::Windows::Forms::ToolStripSeparator^  toolStripSeparator1;
 			this->timer3->Interval = 500;
 			this->timer3->Tick += gcnew System::EventHandler(this, &Main::timer3_Tick);
 			// 
-			// toolStripLabel3
+			// ConsolaA
 			// 
-			this->toolStripLabel3->Name = L"toolStripLabel3";
-			this->toolStripLabel3->Size = System::Drawing::Size(78, 22);
-			this->toolStripLabel3->Text = L"Análisis: 0 ms";
+			this->ConsolaA->Location = System::Drawing::Point(218, 154);
+			this->ConsolaA->Multiline = true;
+			this->ConsolaA->Name = L"ConsolaA";
+			this->ConsolaA->Size = System::Drawing::Size(590, 116);
+			this->ConsolaA->TabIndex = 6;
 			// 
-			// toolStripLabel4
+			// textBox1
 			// 
-			this->toolStripLabel4->Name = L"toolStripLabel4";
-			this->toolStripLabel4->Size = System::Drawing::Size(0, 22);
-			// 
-			// toolStripSeparator1
-			// 
-			this->toolStripSeparator1->Name = L"toolStripSeparator1";
-			this->toolStripSeparator1->Size = System::Drawing::Size(6, 25);
+			this->textBox1->Location = System::Drawing::Point(218, 281);
+			this->textBox1->Multiline = true;
+			this->textBox1->Name = L"textBox1";
+			this->textBox1->Size = System::Drawing::Size(590, 116);
+			this->textBox1->TabIndex = 7;
 			// 
 			// Main
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
 			this->ClientSize = System::Drawing::Size(1222, 733);
+			this->Controls->Add(this->textBox1);
+			this->Controls->Add(this->ConsolaA);
 			this->Controls->Add(this->textBox3);
 			this->Controls->Add(this->Consola);
 			this->Controls->Add(this->tabControl1);
@@ -959,6 +986,8 @@ private: System::Windows::Forms::ToolStripSeparator^  toolStripSeparator1;
 			Controlador->ArrayDataReader[PCALIBRATE_W] = Convert::ToDouble(textBox10->Text);
 
 			Controlador->Flags[FLAG_PAUSA] = false;
+			Controlador->Flags[FLAG_WARNING] = false;
+
 
 			//Bloquear botones al pulsar el activar
 			ActivarOpenGl->Enabled = false;
@@ -1044,13 +1073,18 @@ private: System::Windows::Forms::ToolStripSeparator^  toolStripSeparator1;
 	private: System::Void ActivarAnalisys_CheckedChanged(System::Object^  sender, System::EventArgs^  e) {
 		if (ActivarAnalisys->Checked)
 		{
+			Controlador->ArrayDataAnalisys[HORIZONTAL_RESOLUTION] = 15;//TODO::Cambiar
+			Controlador->ArrayDataAnalisys[VERTICAL_RESOLUTION] = 15;//TODO::Cambiar
+			Controlador->ArrayDataAnalisys[CAR_VELOCITY] = 5;//TODO::Cambiar
+			Controlador->ArrayDataAnalisys[OPENING] = 15;//TODO::Cambiar
+			Controlador->ArrayDataAnalisys[INFORMEA] = " ";//TODO::Cambiar
 			ActivarAnalisys->ImageIndex = 6;
 			Controlador->Flags[FLAG_ANALISYS] = true;
 		}
 		else
 		{
 			ActivarAnalisys->ImageIndex = 7;
-			Controlador->Flags[FLAG_ANALISYS] = true;
+			Controlador->Flags[FLAG_ANALISYS] = false;
 		}
 	}
 	private: System::Void ActivarOpenGl_CheckedChanged(System::Object^  sender, System::EventArgs^  e) {
@@ -1129,19 +1163,26 @@ private: System::Windows::Forms::ToolStripSeparator^  toolStripSeparator1;
 
 	private: System::Void timer2_Tick(System::Object^  sender, System::EventArgs^  e) {
 
-		int fr = Convert::ToInt32(Controlador->ArrayDataReader[FRECUENCY_TIME]);
-		int lec = Convert::ToInt32(Controlador->ArrayDataReader[PROCESS_TIME]);
-		String ^ info = Controlador->ArrayDataReader[INFORME]->ToString();
-		Controlador->ArrayDataReader[INFORME] = "";
-		if (fr > 0)
-		{
-			toolStripLabel1->Text = "Frecuencia: " + (1 / fr) * 1000 + " Hz";
+		if (!Controlador->Flags[FLAG_PAUSA]) {
+			int fr = Convert::ToInt32(Controlador->ArrayDataReader[FRECUENCY_TIME]);
+			int lec = Convert::ToInt32(Controlador->ArrayDataReader[PROCESS_TIME]);
+			info = Controlador->ArrayDataReader[INFORME]->ToString();
+			Controlador->ArrayDataReader[INFORME] = "";
+			if (fr > 0)
+			{
+				toolStripLabel1->Text = "Frecuencia: " + (1 / fr) * 1000 + " Hz";
+			}
+			else {
+				toolStripLabel1->Text = "Frecuencia: 0 Hz";
+			}
+			toolStripLabel2->Text = "Lector: " + lec + " ms";
+			Consola->AppendText(info);
+			if (Controlador->Flags[FLAG_ANALISYS]) {
+				info2 = Controlador->ArrayDataAnalisys[INFORMEA]->ToString();
+				ConsolaA->AppendText(info2);
+				Controlador->ArrayDataAnalisys[INFORMEA] = "";
+			}
 		}
-		else {
-			toolStripLabel1->Text = "Frecuencia: 0 Hz";
-		}
-		toolStripLabel2->Text = "Lector: " + lec + " ms";
-		Consola->AppendText(info);
 	}
 
 	private: System::Void comboBox1_SelectedIndexChanged(System::Object^  sender, System::EventArgs^  e) {

@@ -149,8 +149,8 @@ void DataReader::Esperar()
 {
 	Informar("ESTOY EN ESPERA");
 	while (Flags[FLAG_WARNING] || Flags[FLAG_PAUSA]) {
-		if (Flags[FLAG_WARNING])
-			Kill();
+	//	if (Flags[FLAG_WARNING])
+	//		Kill();
 		Sleep(250);
 	}
 	Read();

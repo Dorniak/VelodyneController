@@ -4,6 +4,7 @@ Controller::Controller()
 {
 	Obstaculos = gcnew List<Obstaculo^>();
 	Puntos = gcnew List<Punto3D^>();
+	Conclusiones = gcnew List<int>();
 	Flags = gcnew cli::array<bool>(SIZE_ARRAY_FLAGS);
 	for (int a = 0; a < SIZE_ARRAY_FLAGS; a++) {
 		Flags[a] = false;

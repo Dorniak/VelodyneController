@@ -48,6 +48,9 @@ public:
 	/// Array que contiene todos los threads.
 	/// </summary>
 	cli::array<Thread^>^ Threads;
+
+	List<int>^ Conclusiones;
+
 private:
 
 };

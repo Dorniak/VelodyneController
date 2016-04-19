@@ -12,7 +12,7 @@
 
 //Numero de parametros de los arrays
 #define SIZE_ARRAY_READER 13
-#define SIZE_ARRAY_ANALISYS 6
+#define SIZE_ARRAY_ANALISYS 7
 //Posicion parametros array Reader
 #define PATH_LOG 0
 #define IP 1
@@ -46,6 +46,7 @@
 #define CAR_VELOCITY 3
 #define INFORME_ANALISYS 4
 #define TOLERANCE 5
+#define INFORMEA 6
 
 //Constantes DataAnalisys
 #define NUMERO_FILAS 16 //Coincide con el numero de canales

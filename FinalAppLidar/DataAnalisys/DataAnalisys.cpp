@@ -1,9 +1,31 @@
 #include "DataAnalisys.h"
-DataAnalisys::DataAnalisys()
+//DataAnalisys::DataAnalisys()
+//{
+//	timeBeginPeriod(1);
+//	indice = -1;
+//	menor = -1;
+DataAnalisys::DataAnalisys(List<Punto3D^>^ puntosController, List<Obstaculo^>^ ObstaculosController, cli::array<Object^>^ ParamAnalisys, List<int>^ Conclusiones, cli::array<bool>^ Flags, cli::array<Thread^>^ Threads, OpenGl^ Dibujador)
 {
-	timeBeginPeriod(1);
-	indice = -1;
-	menor = -1;
+	try {
+		this->Informe = Informe;
+		this->Threads = Threads;
+		this->Flags = Flags;
+		parametros = ParamAnalisys;
+		parametros[INFORMEA] = " ";
+		this->Conclusiones = Conclusiones;
+		matriz = puntosController;
+		ObstaculosvAnt = ObstaculosController;
+		Obstaculos->Clear();
+		if (!thread_analysis) {
+			thread_analysis = gcnew Thread(gcnew ThreadStart(this, &DataAnalisys::AnalisysThread));
+		}
+		thread_analysis->Start();
+		//Guarda el identificador de thread en el array de threads del Controllerador 
+		Threads[1] = thread_analysis;
+	}
+	catch (Exception^ e) {
+
+	}
 }
 //matriz::Lista de puntos
 //resolucionAngular::resolucion del laser
@@ -11,47 +33,16 @@ DataAnalisys::DataAnalisys()
 //consigna velocidad:: puntero para devolucion de parametro de velocidad
 //consigna volante:: puntero para devolucion de parametro de volante
 //apertura::Angulo de interes de lectura en grados
-void DataAnalisys::Analisys(List<Punto3D^>^ puntosController, List<Obstaculo^>^ ObstaculosController, array<Object^>^ ParamAnalisys, List<int>^ Conclusiones, array<bool>^ Flags, array<Thread^>^ Threads, String^* Informe, OpenGl^ Dibujador)
-{
-	this->Informe = Informe;
-	this->Dibujador = Dibujador;
-	this->Threads = Threads;
-	this->Flags = Flags;
-	parametros = ParamAnalisys;
-	this->Conclusiones = Conclusiones;
-	matriz = puntosController;
-	ObstaculosvAnt = ObstaculosController;
-	Obstaculos->Clear();
-	if (!thread_analysis) {
-		thread_analysis = gcnew Thread(gcnew ThreadStart(this, &DataAnalisys::AnalisysThread));
-	}
-	thread_analysis->Start();
-	//Guarda el identificador de thread en el array de threads del Controllerador 
-	Threads[THREAD_ANALISIS] = thread_analysis;
-}
-void DataAnalisys::Analisys(List<Punto3D^>^ puntosController, List<Obstaculo^>^ ObstaculosController, cli::array<Object^>^ ParamAnalisys, List<int>^ Conclusiones, cli::array<bool>^ Flags, cli::array<Thread^>^ Threads, String^* Informe)
-{
-	this->Informe = Informe;
-	this->Threads = Threads;
-	this->Flags = Flags;
-	parametros = ParamAnalisys;
-	this->Conclusiones = Conclusiones;
-	matriz = puntosController;
-	ObstaculosvAnt = ObstaculosController;
-	Obstaculos->Clear();
-	if (!thread_analysis) {
-		thread_analysis = gcnew Thread(gcnew ThreadStart(this, &DataAnalisys::AnalisysThread));
-	}
-	thread_analysis->Start();
-	//Guarda el identificador de thread en el array de threads del Controllerador 
-	Threads[1] = thread_analysis;
-}
 //List<Punto3D^>^ matriz, double resolucionAngular,double Vcoche, double &consigna_velocidad, double &consigna_volante, double apertura
 void DataAnalisys::AnalisysThread()
 {
 	Informar("Iniciando Thread Analisis");
-	//En caso de que se desactive y se reactive despues hay que limpiar los objetos
-	ObstaculosvAnt->Clear();
+	resolutionH = Convert::ToDouble(parametros[HORIZONTAL_RESOLUTION]);//Resolucion
+	resolutionV = Convert::ToDouble(parametros[VERTICAL_RESOLUTION]);//Resolucion
+	VCOCHE = Convert::ToDouble(parametros[CAR_VELOCITY]);//Vcoche
+	apertura = Convert::ToDouble(parametros[OPENING]);//Apertura
+	tolerancia = Convert::ToDouble(parametros[TOLERANCE]);
+	
 	while (Flags[FLAG_ANALISYS] && !Flags[FLAG_WARNING] && !Flags[FLAG_PAUSA])
 	{
 		Informar("Interior del while");
@@ -62,8 +53,8 @@ void DataAnalisys::AnalisysThread()
 				//matriz = Controllerador->Puntos;  La matriz es siempre igual a la matriz de puntos
 				resolutionH = Convert::ToDouble(parametros[HORIZONTAL_RESOLUTION]);//Resolucion
 				resolutionV = Convert::ToDouble(parametros[VERTICAL_RESOLUTION]);//Resolucion
-				VCOCHE = Convert::ToDouble(parametros[OPENING]);//Vcoche
-				apertura = Convert::ToDouble(parametros[CAR_VELOCITY]);//Apertura
+				VCOCHE = Convert::ToDouble(parametros[CAR_VELOCITY]);//Vcoche
+				apertura = Convert::ToDouble(parametros[OPENING]);//Apertura
 				tolerancia = Convert::ToDouble(parametros[TOLERANCE]);
 				NUMERO_COLUMNAS = matriz->Count / NUMERO_FILAS;
 				//Trabajo
@@ -83,32 +74,46 @@ void DataAnalisys::AnalisysThread()
 						prepararObstaculos();
 						Informar("Relacionar obstaculos");
 						RelacionarObstaculos();
-						//TODO::Calcular TTC y actualizar consignas
+						//Copiar el vector de obstaculos obtenido en Controller y comprueba colisiones
+						Informar("Copiar Obstaculos");
+						copiarObstaculos();
 					}
 					else {
-						Informar("Error VMT");
+						Informar("Bloqueo");
 						consigna_velocidad = 0.0;
 					}
 				}
+				else {
+						Informar("Error Velocidad minima tratamiento");
+				}
 
 				//Fin tratamiento
-
-				//Copiar el vector de obstaculos obtenido en Controller y comprueba colisiones
-				Informar("Copiar Obstaculos");
-				copiarObstaculos();
-
 				//Actualizar consignas en el vector de conclusiones
 				Conclusiones[0] = consigna_velocidad;
 				Conclusiones[1] = consigna_volante;
 			}
+			Sleep(200);
 		}
 		catch (Exception^ e)
 		{
 			Informar("Excepcion");
 			Flags[FLAG_WARNING] = true;
 		}
+	}
+	//En caso de que se desactive y se reactive despues hay que limpiar los objetos
+	ObstaculosvAnt->Clear();
+	Esperar();
+}
+
+void DataAnalisys::Esperar()
+{
+	Informar("ESTOY EN ESPERA");
+	while (Flags[FLAG_WARNING] || Flags[FLAG_PAUSA]) {
+	//	if (Flags[FLAG_WARNING])
+	//		Kill();
 		Sleep(200);
 	}
+	AnalisysThread();
 }
 
 void DataAnalisys::Kill()
@@ -118,8 +123,8 @@ void DataAnalisys::Kill()
 
 void DataAnalisys::Informar(String ^ Entrada)
 {
-	if (Informe!=nullptr)
-		*Informe += "																	[" + DateTime::Now.ToString("HH - mm - ss") + "]" + Entrada + "\r\n";
+
+	parametros[INFORMEA] += "																	[" + DateTime::Now.ToString("HH - mm - ss") + "]" + Entrada + "\r\n";
 }
 
 void DataAnalisys::copiarObstaculos()
@@ -265,6 +270,7 @@ void DataAnalisys::Segmentacion(List<Punto3D^>^ matrix, double apertura)
 		}
 	}
 }
+
 void DataAnalisys::prepararObstaculos()
 {
 	for (int i = 0; i < Obstaculos->Count; i++)
@@ -272,6 +278,7 @@ void DataAnalisys::prepararObstaculos()
 		Obstaculos[i]->prepareObstacle();//TODO::Calcular centro,cubo,y todo lo necesario
 	}
 }
+
 void DataAnalisys::EliminarObstaculos()
 {
 	for (int p = 0; p < Obstaculos->Count; p++)
@@ -288,6 +295,7 @@ void DataAnalisys::EliminarObstaculos()
 		}
 	}
 }
+
 void DataAnalisys::RelacionarObstaculos()
 {
 	//TODO::Ajustar variables para este laser
@@ -313,6 +321,7 @@ void DataAnalisys::RelacionarObstaculos()
 		}
 	}
 }
+
 void DataAnalisys::relacionarVel(int i, int j)
 {
 	Obstaculos[i]->setDirection(ObstaculosvAnt[j]->getCenter());
@@ -320,12 +329,14 @@ void DataAnalisys::relacionarVel(int i, int j)
 	Obstaculos[i]->setVelocity(VCOCHE, resolutionH);
 	Obstaculos[i]->calculateTimeToCollision(VCOCHE);
 }
+
 void DataAnalisys::relacionarPos(int i, int j, int VelC, int Res)
 {
 	Obstaculos[i]->setDirection(ObstaculosvAnt[j]->getCenter());
 	Obstaculos[i]->calculatePrediceCenter();
 	Obstaculos[i]->setVelocity(VCOCHE, resolutionH);
 }
+
 bool DataAnalisys::comprobarBloqueo(List<Punto3D^>^ matriz)
 {
 	//Devuelve true cuando hay bloqueo
@@ -339,18 +350,21 @@ bool DataAnalisys::comprobarBloqueo(List<Punto3D^>^ matriz)
 	}
 	return false;
 }
+
 bool DataAnalisys::puntosCercanosH(Punto3D^ p1, Punto3D^ p2)
 {
 	double tolerancia = p1->getDistance() * tan(resolutionV * PI / 180);
 	tolerancia = tolerancia * ((100 + HORIZONTAL_TOLERANCE) / 100);
 	return(tolerancia > p1->distanceToPoint(p2));
 }
+
 bool DataAnalisys::puntosCercanosV(Punto3D^ p1, Punto3D^ p2)
 {
 	double tolerancia = p1->getDistance() * tan(resolutionV  * PI / 180);
 	tolerancia = tolerancia * ((100 + VERTICAL_TOLERANCE) / 100);
 	return(tolerancia > p1->distanceToPoint(p2));
 }
+
 bool DataAnalisys::puntosCercanosD(Punto3D^ p1, Punto3D^ p2)
 {
 	double toleranciaV = p1->getDistance() * tan(resolutionV  * PI / 180);
@@ -360,6 +374,7 @@ bool DataAnalisys::puntosCercanosD(Punto3D^ p1, Punto3D^ p2)
 	tolerancia = tolerancia * ((100 + DIAGONAL_TOLERANCE) / 100);
 	return(tolerancia > p1->distanceToPoint(p2));
 }
+
 int DataAnalisys::convaPos(int columna, int fila) {
 
 	switch (fila)
