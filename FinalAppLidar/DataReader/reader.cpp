@@ -90,17 +90,23 @@ void DataReader::Read()
 			for (int block = 0; block < 12; block++) {
 				for (int i = 0; i < NUMBER_OF_CHANNELS; i++) {
 					//Corte de vuelta
-					if (azimuth_index > 0 && (azimuths[azimuth_index] - azimuths[azimuth_index - 1]) < -2) {
+					if (azimuth_index > 0 && azimuths[azimuth_index] < azimuths[azimuth_index - 1]){//(azimuths[azimuth_index] - azimuths[azimuth_index - 1]) < -2) {
 						ArrayDataReader[FRECUENCY_TIME] = frecuency_clock->ElapsedMilliseconds;
-						frecuency_clock->Restart();
 						copiarPuntos();
 						frame++;
+						frecuency_clock->Restart();
 					}
-					else if (azimuth_index == 0 && (azimuths[azimuth_index + 1] - azimuths[azimuth_index]) < -2) {
+					else if (azimuth_index == 0 && (azimuths[azimuth_index + 1] < azimuths[azimuth_index])) {
 						ArrayDataReader[FRECUENCY_TIME] = frecuency_clock->ElapsedMilliseconds;
-						frecuency_clock->Restart();
 						copiarPuntos();
 						frame++;
+						frecuency_clock->Restart();
+					}
+					else if (azimuth_index == corte){
+						ArrayDataReader[FRECUENCY_TIME] = frecuency_clock->ElapsedMilliseconds;
+						copiarPuntos();
+						frame++;
+						frecuency_clock->Restart();
 					}
 					if (distances[distance_index] >= min && distances[distance_index] <= max) {
 						p = gcnew Punto3D(distances[distance_index], intensities[intensity_index], azimuths[azimuth_index], getAngle(i));
