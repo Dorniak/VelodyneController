@@ -36,10 +36,10 @@
     <ClCompile Include="Controller.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="PostProceso.cpp">
+    <ClCompile Include="Gps.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Gps.cpp">
+    <ClCompile Include="PostProceso.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -68,10 +68,13 @@
     <ClInclude Include="Flags\Parametros.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="PostProceso.h">
+    <ClInclude Include="Gps.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Gps.h">
+    <ClInclude Include="asd.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="PostProceso.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

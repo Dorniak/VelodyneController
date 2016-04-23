@@ -154,12 +154,18 @@
     </ClInclude>
     <ClInclude Include="Obstaculo\Obstaculo.h" />
     <ClInclude Include="OpenGl\OpenGl.h" />
-    <ClInclude Include="PostProceso.h" />
+    <ClInclude Include="asd.h" />
+    <ClInclude Include="PostProceso.h">
+      <FileType>CppForm</FileType>
+    </ClInclude>
     <ClInclude Include="Punto3D\Punto3D.h" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Main.resx">
       <DependentUpon>Main.h</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PostProceso.resx">
+      <DependentUpon>PostProceso.h</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

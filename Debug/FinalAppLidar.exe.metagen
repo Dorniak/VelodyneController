@@ -1,4 +1,5 @@
   FinalAppLidar.Main.resources - Embedded, ContainedInManifestFile, 
+  FinalAppLidar.PostProceso.resources - Embedded, ContainedInManifestFile, 
 ImageRuntimeVersion: v4.0.30319
 Assembly FinalAppLidar, Version=0.0.*, Culture=Invariant Language (Invariant Country): 
 	hash=SHA1, flags=PublicKey
