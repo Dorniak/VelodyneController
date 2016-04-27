@@ -984,7 +984,7 @@ private: System::Windows::Forms::TextBox^  textBox1;
 			Controlador->ArrayDataReader[PCALIBRATE_R] = Convert::ToDouble(textBox6->Text);
 			Controlador->ArrayDataReader[PCALIBRATE_P] = Convert::ToDouble(textBox8->Text);
 			Controlador->ArrayDataReader[PCALIBRATE_W] = Convert::ToDouble(textBox10->Text);
-
+			Controlador->ArrayDataReader[FRECUENCY] = Convert::ToInt32(textBox4->Text);
 			Controlador->Flags[FLAG_PAUSA] = false;
 			Controlador->Flags[FLAG_WARNING] = false;
 

@@ -11,7 +11,7 @@
 
 
 //Numero de parametros de los arrays
-#define SIZE_ARRAY_READER 13
+#define SIZE_ARRAY_READER 14
 #define SIZE_ARRAY_ANALISYS 7
 //Posicion parametros array Reader
 #define PATH_LOG 0
@@ -27,7 +27,7 @@
 #define INFORME 10
 #define FRECUENCY_TIME 11
 #define PROCESS_TIME 12
-
+#define FRECUENCY 13
 
 #define NUMBER_OF_BLOCKS 12
 #define NUMBER_OF_CHANNELS 32

@@ -17,7 +17,7 @@ DataAnalisys::DataAnalisys(List<Punto3D^>^ puntosController, List<Obstaculo^>^ O
 		ObstaculosvAnt = ObstaculosController;
 		Obstaculos->Clear();
 		if (!thread_analysis) {
-			thread_analysis = gcnew Thread(gcnew ThreadStart(this, &DataAnalisys::AnalisysThread));
+			thread_analysis = gcnew Thread(gcnew ThreadStart(this, &DataAnalisys::Esperar));
 		}
 		thread_analysis->Start();
 		//Guarda el identificador de thread en el array de threads del Controllerador 
@@ -36,7 +36,7 @@ DataAnalisys::DataAnalisys(List<Punto3D^>^ puntosController, List<Obstaculo^>^ O
 //List<Punto3D^>^ matriz, double resolucionAngular,double Vcoche, double &consigna_velocidad, double &consigna_volante, double apertura
 void DataAnalisys::AnalisysThread()
 {
-	Informar("Iniciando Thread Analisis");
+//	Informar("Iniciando Thread Analisis");
 	resolutionH = Convert::ToDouble(parametros[HORIZONTAL_RESOLUTION]);//Resolucion
 	resolutionV = Convert::ToDouble(parametros[VERTICAL_RESOLUTION]);//Resolucion
 	VCOCHE = Convert::ToDouble(parametros[CAR_VELOCITY]);//Vcoche
@@ -45,7 +45,7 @@ void DataAnalisys::AnalisysThread()
 	
 	while (Flags[FLAG_ANALISYS] && !Flags[FLAG_WARNING] && !Flags[FLAG_PAUSA])
 	{
-		Informar("Interior del while");
+		//Informar("Interior del while");
 		try
 		{
 			if (!Flags[FLAG_TRATAMIENTO]) {
@@ -107,7 +107,7 @@ void DataAnalisys::AnalisysThread()
 
 void DataAnalisys::Esperar()
 {
-	Informar("ESTOY EN ESPERA");
+	Informar(" ana ESTOY EN ESPERA");
 	while (Flags[FLAG_WARNING] || Flags[FLAG_PAUSA]) {
 	//	if (Flags[FLAG_WARNING])
 	//		Kill();
@@ -124,7 +124,7 @@ void DataAnalisys::Kill()
 void DataAnalisys::Informar(String ^ Entrada)
 {
 
-	parametros[INFORMEA] += "																	[" + DateTime::Now.ToString("HH - mm - ss") + "]" + Entrada + "\r\n";
+//	parametros[INFORMEA] += "																	[" + DateTime::Now.ToString("HH - mm - ss") + "]" + Entrada + "\r\n";
 }
 
 void DataAnalisys::copiarObstaculos()

@@ -1,9 +1,10 @@
-﻿  Main.cpp
-d:\visual studio\finalapplidar\finalapplidar\PostProceso.h(241): warning C4101: 'e': unreferenced local variable
-  PostProceso.cpp
-d:\visual studio\finalapplidar\finalapplidar\PostProceso.h(211): warning C4244: '=': conversion from '__int64' to 'int', possible loss of data
-d:\visual studio\finalapplidar\finalapplidar\PostProceso.h(241): warning C4101: 'e': unreferenced local variable
-  Generating Code...
+﻿  reader.cpp
+DataReader\reader.cpp(77): warning C4965: implicit box of integer 0; use nullptr or explicit cast
+DataReader\reader.cpp(78): warning C4965: implicit box of integer 0; use nullptr or explicit cast
+DataReader\reader.cpp(75): warning C4101: 'ElapsedTime': unreferenced local variable
+DataReader\reader.cpp(76): warning C4101: 'ElapsedSeconds': unreferenced local variable
+DataReader\reader.cpp(71): warning C4101: 'EndingTime': unreferenced local variable
+d:\visual studio\finalapplidar\finalapplidar\datareader\reader.cpp(317): warning C4715: 'DataReader::getAngle': not all control paths return a value
   Controller.obj : /DEBUG:FASTLINK is not supported when managed code is present; restarting link with /DEBUG:FULL
   FinalAppLidar.vcxproj -> D:\Visual Studio\FinalAppLidar\Debug\FinalAppLidar.exe
   FinalAppLidar.vcxproj -> D:\Visual Studio\FinalAppLidar\Debug\FinalAppLidar.pdb (Partial PDB)

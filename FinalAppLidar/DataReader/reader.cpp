@@ -65,15 +65,17 @@ void DataReader::Read()
 	cli::array<Double>^ distances;
 	cli::array<Double>^ intensities;
 	Punto3D^ p;
+	recorrido_disparo = (2 * Convert::ToInt32(ArrayDataReader[FRECUENCY]) * 0.000002304 * 180) / 1000;
+	recorrido_recarga = (2 * Convert::ToInt32(ArrayDataReader[FRECUENCY]) * 0.00001843 * 180) / 1000;
 	int corte = -1;
 	double azi = -1;
-	long StartingTime = Stopwatch::GetTimestamp(); 
+	long StartingTime = Stopwatch::GetTimestamp();
 	long EndingTime;
 	Stopwatch^ frecuency_clock = gcnew Stopwatch();
 	Stopwatch^ process_clock = gcnew Stopwatch();
 	frecuency_clock->Start();
 	long ElapsedTime;
-	double ElapsedSeconds; 
+	double ElapsedSeconds;
 	ArrayDataReader[FRECUENCY_TIME] = 0;
 	ArrayDataReader[PROCESS_TIME] = 0;
 	while (!Flags[FLAG_WARNING] && !Flags[FLAG_PAUSA]) {
@@ -90,25 +92,25 @@ void DataReader::Read()
 			for (int block = 0; block < 12; block++) {
 				for (int i = 0; i < NUMBER_OF_CHANNELS; i++) {
 					//Corte de vuelta
-					if (azimuth_index > 0 && azimuths[azimuth_index] < azimuths[azimuth_index - 1]){//(azimuths[azimuth_index] - azimuths[azimuth_index - 1]) < -2) {
+					if ((azimuth_index > 0) && (azimuths[azimuth_index] < azimuths[azimuth_index - 1])) {//(azimuths[azimuth_index] - azimuths[azimuth_index - 1]) < -2) {
 						ArrayDataReader[FRECUENCY_TIME] = frecuency_clock->ElapsedMilliseconds;
 						copiarPuntos();
 						frame++;
 						frecuency_clock->Restart();
 					}
-					else if (azimuth_index == 0 && (azimuths[azimuth_index + 1] < azimuths[azimuth_index])) {
+					else if ((azimuth_index == 0) && (azimuths[azimuth_index + 1] < azimuths[azimuth_index])) {
 						ArrayDataReader[FRECUENCY_TIME] = frecuency_clock->ElapsedMilliseconds;
 						copiarPuntos();
 						frame++;
 						frecuency_clock->Restart();
 					}
-					else if (azimuth_index == corte){
+					else if (azimuth_index == corte) {
 						ArrayDataReader[FRECUENCY_TIME] = frecuency_clock->ElapsedMilliseconds;
 						copiarPuntos();
 						frame++;
 						frecuency_clock->Restart();
 					}
-					if (distances[distance_index] >= min && distances[distance_index] <= max) {
+					if ((distances[distance_index] >= min) && (distances[distance_index] <= max)) {
 						p = gcnew Punto3D(distances[distance_index], intensities[intensity_index], azimuths[azimuth_index], getAngle(i));
 						p->CalculateCoordinates(CALIBRATE_X, CALIBRATE_Y, CALIBRATE_Z, CALIBRATE_P, CALIBRATE_R, CALIBRATE_Y);
 						Puntos->Add(p);
@@ -155,8 +157,8 @@ void DataReader::Esperar()
 {
 	Informar("ESTOY EN ESPERA");
 	while (Flags[FLAG_WARNING] || Flags[FLAG_PAUSA]) {
-	//	if (Flags[FLAG_WARNING])
-	//		Kill();
+		//	if (Flags[FLAG_WARNING])
+		//		Kill();
 		Sleep(250);
 	}
 	Read();
@@ -178,7 +180,7 @@ cli::array<Double>^ DataReader::InterpolateAzimuth(cli::array<Byte>^ &ReceiveByt
 	cli::array<double>^ result = gcnew cli::array<double>(384);
 	cli::array<double>^ azimuths = gcnew cli::array<double>(12);
 	int byteIndex = 2;
-
+	//2*f*t*180 / 1000
 	for (int i = 0; i < 12; i++)
 	{
 		azimuths[i] = (ReceiveBytes[byteIndex] + (ReceiveBytes[byteIndex + 1] << 8));
@@ -193,10 +195,10 @@ cli::array<Double>^ DataReader::InterpolateAzimuth(cli::array<Byte>^ &ReceiveByt
 		{
 			if (j < 16)
 			{
-				result[j + (32 * k)] = azimuths[k] + (j*0.0165887);
+				result[j + (32 * k)] = azimuths[k] + (j*recorrido_disparo);//0.0165887
 			}
 			else {
-				result[j + (32 * k)] = azimuths[k] + ((j*0.0165887) + 0.1326959);
+				result[j + (32 * k)] = azimuths[k] + ((j*recorrido_disparo) + recorrido_recarga);//0.1326959
 			}
 
 			if (result[j + (32 * k)] >= 360) {

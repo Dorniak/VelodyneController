@@ -116,7 +116,7 @@ private:
 	/// <summary>
 	/// Variables necesarias para la calibración de las coordenadas del laser.
 	/// </summary>
-	double CALIBRATE_X, CALIBRATE_Y, CALIBRATE_Z, CALIBRATE_R, CALIBRATE_P, CALIBRATE_W, max, min;
+	double CALIBRATE_X, CALIBRATE_Y, CALIBRATE_Z, CALIBRATE_R, CALIBRATE_P, CALIBRATE_W, max, min,recorrido_disparo,recorrido_recarga;
 	int azimuth_index, distance_index, intensity_index;
 
 	/// <summary>
