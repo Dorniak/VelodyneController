@@ -65,9 +65,9 @@ void DataReader::Read()
 	cli::array<Double>^ distances;
 	cli::array<Double>^ intensities;
 	Punto3D^ p;
-	recorrido_disparo = (2 * Convert::ToInt32(ArrayDataReader[FRECUENCY]) * 0.000002304 * 180) / 1000;
-	recorrido_recarga = (2 * Convert::ToInt32(ArrayDataReader[FRECUENCY]) * 0.00001843 * 180) / 1000;
-	int corte = -1;
+	recorrido_disparo = (2 * Convert::ToInt32(ArrayDataReader[FRECUENCY]) * 0.000002304 * 180);
+	recorrido_recarga = (2 * Convert::ToInt32(ArrayDataReader[FRECUENCY]) * 0.00001843 * 180);
+	bool corte = false;
 	double azi = -1;
 	long StartingTime = Stopwatch::GetTimestamp();
 	long EndingTime;
@@ -93,19 +93,20 @@ void DataReader::Read()
 				for (int i = 0; i < NUMBER_OF_CHANNELS; i++) {
 					//Corte de vuelta
 					if ((azimuth_index > 0) && (azimuths[azimuth_index] < azimuths[azimuth_index - 1])) {//(azimuths[azimuth_index] - azimuths[azimuth_index - 1]) < -2) {
-						ArrayDataReader[FRECUENCY_TIME] = frecuency_clock->ElapsedMilliseconds;
+						ArrayDataReader[FRECUENCY_TIME] = frecuency_clock->ElapsedMilliseconds/1000;
 						copiarPuntos();
 						frame++;
 						frecuency_clock->Restart();
 					}
 					else if ((azimuth_index == 0) && (azimuths[azimuth_index + 1] < azimuths[azimuth_index])) {
-						ArrayDataReader[FRECUENCY_TIME] = frecuency_clock->ElapsedMilliseconds;
+						ArrayDataReader[FRECUENCY_TIME] = frecuency_clock->ElapsedMilliseconds/1000;
 						copiarPuntos();
 						frame++;
 						frecuency_clock->Restart();
 					}
-					else if (azimuth_index == corte) {
-						ArrayDataReader[FRECUENCY_TIME] = frecuency_clock->ElapsedMilliseconds;
+					else if (corte) {
+						corte = false;
+						ArrayDataReader[FRECUENCY_TIME] = frecuency_clock->ElapsedMilliseconds/1000;
 						copiarPuntos();
 						frame++;
 						frecuency_clock->Restart();
@@ -169,7 +170,7 @@ void DataReader::Kill()
 	thread_reader->Abort();
 }
 
-cli::array<Double>^ DataReader::InterpolateAzimuth(cli::array<Byte>^ &ReceiveBytes, int *corte, double *azi) {
+cli::array<Double>^ DataReader::InterpolateAzimuth(cli::array<Byte>^ &ReceiveBytes, bool *corte, double *azi) {
 
 	if (ReceiveBytes->Length == 0)
 		throw gcnew Exception("Recibiendo 0 bytes...");
@@ -187,34 +188,24 @@ cli::array<Double>^ DataReader::InterpolateAzimuth(cli::array<Byte>^ &ReceiveByt
 		azimuths[i] /= 100;
 		byteIndex += 100;
 	}
-	if (*azi > azimuths[0]) {
-		*corte = 0;
-	}
 	for (int k = 0; k < 12; k++) {
-		for (int j = 0; j < 32; j++)
-		{
+		for (int j = 0; j < 32; j++) {
 			if (j < 16)
 			{
 				result[j + (32 * k)] = azimuths[k] + (j*recorrido_disparo);//0.0165887
 			}
-			else {
+			else 
+			{
 				result[j + (32 * k)] = azimuths[k] + ((j*recorrido_disparo) + recorrido_recarga);//0.1326959
 			}
 
 			if (result[j + (32 * k)] >= 360) {
 				result[j + (32 * k)] -= 360;
-
-				if (*corte == -1)
-					*corte = (j + (32 * k));
 			}
 		}
-		if (k < 11) {
-			if (result[31 + (32 * k)] < result[(32 * (k + 1))]) {
-
-				if (*corte == -1)
-					*corte = 31 + (32 * k);
-			}
-		}
+	}
+	if (*azi > azimuths[0]) {
+		*corte = true;
 	}
 	*azi = result[383];
 	return result;

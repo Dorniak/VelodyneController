@@ -201,22 +201,24 @@ namespace FinalAppLidar {
 
 			 }
 			 void Splitter() {
-				 String^ linea;
+				 String^ linea = "";
 				 int frame = 0;
 				 int anterior = 0;
 				 StreamReader^ file_in = File::OpenText(path_in);
 				 StreamWriter^ file_out = File::CreateText(path_out + "Frame_" + frame + ".csv");
-				 file_out->WriteLine("X,Y,Z");
+				 file_out->WriteLine("Azimuth,X,Y,Z,Distancia,Intensidad,Angulo,GPS");
 				 while ((linea = file_in->ReadLine()) != nullptr) {
-					 frame = Convert::ToInt64(linea->Substring(0, linea->IndexOf(',')));
-					 if (frame != anterior) {
-						 anterior = frame;
-						 file_out->Close();
-						 toolStripLabel2->Text = "Frame" + frame;
-						 file_out = File::CreateText(path_out + "Frame_" + frame + ".csv");
-						 file_out->WriteLine("X,Y,Z");
+					 if (linea->Length > 5) {
+						 frame = Convert::ToInt64(linea->Substring(0, linea->IndexOf(',')));
+						 if (frame != anterior) {
+							 anterior = frame;
+							 file_out->Close();
+							 toolStripLabel2->Text = "Frame" + frame;
+							 file_out = File::CreateText(path_out + "Frame_" + frame + ".csv");
+							 file_out->WriteLine("Azimuth,X,Y,Z,Distancia,Intensidad,Angulo,GPS");
+						 }
+						 file_out->WriteLine(linea->Substring(linea->IndexOf(',') + 1));
 					 }
-					 file_out->WriteLine(linea->Substring(linea->IndexOf(',')+1));
 				 }
 				 file_in->Close();
 				 file_out->Close();
@@ -242,7 +244,7 @@ namespace FinalAppLidar {
 		{
 			MessageBox::Show("Error al crear el directorio " + path_out, "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
 		}
-		toolStripLabel1->Text = "Puntos: " + ContarLineas();
+		//toolStripLabel1->Text = "Puntos: " + ContarLineas();
 	}
 	private: System::Void button1_Click(System::Object^  sender, System::EventArgs^  e) {
 		openFileDialog1->ShowDialog();

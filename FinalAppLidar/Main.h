@@ -28,7 +28,7 @@ namespace FinalAppLidar {
 			gps = gcnew	Gps(Controlador->ArrayGps, Controlador->Threads);
 			Dibujador = gcnew OpenGl(Controlador->Threads);
 			Reader = gcnew DataReader(Controlador->Puntos, Controlador->ArrayDataReader, Controlador->Flags, Controlador->Threads, Dibujador, Controlador->ArrayGps);
-			Analisys = gcnew DataAnalisys(Controlador->Puntos,Controlador->Obstaculos,Controlador->ArrayDataAnalisys,Controlador->Conclusiones, Controlador->Flags, Controlador->Threads,Dibujador);
+			//Analisys = gcnew DataAnalisys(Controlador->Puntos,Controlador->Obstaculos,Controlador->ArrayDataAnalisys,Controlador->Conclusiones, Controlador->Flags, Controlador->Threads,Dibujador);
 			groupBox2->Visible = false;
 			groupBox3->Visible = false;
 			groupBox4->Visible = false;
@@ -560,6 +560,7 @@ private: System::Windows::Forms::TextBox^  textBox1;
 			this->textBox4->Name = L"textBox4";
 			this->textBox4->Size = System::Drawing::Size(28, 20);
 			this->textBox4->TabIndex = 4;
+			this->textBox4->Text = L"20";
 			// 
 			// label12
 			// 
@@ -907,7 +908,7 @@ private: System::Windows::Forms::TextBox^  textBox1;
 			this->textBox3->Location = System::Drawing::Point(218, 477);
 			this->textBox3->Multiline = true;
 			this->textBox3->Name = L"textBox3";
-			this->textBox3->Size = System::Drawing::Size(968, 168);
+			this->textBox3->Size = System::Drawing::Size(590, 168);
 			this->textBox3->TabIndex = 5;
 			// 
 			// timer3
@@ -1229,5 +1230,6 @@ private: System::Windows::Forms::TextBox^  textBox1;
 		}
 
 	}
-	};
+
+};
 }

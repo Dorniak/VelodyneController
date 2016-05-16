@@ -56,7 +56,7 @@ public:
 	/// <param name="corte">Variable para indicar si el princio de vuelta se da entre dos paquetes.</param>
 	/// <param name="azi">último azimuth de la vueta anterior.</param>
 	/// <returns>Array de azimuths.</returns>
-	cli::array<Double>^ InterpolateAzimuth(cli::array<Byte>^& ReceiveBytes, int *corte, double *azi);
+	cli::array<Double>^ InterpolateAzimuth(cli::array<Byte>^& ReceiveBytes, bool *corte, double *azi);
 
 	/// <summary>
 	/// Extrae las distancias pertinentes a cada punto. Se recorre el área de datos del paquete en busca de la información de distancias.
