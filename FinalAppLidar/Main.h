@@ -1171,11 +1171,11 @@ private: System::Windows::Forms::TextBox^  textBox1;
 			Controlador->ArrayDataReader[INFORME] = "";
 			if (fr > 0)
 			{
-				toolStripLabel1->Text = "Frecuencia: " + (1 / fr) * 1000 + " Hz";
+				toolStripLabel1->Text = "Frecuencia: " + (1 / fr)  + " Hz";
 			}
-			else {
+			/*else {
 				toolStripLabel1->Text = "Frecuencia: 0 Hz";
-			}
+			}*/
 			toolStripLabel2->Text = "Lector: " + lec + " ms";
 			Consola->AppendText(info);
 			if (Controlador->Flags[FLAG_ANALISYS]) {

@@ -117,7 +117,7 @@ void DataReader::Read()
 						Puntos->Add(p);
 						if (Flags[FLAG_LOG]) {
 							//Azimuth, X, Y, Z, Distance;
-							loger->WriteLine(frame + "," + p->visualize() + ArrayGps[TRAMA]->ToString());
+								loger->WriteLine(frame + "," + p->visualize() + ArrayGps[TRAMA]->ToString());
 						}
 					}
 					else {

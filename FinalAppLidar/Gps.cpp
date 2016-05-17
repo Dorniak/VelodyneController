@@ -30,7 +30,7 @@ void Gps::Read() {
 		if (data->Contains("GGA"))
 			ExtraerGGA(data);
 		if (data->Contains(parametros[TIPO_TRAMA]->ToString()))
-			parametros[TRAMA] = "," + data->Substring(0,data->IndexOf('\n')-1);
+			parametros[TRAMA] = "," + data->Substring(0,data->Length-1);
 	}
 	parametros[TRAMA] = "";
 	serialPort->Close();
