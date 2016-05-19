@@ -1,39 +1,6 @@
-﻿  Controller.cpp
-Controller.cpp(20): warning C4965: implicit box of integer 0; use nullptr or explicit cast
-  DataAnalisys.cpp
-DataAnalisys\DataAnalisys.cpp(26): warning C4101: 'e': unreferenced local variable
-DataAnalisys\DataAnalisys.cpp(92): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
-DataAnalisys\DataAnalisys.cpp(93): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
-DataAnalisys\DataAnalisys.cpp(97): warning C4101: 'e': unreferenced local variable
-DataAnalisys\DataAnalisys.cpp(151): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
-DataAnalisys\DataAnalisys.cpp(230): warning C4101: 'VarX': unreferenced local variable
-DataAnalisys\DataAnalisys.cpp(230): warning C4101: 'VarY': unreferenced local variable
-DataAnalisys\DataAnalisys.cpp(236): warning C4101: 'Obs': unreferenced local variable
-DataAnalisys\DataAnalisys.cpp(318): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
-  reader.cpp
-DataReader\reader.cpp(79): warning C4965: implicit box of integer 0; use nullptr or explicit cast
-DataReader\reader.cpp(80): warning C4965: implicit box of integer 0; use nullptr or explicit cast
-DataReader\reader.cpp(77): warning C4101: 'ElapsedTime': unreferenced local variable
-DataReader\reader.cpp(78): warning C4101: 'ElapsedSeconds': unreferenced local variable
-DataReader\reader.cpp(73): warning C4101: 'EndingTime': unreferenced local variable
-  Gps.cpp
-Gps.cpp(23): warning C4101: 'e': unreferenced local variable
-Gps.cpp(53): warning C4101: 'e': unreferenced local variable
-  Main.cpp
-d:\visual studio\finalapplidar\finalapplidar\PostProceso.h(243): warning C4101: 'e': unreferenced local variable
-  Obstaculo.cpp
-  OpenGl.cpp
-OpenGl\OpenGl.cpp(421): warning C4305: 'argument': truncation from 'double' to 'GLfloat'
-OpenGl\OpenGl.cpp(424): warning C4305: 'argument': truncation from 'double' to 'GLfloat'
-OpenGl\OpenGl.cpp(428): warning C4305: 'argument': truncation from 'double' to 'GLfloat'
-  PostProceso.cpp
-d:\visual studio\finalapplidar\finalapplidar\PostProceso.h(212): warning C4244: '=': conversion from '__int64' to 'int', possible loss of data
-d:\visual studio\finalapplidar\finalapplidar\PostProceso.h(243): warning C4101: 'e': unreferenced local variable
-  Punto3D.cpp
-  Generating Code...
-d:\visual studio\finalapplidar\finalapplidar\opengl\opengl.cpp(50): warning C4700: uninitialized local variable 'argv' used
-d:\visual studio\finalapplidar\finalapplidar\datareader\reader.cpp(310): warning C4715: 'DataReader::getAngle': not all control paths return a value
-  .NETFramework,Version=v4.5.2.AssemblyAttributes.cpp
+﻿  Gps.cpp
+Gps.cpp(25): warning C4101: 'e': unreferenced local variable
+Gps.cpp(55): warning C4101: 'e': unreferenced local variable
   Controller.obj : /DEBUG:FASTLINK is not supported when managed code is present; restarting link with /DEBUG:FULL
   FinalAppLidar.vcxproj -> D:\Visual Studio\FinalAppLidar\Debug\FinalAppLidar.exe
   FinalAppLidar.vcxproj -> D:\Visual Studio\FinalAppLidar\Debug\FinalAppLidar.pdb (Partial PDB)

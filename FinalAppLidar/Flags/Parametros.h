@@ -59,13 +59,14 @@
 #define NUM_OBSTACULOS 10
 
 //Constantes GPS
-#define SIZE_ARRAY_GPS 6
+#define SIZE_ARRAY_GPS 7
 #define TIPO_TRAMA 0
 #define TRAMA 1
 #define START 2
 #define COM 3
 #define QUALITY 4
 #define SATELITES 5
+#define RATE 6
 //THREADS
 #define NUMERO_THREADS 4 
 #define THREAD_READER 0

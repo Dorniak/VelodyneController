@@ -10,8 +10,10 @@ Gps::Gps(cli::array<Object^>^ ArrayGps, cli::array<Thread^>^ Threads_in)
 	gps_thread->Start();
 }
 void Gps::Read() {
+	serialPort->BaudRate = Convert::ToInt32(parametros[RATE]);
 	serialPort->ReadTimeout = 2000;
 	serialPort->Open();
+	
 	if (!serialPort->IsOpen)
 		MessageBox::Show("Error al conectar en el puerto" + parametros[COM], "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
 	String^ data;

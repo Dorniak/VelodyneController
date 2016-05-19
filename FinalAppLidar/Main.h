@@ -133,13 +133,15 @@ namespace FinalAppLidar {
 	private: System::Windows::Forms::ComboBox^  comboBox2;
 	private: System::Windows::Forms::Button^  button4;
 	private: System::Windows::Forms::Label^  label1;
-private: System::Windows::Forms::ToolStripLabel^  toolStripLabel1;
-private: System::Windows::Forms::ToolStripLabel^  toolStripLabel2;
-private: System::Windows::Forms::ToolStripLabel^  toolStripLabel3;
-private: System::Windows::Forms::ToolStripLabel^  toolStripLabel4;
-private: System::Windows::Forms::ToolStripSeparator^  toolStripSeparator1;
-private: System::Windows::Forms::TextBox^  ConsolaA;
-private: System::Windows::Forms::TextBox^  textBox1;
+	private: System::Windows::Forms::ToolStripLabel^  toolStripLabel1;
+	private: System::Windows::Forms::ToolStripLabel^  toolStripLabel2;
+	private: System::Windows::Forms::ToolStripLabel^  toolStripLabel3;
+	private: System::Windows::Forms::ToolStripLabel^  toolStripLabel4;
+	private: System::Windows::Forms::ToolStripSeparator^  toolStripSeparator1;
+	private: System::Windows::Forms::TextBox^  ConsolaA;
+	private: System::Windows::Forms::TextBox^  textBox1;
+	private: System::Windows::Forms::Label^  label17;
+	private: System::Windows::Forms::TextBox^  textBox11;
 
 
 
@@ -187,6 +189,8 @@ private: System::Windows::Forms::TextBox^  textBox1;
 			this->label16 = (gcnew System::Windows::Forms::Label());
 			this->comboBox2 = (gcnew System::Windows::Forms::ComboBox());
 			this->label1 = (gcnew System::Windows::Forms::Label());
+			this->label17 = (gcnew System::Windows::Forms::Label());
+			this->textBox11 = (gcnew System::Windows::Forms::TextBox());
 			this->groupBox3 = (gcnew System::Windows::Forms::GroupBox());
 			this->flowLayoutPanel3 = (gcnew System::Windows::Forms::FlowLayoutPanel());
 			this->ActivarAnalisys = (gcnew System::Windows::Forms::CheckBox());
@@ -253,7 +257,7 @@ private: System::Windows::Forms::TextBox^  textBox1;
 				this->toolStripLabel1,
 					this->toolStripLabel2, this->toolStripLabel3, this->toolStripLabel4, this->toolStripSeparator1
 			});
-			this->toolStrip1->Location = System::Drawing::Point(0, 708);
+			this->toolStrip1->Location = System::Drawing::Point(0, 667);
 			this->toolStrip1->Name = L"toolStrip1";
 			this->toolStrip1->Size = System::Drawing::Size(1222, 25);
 			this->toolStrip1->TabIndex = 1;
@@ -295,7 +299,7 @@ private: System::Windows::Forms::TextBox^  textBox1;
 			this->tabControl1->Location = System::Drawing::Point(0, 0);
 			this->tabControl1->Name = L"tabControl1";
 			this->tabControl1->SelectedIndex = 0;
-			this->tabControl1->Size = System::Drawing::Size(200, 708);
+			this->tabControl1->Size = System::Drawing::Size(212, 667);
 			this->tabControl1->TabIndex = 2;
 			// 
 			// tabPage1
@@ -310,7 +314,7 @@ private: System::Windows::Forms::TextBox^  textBox1;
 			this->tabPage1->Location = System::Drawing::Point(4, 22);
 			this->tabPage1->Name = L"tabPage1";
 			this->tabPage1->Padding = System::Windows::Forms::Padding(3);
-			this->tabPage1->Size = System::Drawing::Size(192, 682);
+			this->tabPage1->Size = System::Drawing::Size(204, 641);
 			this->tabPage1->TabIndex = 0;
 			this->tabPage1->Text = L"Lidar";
 			this->tabPage1->UseVisualStyleBackColor = true;
@@ -319,7 +323,7 @@ private: System::Windows::Forms::TextBox^  textBox1;
 			// 
 			this->label14->AutoSize = true;
 			this->label14->Dock = System::Windows::Forms::DockStyle::Top;
-			this->label14->Location = System::Drawing::Point(3, 711);
+			this->label14->Location = System::Drawing::Point(3, 724);
 			this->label14->Name = L"label14";
 			this->label14->Padding = System::Windows::Forms::Padding(35, 0, 0, 0);
 			this->label14->Size = System::Drawing::Size(152, 13);
@@ -334,9 +338,9 @@ private: System::Windows::Forms::TextBox^  textBox1;
 			this->button3->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
 			this->button3->ImageIndex = 9;
 			this->button3->ImageList = this->imageList1;
-			this->button3->Location = System::Drawing::Point(3, 671);
+			this->button3->Location = System::Drawing::Point(3, 684);
 			this->button3->Name = L"button3";
-			this->button3->Size = System::Drawing::Size(186, 40);
+			this->button3->Size = System::Drawing::Size(198, 40);
 			this->button3->TabIndex = 4;
 			this->button3->UseVisualStyleBackColor = false;
 			this->button3->Click += gcnew System::EventHandler(this, &Main::button3_Click);
@@ -364,9 +368,9 @@ private: System::Windows::Forms::TextBox^  textBox1;
 			// 
 			this->groupBox5->Controls->Add(this->flowLayoutPanel5);
 			this->groupBox5->Dock = System::Windows::Forms::DockStyle::Top;
-			this->groupBox5->Location = System::Drawing::Point(3, 571);
+			this->groupBox5->Location = System::Drawing::Point(3, 584);
 			this->groupBox5->Name = L"groupBox5";
-			this->groupBox5->Size = System::Drawing::Size(186, 100);
+			this->groupBox5->Size = System::Drawing::Size(198, 100);
 			this->groupBox5->TabIndex = 4;
 			this->groupBox5->TabStop = false;
 			this->groupBox5->Text = L"Visor";
@@ -377,7 +381,7 @@ private: System::Windows::Forms::TextBox^  textBox1;
 			this->flowLayoutPanel5->Dock = System::Windows::Forms::DockStyle::Fill;
 			this->flowLayoutPanel5->Location = System::Drawing::Point(3, 16);
 			this->flowLayoutPanel5->Name = L"flowLayoutPanel5";
-			this->flowLayoutPanel5->Size = System::Drawing::Size(180, 81);
+			this->flowLayoutPanel5->Size = System::Drawing::Size(192, 81);
 			this->flowLayoutPanel5->TabIndex = 0;
 			// 
 			// ActivarOpenGl
@@ -402,7 +406,7 @@ private: System::Windows::Forms::TextBox^  textBox1;
 			this->groupBox4->Dock = System::Windows::Forms::DockStyle::Top;
 			this->groupBox4->Location = System::Drawing::Point(3, 441);
 			this->groupBox4->Name = L"groupBox4";
-			this->groupBox4->Size = System::Drawing::Size(186, 130);
+			this->groupBox4->Size = System::Drawing::Size(198, 143);
 			this->groupBox4->TabIndex = 3;
 			this->groupBox4->TabStop = false;
 			this->groupBox4->Text = L"GPS";
@@ -416,10 +420,12 @@ private: System::Windows::Forms::TextBox^  textBox1;
 			this->flowLayoutPanel4->Controls->Add(this->label16);
 			this->flowLayoutPanel4->Controls->Add(this->comboBox2);
 			this->flowLayoutPanel4->Controls->Add(this->label1);
+			this->flowLayoutPanel4->Controls->Add(this->label17);
+			this->flowLayoutPanel4->Controls->Add(this->textBox11);
 			this->flowLayoutPanel4->Dock = System::Windows::Forms::DockStyle::Fill;
 			this->flowLayoutPanel4->Location = System::Drawing::Point(3, 16);
 			this->flowLayoutPanel4->Name = L"flowLayoutPanel4";
-			this->flowLayoutPanel4->Size = System::Drawing::Size(180, 111);
+			this->flowLayoutPanel4->Size = System::Drawing::Size(192, 124);
 			this->flowLayoutPanel4->TabIndex = 0;
 			// 
 			// ActivarGPS
@@ -502,13 +508,31 @@ private: System::Windows::Forms::TextBox^  textBox1;
 			this->label1->TabIndex = 7;
 			this->label1->Text = L"Satélites: ";
 			// 
+			// label17
+			// 
+			this->label17->AutoSize = true;
+			this->label17->Location = System::Drawing::Point(62, 88);
+			this->label17->Name = L"label17";
+			this->label17->Padding = System::Windows::Forms::Padding(0, 6, 0, 0);
+			this->label17->Size = System::Drawing::Size(45, 19);
+			this->label17->TabIndex = 8;
+			this->label17->Text = L"Baudios";
+			// 
+			// textBox11
+			// 
+			this->textBox11->Location = System::Drawing::Point(113, 91);
+			this->textBox11->Name = L"textBox11";
+			this->textBox11->Size = System::Drawing::Size(55, 20);
+			this->textBox11->TabIndex = 8;
+			this->textBox11->Text = L"9600";
+			// 
 			// groupBox3
 			// 
 			this->groupBox3->Controls->Add(this->flowLayoutPanel3);
 			this->groupBox3->Dock = System::Windows::Forms::DockStyle::Top;
 			this->groupBox3->Location = System::Drawing::Point(3, 292);
 			this->groupBox3->Name = L"groupBox3";
-			this->groupBox3->Size = System::Drawing::Size(186, 149);
+			this->groupBox3->Size = System::Drawing::Size(198, 149);
 			this->groupBox3->TabIndex = 2;
 			this->groupBox3->TabStop = false;
 			this->groupBox3->Text = L"Análisis";
@@ -524,7 +548,7 @@ private: System::Windows::Forms::TextBox^  textBox1;
 			this->flowLayoutPanel3->Dock = System::Windows::Forms::DockStyle::Fill;
 			this->flowLayoutPanel3->Location = System::Drawing::Point(3, 16);
 			this->flowLayoutPanel3->Name = L"flowLayoutPanel3";
-			this->flowLayoutPanel3->Size = System::Drawing::Size(180, 130);
+			this->flowLayoutPanel3->Size = System::Drawing::Size(192, 130);
 			this->flowLayoutPanel3->TabIndex = 0;
 			// 
 			// ActivarAnalisys
@@ -600,7 +624,7 @@ private: System::Windows::Forms::TextBox^  textBox1;
 			this->groupBox2->Dock = System::Windows::Forms::DockStyle::Top;
 			this->groupBox2->Location = System::Drawing::Point(3, 95);
 			this->groupBox2->Name = L"groupBox2";
-			this->groupBox2->Size = System::Drawing::Size(186, 197);
+			this->groupBox2->Size = System::Drawing::Size(198, 197);
 			this->groupBox2->TabIndex = 1;
 			this->groupBox2->TabStop = false;
 			this->groupBox2->Text = L"Lector";
@@ -628,7 +652,7 @@ private: System::Windows::Forms::TextBox^  textBox1;
 			this->flowLayoutPanel2->Dock = System::Windows::Forms::DockStyle::Fill;
 			this->flowLayoutPanel2->Location = System::Drawing::Point(3, 16);
 			this->flowLayoutPanel2->Name = L"flowLayoutPanel2";
-			this->flowLayoutPanel2->Size = System::Drawing::Size(180, 178);
+			this->flowLayoutPanel2->Size = System::Drawing::Size(192, 178);
 			this->flowLayoutPanel2->TabIndex = 0;
 			// 
 			// ActivarLector
@@ -740,7 +764,7 @@ private: System::Windows::Forms::TextBox^  textBox1;
 			// label8
 			// 
 			this->label8->AutoSize = true;
-			this->label8->Location = System::Drawing::Point(3, 122);
+			this->label8->Location = System::Drawing::Point(166, 96);
 			this->label8->Name = L"label8";
 			this->label8->Padding = System::Windows::Forms::Padding(0, 5, 0, 0);
 			this->label8->Size = System::Drawing::Size(14, 18);
@@ -749,7 +773,7 @@ private: System::Windows::Forms::TextBox^  textBox1;
 			// 
 			// textBox7
 			// 
-			this->textBox7->Location = System::Drawing::Point(23, 125);
+			this->textBox7->Location = System::Drawing::Point(3, 125);
 			this->textBox7->Name = L"textBox7";
 			this->textBox7->Size = System::Drawing::Size(55, 20);
 			this->textBox7->TabIndex = 12;
@@ -758,7 +782,7 @@ private: System::Windows::Forms::TextBox^  textBox1;
 			// label9
 			// 
 			this->label9->AutoSize = true;
-			this->label9->Location = System::Drawing::Point(84, 122);
+			this->label9->Location = System::Drawing::Point(64, 122);
 			this->label9->Name = L"label9";
 			this->label9->Padding = System::Windows::Forms::Padding(0, 5, 0, 0);
 			this->label9->Size = System::Drawing::Size(14, 18);
@@ -767,7 +791,7 @@ private: System::Windows::Forms::TextBox^  textBox1;
 			// 
 			// textBox8
 			// 
-			this->textBox8->Location = System::Drawing::Point(104, 125);
+			this->textBox8->Location = System::Drawing::Point(84, 125);
 			this->textBox8->Name = L"textBox8";
 			this->textBox8->Size = System::Drawing::Size(56, 20);
 			this->textBox8->TabIndex = 14;
@@ -776,7 +800,7 @@ private: System::Windows::Forms::TextBox^  textBox1;
 			// label10
 			// 
 			this->label10->AutoSize = true;
-			this->label10->Location = System::Drawing::Point(3, 148);
+			this->label10->Location = System::Drawing::Point(146, 122);
 			this->label10->Name = L"label10";
 			this->label10->Padding = System::Windows::Forms::Padding(0, 5, 0, 0);
 			this->label10->Size = System::Drawing::Size(14, 18);
@@ -785,7 +809,7 @@ private: System::Windows::Forms::TextBox^  textBox1;
 			// 
 			// textBox9
 			// 
-			this->textBox9->Location = System::Drawing::Point(23, 151);
+			this->textBox9->Location = System::Drawing::Point(3, 151);
 			this->textBox9->Name = L"textBox9";
 			this->textBox9->Size = System::Drawing::Size(55, 20);
 			this->textBox9->TabIndex = 16;
@@ -793,7 +817,7 @@ private: System::Windows::Forms::TextBox^  textBox1;
 			// 
 			// label11
 			// 
-			this->label11->Location = System::Drawing::Point(84, 148);
+			this->label11->Location = System::Drawing::Point(64, 148);
 			this->label11->Name = L"label11";
 			this->label11->Padding = System::Windows::Forms::Padding(0, 5, 0, 0);
 			this->label11->Size = System::Drawing::Size(14, 18);
@@ -802,7 +826,7 @@ private: System::Windows::Forms::TextBox^  textBox1;
 			// 
 			// textBox10
 			// 
-			this->textBox10->Location = System::Drawing::Point(104, 151);
+			this->textBox10->Location = System::Drawing::Point(84, 151);
 			this->textBox10->Name = L"textBox10";
 			this->textBox10->Size = System::Drawing::Size(56, 20);
 			this->textBox10->TabIndex = 18;
@@ -814,7 +838,7 @@ private: System::Windows::Forms::TextBox^  textBox1;
 			this->groupBox1->Dock = System::Windows::Forms::DockStyle::Top;
 			this->groupBox1->Location = System::Drawing::Point(3, 3);
 			this->groupBox1->Name = L"groupBox1";
-			this->groupBox1->Size = System::Drawing::Size(186, 92);
+			this->groupBox1->Size = System::Drawing::Size(198, 92);
 			this->groupBox1->TabIndex = 0;
 			this->groupBox1->TabStop = false;
 			this->groupBox1->Text = L"Conexión";
@@ -827,7 +851,7 @@ private: System::Windows::Forms::TextBox^  textBox1;
 			this->flowLayoutPanel1->Dock = System::Windows::Forms::DockStyle::Fill;
 			this->flowLayoutPanel1->Location = System::Drawing::Point(3, 16);
 			this->flowLayoutPanel1->Name = L"flowLayoutPanel1";
-			this->flowLayoutPanel1->Size = System::Drawing::Size(180, 73);
+			this->flowLayoutPanel1->Size = System::Drawing::Size(192, 73);
 			this->flowLayoutPanel1->TabIndex = 0;
 			// 
 			// label2
@@ -885,7 +909,7 @@ private: System::Windows::Forms::TextBox^  textBox1;
 			this->tabPage2->Location = System::Drawing::Point(4, 22);
 			this->tabPage2->Name = L"tabPage2";
 			this->tabPage2->Padding = System::Windows::Forms::Padding(3);
-			this->tabPage2->Size = System::Drawing::Size(192, 682);
+			this->tabPage2->Size = System::Drawing::Size(192, 641);
 			this->tabPage2->TabIndex = 1;
 			this->tabPage2->Text = L"Visor";
 			this->tabPage2->UseVisualStyleBackColor = true;
@@ -936,7 +960,7 @@ private: System::Windows::Forms::TextBox^  textBox1;
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
-			this->ClientSize = System::Drawing::Size(1222, 733);
+			this->ClientSize = System::Drawing::Size(1222, 692);
 			this->Controls->Add(this->textBox1);
 			this->Controls->Add(this->ConsolaA);
 			this->Controls->Add(this->textBox3);
@@ -1050,14 +1074,21 @@ private: System::Windows::Forms::TextBox^  textBox1;
 			ActivarGPS->ImageIndex = 6;
 			comboBox1->BeginUpdate();
 			cli::array<String^>^ coms = gps->serialPort->GetPortNames();
-			comboBox1->Items->Clear();
-			for (int i = 0; i < coms->Length; i++)
-			{
-				comboBox1->Items->Add(coms[i]);
+			if (coms->Length < 1) {
+				ActivarGPS->Checked = false;
+				MessageBox::Show("No se detectan dispositivos conectados", "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
 			}
-			comboBox1->SelectedItem = comboBox1->Items[0];
-			comboBox1->EndUpdate();
-			comboBox2->SelectedIndex = 1;
+			else {
+				comboBox1->Items->Clear();
+				for (int i = 0; i < coms->Length; i++)
+				{
+					comboBox1->Items->Add(coms[i]);
+				}
+
+				comboBox1->SelectedItem = comboBox1->Items[0];
+				comboBox1->EndUpdate();
+				comboBox2->SelectedIndex = 1;
+			}
 		}
 		else {
 			Controlador->ArrayGps[START] = false;
@@ -1068,6 +1099,7 @@ private: System::Windows::Forms::TextBox^  textBox1;
 			ActivarGPS->ImageIndex = 7;
 			timer3->Enabled = false;
 		}
+
 
 		//TODO: MANDAR A CONTROL 
 	}
@@ -1171,7 +1203,7 @@ private: System::Windows::Forms::TextBox^  textBox1;
 			Controlador->ArrayDataReader[INFORME] = "";
 			if (fr > 0)
 			{
-				toolStripLabel1->Text = "Frecuencia: " + (1 / fr)  + " Hz";
+				toolStripLabel1->Text = "Frecuencia: " + (1 / fr) + " Hz";
 			}
 			/*else {
 				toolStripLabel1->Text = "Frecuencia: 0 Hz";
@@ -1224,6 +1256,7 @@ private: System::Windows::Forms::TextBox^  textBox1;
 		}
 		else
 		{
+			Controlador->ArrayGps[RATE] = Convert::ToInt32(textBox11->Text);
 			button4->ImageIndex = 11;
 			Controlador->ArrayGps[START] = true;
 			timer3->Enabled = true;
@@ -1231,5 +1264,5 @@ private: System::Windows::Forms::TextBox^  textBox1;
 
 	}
 
-};
+	};
 }

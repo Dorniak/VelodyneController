@@ -113,6 +113,8 @@ void Punto3D::setAzimuth(double r) {
 /// <param name="channel">The channel.</param>
 void Punto3D::setAngle(int channel)
 {
+	if (channel > 15)
+		channel -= 16;
 	switch (channel)
 	{
 	case 0: Angle = -15; break;

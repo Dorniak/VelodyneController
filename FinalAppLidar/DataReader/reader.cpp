@@ -78,6 +78,7 @@ void DataReader::Read()
 	double ElapsedSeconds;
 	ArrayDataReader[FRECUENCY_TIME] = 0;
 	ArrayDataReader[PROCESS_TIME] = 0;
+	bool primer = false;
 	while (!Flags[FLAG_WARNING] && !Flags[FLAG_PAUSA]) {
 		try
 		{
@@ -93,31 +94,40 @@ void DataReader::Read()
 				for (int i = 0; i < NUMBER_OF_CHANNELS; i++) {
 					//Corte de vuelta
 					if ((azimuth_index > 0) && (azimuths[azimuth_index] < azimuths[azimuth_index - 1])) {//(azimuths[azimuth_index] - azimuths[azimuth_index - 1]) < -2) {
-						ArrayDataReader[FRECUENCY_TIME] = frecuency_clock->ElapsedMilliseconds/1000;
+						ArrayDataReader[FRECUENCY_TIME] = frecuency_clock->ElapsedMilliseconds / 1000;
 						copiarPuntos();
 						frame++;
 						frecuency_clock->Restart();
+						primer = true;
 					}
 					else if ((azimuth_index == 0) && (azimuths[azimuth_index + 1] < azimuths[azimuth_index])) {
-						ArrayDataReader[FRECUENCY_TIME] = frecuency_clock->ElapsedMilliseconds/1000;
+						ArrayDataReader[FRECUENCY_TIME] = frecuency_clock->ElapsedMilliseconds / 1000;
 						copiarPuntos();
 						frame++;
 						frecuency_clock->Restart();
+						primer = true;
 					}
 					else if (corte) {
 						corte = false;
-						ArrayDataReader[FRECUENCY_TIME] = frecuency_clock->ElapsedMilliseconds/1000;
+						ArrayDataReader[FRECUENCY_TIME] = frecuency_clock->ElapsedMilliseconds / 1000;
 						copiarPuntos();
 						frame++;
 						frecuency_clock->Restart();
+						primer = true;
 					}
 					if ((distances[distance_index] >= min) && (distances[distance_index] <= max)) {
 						p = gcnew Punto3D(distances[distance_index], intensities[intensity_index], azimuths[azimuth_index], getAngle(i));
 						p->CalculateCoordinates(CALIBRATE_X, CALIBRATE_Y, CALIBRATE_Z, CALIBRATE_P, CALIBRATE_R, CALIBRATE_Y);
 						Puntos->Add(p);
 						if (Flags[FLAG_LOG]) {
-							//Azimuth, X, Y, Z, Distance;
+							if (!primer) {
+								//Azimuth, X, Y, Z, Distance;
+								loger->WriteLine(frame + "," + p->visualize());
+							}
+							else {
 								loger->WriteLine(frame + "," + p->visualize() + ArrayGps[TRAMA]->ToString());
+								primer = false;
+							}
 						}
 					}
 					else {
@@ -194,7 +204,7 @@ cli::array<Double>^ DataReader::InterpolateAzimuth(cli::array<Byte>^ &ReceiveByt
 			{
 				result[j + (32 * k)] = azimuths[k] + (j*recorrido_disparo);//0.0165887
 			}
-			else 
+			else
 			{
 				result[j + (32 * k)] = azimuths[k] + ((j*recorrido_disparo) + recorrido_recarga);//0.1326959
 			}
@@ -288,6 +298,8 @@ void DataReader::copiarPuntos()
 
 double DataReader::getAngle(int channel)
 {
+	if (channel > 15)
+		channel -= 16;
 	switch (channel)
 	{
 	case 0: return -15;
