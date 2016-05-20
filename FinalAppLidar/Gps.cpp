@@ -59,13 +59,20 @@ void Gps::Esperar() {
 	Read();
 }
 void Gps::ExtraerGGA(String^ data) {
-	cli::array<String^>^ partes = data->Split(',');
-	/*for (int i = 0; i < partes->Length; i++)
+	try
 	{
-		parametros[TRAMA] += "["+i+"]="+partes[i]+"  ";
+		cli::array<String^>^ partes = data->Split(',');
+		/*for (int i = 0; i < partes->Length; i++)
+		{
+			parametros[TRAMA] += "["+i+"]="+partes[i]+"  ";
+		}
+		parametros[TRAMA] += "\r\n";*/
+		parametros[QUALITY] = partes[6];
+		parametros[SATELITES] = partes[7];
 	}
-	parametros[TRAMA] += "\r\n";*/
-	parametros[QUALITY] = partes[6];
-	parametros[SATELITES] = partes[7];
+	catch (Exception^ e)
+	{
+
+	}
 
 }

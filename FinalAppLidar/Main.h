@@ -1223,26 +1223,33 @@ namespace FinalAppLidar {
 	}
 	private: System::Void timer3_Tick(System::Object^  sender, System::EventArgs^  e) {
 		bool start = (bool)Controlador->ArrayGps[START];
-		if (start) {
-			String^ trama = Controlador->ArrayGps[TRAMA]->ToString();
-			int sig = Convert::ToInt32(Controlador->ArrayGps[QUALITY]);
-			int sat = Convert::ToInt32(Controlador->ArrayGps[SATELITES]);
-			if (trama->Length > 0)
-				textBox3->AppendText(trama + "\n");
+		try
+		{
+			if (start) {
+				String^ trama = Controlador->ArrayGps[TRAMA]->ToString();
+				int sig = Convert::ToInt32(Controlador->ArrayGps[QUALITY]);
+				int sat = Convert::ToInt32(Controlador->ArrayGps[SATELITES]);
+				if (trama->Length > 0)
+					textBox3->AppendText(trama + "\n");
 
-			switch (sig)
-			{
-			case 1: button4->ImageIndex = 12;label1->Text = "Satélites: " + sat;break;
-			case 2: button4->ImageIndex = 13;label1->Text = "Satélites: " + sat;break;
-			default:
-				button4->ImageIndex = 11;
-				label1->Text = "Satélites: Buscando...";
-				break;
+				switch (sig)
+				{
+				case 1: button4->ImageIndex = 12;label1->Text = "Satélites: " + sat;break;
+				case 2: button4->ImageIndex = 13;label1->Text = "Satélites: " + sat;break;
+				default:
+					button4->ImageIndex = 11;
+					label1->Text = "Satélites: Buscando...";
+					break;
+				}
+			}
+			else {
+				button4->ImageIndex = 10;
+				label1->Text = "Satélites:";
 			}
 		}
-		else {
-			button4->ImageIndex = 10;
-			label1->Text = "Satélites:";
+		catch (Exception^ e)
+		{
+
 		}
 	}
 	private: System::Void comboBox2_SelectedIndexChanged(System::Object^  sender, System::EventArgs^  e) {
