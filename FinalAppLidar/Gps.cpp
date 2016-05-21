@@ -10,12 +10,14 @@ Gps::Gps(cli::array<Object^>^ ArrayGps, cli::array<Thread^>^ Threads_in)
 	gps_thread->Start();
 }
 void Gps::Read() {
-	serialPort->BaudRate = Convert::ToInt32(parametros[RATE]);
-	serialPort->ReadTimeout = 2000;
+	
 	serialPort->Open();
 	
-	if (!serialPort->IsOpen)
+	if (!serialPort->IsOpen){
 		MessageBox::Show("Error al conectar en el puerto" + parametros[COM], "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
+		Esperar();
+	}
+	parametros[ESTADO] = 1;
 	String^ data;
 	while (Convert::ToBoolean(parametros[START])) {
 		try
@@ -40,6 +42,7 @@ void Gps::Read() {
 }
 
 void Gps::Esperar() {
+	parametros[ESTADO] = 0;
 	while (!Convert::ToBoolean(parametros[START]))
 	{
 		Sleep(100);
@@ -47,14 +50,14 @@ void Gps::Esperar() {
 	try
 	{
 		serialPort->PortName = parametros[COM]->ToString();
-		serialPort->Parity = Parity::None;
 		serialPort->StopBits = StopBits::One;
 		serialPort->DataBits = 8;
-		serialPort->Handshake = Handshake::None;
+		serialPort->BaudRate = Convert::ToInt32(parametros[RATE]);
+		serialPort->ReadTimeout = 1500;
 	}
 	catch (Exception^ e)
 	{
-		MessageBox::Show("Error en gps", "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
+		MessageBox::Show("Error al configurara el puerto serie", "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
 	}
 	Read();
 }
@@ -62,13 +65,11 @@ void Gps::ExtraerGGA(String^ data) {
 	try
 	{
 		cli::array<String^>^ partes = data->Split(',');
-		/*for (int i = 0; i < partes->Length; i++)
-		{
-			parametros[TRAMA] += "["+i+"]="+partes[i]+"  ";
-		}
-		parametros[TRAMA] += "\r\n";*/
-		parametros[QUALITY] = partes[6];
-		parametros[SATELITES] = partes[7];
+		
+		if (parametros[QUALITY] != partes[6])
+			parametros[QUALITY] = partes[6];
+		if (parametros[SATELITES] != partes[7] && partes[7] != "")
+			parametros[SATELITES] = partes[7];
 	}
 	catch (Exception^ e)
 	{

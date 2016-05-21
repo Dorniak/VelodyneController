@@ -83,7 +83,7 @@ namespace FinalAppLidar {
 	private: System::Windows::Forms::GroupBox^  groupBox5;
 	private: System::Windows::Forms::FlowLayoutPanel^  flowLayoutPanel5;
 	private: System::Windows::Forms::CheckBox^  ActivarOpenGl;
-	private: System::Windows::Forms::FlowLayoutPanel^  flowLayoutPanel4;
+
 	private: System::Windows::Forms::CheckBox^  ActivarGPS;
 	private: System::Windows::Forms::FlowLayoutPanel^  flowLayoutPanel3;
 	private: System::Windows::Forms::CheckBox^  ActivarAnalisys;
@@ -141,7 +141,12 @@ namespace FinalAppLidar {
 	private: System::Windows::Forms::TextBox^  ConsolaA;
 	private: System::Windows::Forms::TextBox^  textBox1;
 	private: System::Windows::Forms::Label^  label17;
-	private: System::Windows::Forms::TextBox^  textBox11;
+	private: System::Windows::Forms::ComboBox^  comboBox3;
+
+private: System::Windows::Forms::ImageList^  imageList2;
+private: System::Windows::Forms::PictureBox^  pictureBox1;
+private: System::Windows::Forms::PictureBox^  pictureBox2;
+
 
 
 
@@ -181,21 +186,22 @@ namespace FinalAppLidar {
 			this->flowLayoutPanel5 = (gcnew System::Windows::Forms::FlowLayoutPanel());
 			this->ActivarOpenGl = (gcnew System::Windows::Forms::CheckBox());
 			this->groupBox4 = (gcnew System::Windows::Forms::GroupBox());
-			this->flowLayoutPanel4 = (gcnew System::Windows::Forms::FlowLayoutPanel());
+			this->pictureBox1 = (gcnew System::Windows::Forms::PictureBox());
+			this->comboBox3 = (gcnew System::Windows::Forms::ComboBox());
 			this->ActivarGPS = (gcnew System::Windows::Forms::CheckBox());
-			this->label15 = (gcnew System::Windows::Forms::Label());
 			this->comboBox1 = (gcnew System::Windows::Forms::ComboBox());
+			this->label15 = (gcnew System::Windows::Forms::Label());
 			this->button4 = (gcnew System::Windows::Forms::Button());
+			this->label1 = (gcnew System::Windows::Forms::Label());
 			this->label16 = (gcnew System::Windows::Forms::Label());
 			this->comboBox2 = (gcnew System::Windows::Forms::ComboBox());
-			this->label1 = (gcnew System::Windows::Forms::Label());
 			this->label17 = (gcnew System::Windows::Forms::Label());
-			this->textBox11 = (gcnew System::Windows::Forms::TextBox());
 			this->groupBox3 = (gcnew System::Windows::Forms::GroupBox());
 			this->flowLayoutPanel3 = (gcnew System::Windows::Forms::FlowLayoutPanel());
 			this->ActivarAnalisys = (gcnew System::Windows::Forms::CheckBox());
 			this->label4 = (gcnew System::Windows::Forms::Label());
 			this->textBox4 = (gcnew System::Windows::Forms::TextBox());
+			this->pictureBox2 = (gcnew System::Windows::Forms::PictureBox());
 			this->label12 = (gcnew System::Windows::Forms::Label());
 			this->trackBar1 = (gcnew System::Windows::Forms::TrackBar());
 			this->label13 = (gcnew System::Windows::Forms::Label());
@@ -233,15 +239,17 @@ namespace FinalAppLidar {
 			this->timer3 = (gcnew System::Windows::Forms::Timer(this->components));
 			this->ConsolaA = (gcnew System::Windows::Forms::TextBox());
 			this->textBox1 = (gcnew System::Windows::Forms::TextBox());
+			this->imageList2 = (gcnew System::Windows::Forms::ImageList(this->components));
 			this->toolStrip1->SuspendLayout();
 			this->tabControl1->SuspendLayout();
 			this->tabPage1->SuspendLayout();
 			this->groupBox5->SuspendLayout();
 			this->flowLayoutPanel5->SuspendLayout();
 			this->groupBox4->SuspendLayout();
-			this->flowLayoutPanel4->SuspendLayout();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox1))->BeginInit();
 			this->groupBox3->SuspendLayout();
 			this->flowLayoutPanel3->SuspendLayout();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox2))->BeginInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->trackBar1))->BeginInit();
 			this->groupBox2->SuspendLayout();
 			this->flowLayoutPanel2->SuspendLayout();
@@ -323,7 +331,7 @@ namespace FinalAppLidar {
 			// 
 			this->label14->AutoSize = true;
 			this->label14->Dock = System::Windows::Forms::DockStyle::Top;
-			this->label14->Location = System::Drawing::Point(3, 724);
+			this->label14->Location = System::Drawing::Point(3, 727);
 			this->label14->Name = L"label14";
 			this->label14->Padding = System::Windows::Forms::Padding(35, 0, 0, 0);
 			this->label14->Size = System::Drawing::Size(152, 13);
@@ -338,7 +346,7 @@ namespace FinalAppLidar {
 			this->button3->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
 			this->button3->ImageIndex = 9;
 			this->button3->ImageList = this->imageList1;
-			this->button3->Location = System::Drawing::Point(3, 684);
+			this->button3->Location = System::Drawing::Point(3, 687);
 			this->button3->Name = L"button3";
 			this->button3->Size = System::Drawing::Size(198, 40);
 			this->button3->TabIndex = 4;
@@ -368,7 +376,7 @@ namespace FinalAppLidar {
 			// 
 			this->groupBox5->Controls->Add(this->flowLayoutPanel5);
 			this->groupBox5->Dock = System::Windows::Forms::DockStyle::Top;
-			this->groupBox5->Location = System::Drawing::Point(3, 584);
+			this->groupBox5->Location = System::Drawing::Point(3, 587);
 			this->groupBox5->Name = L"groupBox5";
 			this->groupBox5->Size = System::Drawing::Size(198, 100);
 			this->groupBox5->TabIndex = 4;
@@ -402,31 +410,46 @@ namespace FinalAppLidar {
 			// 
 			// groupBox4
 			// 
-			this->groupBox4->Controls->Add(this->flowLayoutPanel4);
+			this->groupBox4->Controls->Add(this->pictureBox1);
+			this->groupBox4->Controls->Add(this->comboBox3);
+			this->groupBox4->Controls->Add(this->ActivarGPS);
+			this->groupBox4->Controls->Add(this->comboBox1);
+			this->groupBox4->Controls->Add(this->label15);
+			this->groupBox4->Controls->Add(this->button4);
+			this->groupBox4->Controls->Add(this->label1);
+			this->groupBox4->Controls->Add(this->label16);
+			this->groupBox4->Controls->Add(this->comboBox2);
+			this->groupBox4->Controls->Add(this->label17);
 			this->groupBox4->Dock = System::Windows::Forms::DockStyle::Top;
 			this->groupBox4->Location = System::Drawing::Point(3, 441);
 			this->groupBox4->Name = L"groupBox4";
-			this->groupBox4->Size = System::Drawing::Size(198, 143);
+			this->groupBox4->Size = System::Drawing::Size(198, 146);
 			this->groupBox4->TabIndex = 3;
 			this->groupBox4->TabStop = false;
 			this->groupBox4->Text = L"GPS";
 			// 
-			// flowLayoutPanel4
+			// pictureBox1
 			// 
-			this->flowLayoutPanel4->Controls->Add(this->ActivarGPS);
-			this->flowLayoutPanel4->Controls->Add(this->label15);
-			this->flowLayoutPanel4->Controls->Add(this->comboBox1);
-			this->flowLayoutPanel4->Controls->Add(this->button4);
-			this->flowLayoutPanel4->Controls->Add(this->label16);
-			this->flowLayoutPanel4->Controls->Add(this->comboBox2);
-			this->flowLayoutPanel4->Controls->Add(this->label1);
-			this->flowLayoutPanel4->Controls->Add(this->label17);
-			this->flowLayoutPanel4->Controls->Add(this->textBox11);
-			this->flowLayoutPanel4->Dock = System::Windows::Forms::DockStyle::Fill;
-			this->flowLayoutPanel4->Location = System::Drawing::Point(3, 16);
-			this->flowLayoutPanel4->Name = L"flowLayoutPanel4";
-			this->flowLayoutPanel4->Size = System::Drawing::Size(192, 124);
-			this->flowLayoutPanel4->TabIndex = 0;
+			this->pictureBox1->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"pictureBox1.Image")));
+			this->pictureBox1->Location = System::Drawing::Point(176, 6);
+			this->pictureBox1->Name = L"pictureBox1";
+			this->pictureBox1->Size = System::Drawing::Size(16, 16);
+			this->pictureBox1->SizeMode = System::Windows::Forms::PictureBoxSizeMode::AutoSize;
+			this->pictureBox1->TabIndex = 9;
+			this->pictureBox1->TabStop = false;
+			// 
+			// comboBox3
+			// 
+			this->comboBox3->Enabled = false;
+			this->comboBox3->FormattingEnabled = true;
+			this->comboBox3->Items->AddRange(gcnew cli::array< System::Object^  >(16) {
+				L"4800", L"9600", L"14400 \t", L"19200", L"28800 \t",
+					L"38400", L"56000 \t", L"57600", L"115200", L"128000", L"153600", L" 230400", L"256000 \t", L"460800", L"921600", L""
+			});
+			this->comboBox3->Location = System::Drawing::Point(64, 64);
+			this->comboBox3->Name = L"comboBox3";
+			this->comboBox3->Size = System::Drawing::Size(79, 21);
+			this->comboBox3->TabIndex = 8;
 			// 
 			// ActivarGPS
 			// 
@@ -437,51 +460,63 @@ namespace FinalAppLidar {
 			this->ActivarGPS->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
 			this->ActivarGPS->ImageIndex = 7;
 			this->ActivarGPS->ImageList = this->imageList1;
-			this->ActivarGPS->Location = System::Drawing::Point(3, 3);
+			this->ActivarGPS->Location = System::Drawing::Point(6, 19);
 			this->ActivarGPS->Name = L"ActivarGPS";
 			this->ActivarGPS->Size = System::Drawing::Size(38, 38);
 			this->ActivarGPS->TabIndex = 1;
 			this->ActivarGPS->UseVisualStyleBackColor = false;
 			this->ActivarGPS->CheckedChanged += gcnew System::EventHandler(this, &Main::ActivarGPS_CheckedChanged);
 			// 
+			// comboBox1
+			// 
+			this->comboBox1->Enabled = false;
+			this->comboBox1->FormattingEnabled = true;
+			this->comboBox1->Location = System::Drawing::Point(64, 88);
+			this->comboBox1->Margin = System::Windows::Forms::Padding(3, 6, 3, 3);
+			this->comboBox1->Name = L"comboBox1";
+			this->comboBox1->Size = System::Drawing::Size(79, 21);
+			this->comboBox1->TabIndex = 2;
+			this->comboBox1->SelectedIndexChanged += gcnew System::EventHandler(this, &Main::comboBox1_SelectedIndexChanged);
+			// 
 			// label15
 			// 
 			this->label15->AutoSize = true;
-			this->label15->Location = System::Drawing::Point(47, 0);
+			this->label15->Location = System::Drawing::Point(6, 83);
 			this->label15->Name = L"label15";
 			this->label15->Padding = System::Windows::Forms::Padding(0, 13, 0, 0);
 			this->label15->Size = System::Drawing::Size(38, 26);
 			this->label15->TabIndex = 4;
 			this->label15->Text = L"Puerto";
 			// 
-			// comboBox1
-			// 
-			this->comboBox1->FormattingEnabled = true;
-			this->comboBox1->Location = System::Drawing::Point(91, 6);
-			this->comboBox1->Margin = System::Windows::Forms::Padding(3, 6, 3, 3);
-			this->comboBox1->Name = L"comboBox1";
-			this->comboBox1->Size = System::Drawing::Size(77, 21);
-			this->comboBox1->TabIndex = 2;
-			this->comboBox1->SelectedIndexChanged += gcnew System::EventHandler(this, &Main::comboBox1_SelectedIndexChanged);
-			// 
 			// button4
 			// 
 			this->button4->AutoSize = true;
+			this->button4->Enabled = false;
 			this->button4->FlatAppearance->BorderSize = 0;
 			this->button4->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
 			this->button4->ImageIndex = 10;
 			this->button4->ImageList = this->imageList1;
-			this->button4->Location = System::Drawing::Point(3, 47);
+			this->button4->Location = System::Drawing::Point(45, 17);
 			this->button4->Name = L"button4";
 			this->button4->Size = System::Drawing::Size(48, 38);
 			this->button4->TabIndex = 6;
 			this->button4->UseVisualStyleBackColor = true;
 			this->button4->Click += gcnew System::EventHandler(this, &Main::button4_Click);
 			// 
+			// label1
+			// 
+			this->label1->AutoSize = true;
+			this->label1->Location = System::Drawing::Point(86, 32);
+			this->label1->Name = L"label1";
+			this->label1->Padding = System::Windows::Forms::Padding(3, 0, 0, 0);
+			this->label1->Size = System::Drawing::Size(38, 13);
+			this->label1->TabIndex = 7;
+			this->label1->Text = L"Iniciar";
+			// 
 			// label16
 			// 
 			this->label16->AutoSize = true;
-			this->label16->Location = System::Drawing::Point(54, 44);
+			this->label16->Location = System::Drawing::Point(6, 109);
 			this->label16->Margin = System::Windows::Forms::Padding(0);
 			this->label16->Name = L"label16";
 			this->label16->Padding = System::Windows::Forms::Padding(0, 10, 0, 0);
@@ -491,40 +526,24 @@ namespace FinalAppLidar {
 			// 
 			// comboBox2
 			// 
+			this->comboBox2->Enabled = false;
 			this->comboBox2->FormattingEnabled = true;
 			this->comboBox2->Items->AddRange(gcnew cli::array< System::Object^  >(3) { L"GPGGA", L"GPRMC", L"GPVTG" });
-			this->comboBox2->Location = System::Drawing::Point(94, 47);
+			this->comboBox2->Location = System::Drawing::Point(64, 115);
 			this->comboBox2->Name = L"comboBox2";
-			this->comboBox2->Size = System::Drawing::Size(75, 21);
+			this->comboBox2->Size = System::Drawing::Size(79, 21);
 			this->comboBox2->TabIndex = 3;
 			this->comboBox2->SelectedIndexChanged += gcnew System::EventHandler(this, &Main::comboBox2_SelectedIndexChanged);
-			// 
-			// label1
-			// 
-			this->label1->AutoSize = true;
-			this->label1->Location = System::Drawing::Point(3, 88);
-			this->label1->Name = L"label1";
-			this->label1->Size = System::Drawing::Size(53, 13);
-			this->label1->TabIndex = 7;
-			this->label1->Text = L"Satélites: ";
 			// 
 			// label17
 			// 
 			this->label17->AutoSize = true;
-			this->label17->Location = System::Drawing::Point(62, 88);
+			this->label17->Location = System::Drawing::Point(6, 64);
 			this->label17->Name = L"label17";
 			this->label17->Padding = System::Windows::Forms::Padding(0, 6, 0, 0);
 			this->label17->Size = System::Drawing::Size(45, 19);
 			this->label17->TabIndex = 8;
 			this->label17->Text = L"Baudios";
-			// 
-			// textBox11
-			// 
-			this->textBox11->Location = System::Drawing::Point(113, 91);
-			this->textBox11->Name = L"textBox11";
-			this->textBox11->Size = System::Drawing::Size(55, 20);
-			this->textBox11->TabIndex = 8;
-			this->textBox11->Text = L"9600";
 			// 
 			// groupBox3
 			// 
@@ -542,6 +561,7 @@ namespace FinalAppLidar {
 			this->flowLayoutPanel3->Controls->Add(this->ActivarAnalisys);
 			this->flowLayoutPanel3->Controls->Add(this->label4);
 			this->flowLayoutPanel3->Controls->Add(this->textBox4);
+			this->flowLayoutPanel3->Controls->Add(this->pictureBox2);
 			this->flowLayoutPanel3->Controls->Add(this->label12);
 			this->flowLayoutPanel3->Controls->Add(this->trackBar1);
 			this->flowLayoutPanel3->Controls->Add(this->label13);
@@ -585,6 +605,16 @@ namespace FinalAppLidar {
 			this->textBox4->Size = System::Drawing::Size(28, 20);
 			this->textBox4->TabIndex = 4;
 			this->textBox4->Text = L"20";
+			// 
+			// pictureBox2
+			// 
+			this->pictureBox2->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"pictureBox2.Image")));
+			this->pictureBox2->Location = System::Drawing::Point(150, 3);
+			this->pictureBox2->Name = L"pictureBox2";
+			this->pictureBox2->Size = System::Drawing::Size(16, 16);
+			this->pictureBox2->SizeMode = System::Windows::Forms::PictureBoxSizeMode::AutoSize;
+			this->pictureBox2->TabIndex = 10;
+			this->pictureBox2->TabStop = false;
 			// 
 			// label12
 			// 
@@ -909,7 +939,7 @@ namespace FinalAppLidar {
 			this->tabPage2->Location = System::Drawing::Point(4, 22);
 			this->tabPage2->Name = L"tabPage2";
 			this->tabPage2->Padding = System::Windows::Forms::Padding(3);
-			this->tabPage2->Size = System::Drawing::Size(192, 641);
+			this->tabPage2->Size = System::Drawing::Size(204, 641);
 			this->tabPage2->TabIndex = 1;
 			this->tabPage2->Text = L"Visor";
 			this->tabPage2->UseVisualStyleBackColor = true;
@@ -956,6 +986,13 @@ namespace FinalAppLidar {
 			this->textBox1->Size = System::Drawing::Size(590, 116);
 			this->textBox1->TabIndex = 7;
 			// 
+			// imageList2
+			// 
+			this->imageList2->ImageStream = (cli::safe_cast<System::Windows::Forms::ImageListStreamer^>(resources->GetObject(L"imageList2.ImageStream")));
+			this->imageList2->TransparentColor = System::Drawing::Color::Transparent;
+			this->imageList2->Images->SetKeyName(0, L"1463785692_Circle_Red.png");
+			this->imageList2->Images->SetKeyName(1, L"1463785696_Circle_Green.png");
+			// 
 			// Main
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
@@ -971,6 +1008,7 @@ namespace FinalAppLidar {
 			this->Text = L"LidarController";
 			this->WindowState = System::Windows::Forms::FormWindowState::Maximized;
 			this->FormClosing += gcnew System::Windows::Forms::FormClosingEventHandler(this, &Main::Main_FormClosing);
+			this->Load += gcnew System::EventHandler(this, &Main::Main_Load);
 			this->toolStrip1->ResumeLayout(false);
 			this->toolStrip1->PerformLayout();
 			this->tabControl1->ResumeLayout(false);
@@ -980,11 +1018,12 @@ namespace FinalAppLidar {
 			this->flowLayoutPanel5->ResumeLayout(false);
 			this->flowLayoutPanel5->PerformLayout();
 			this->groupBox4->ResumeLayout(false);
-			this->flowLayoutPanel4->ResumeLayout(false);
-			this->flowLayoutPanel4->PerformLayout();
+			this->groupBox4->PerformLayout();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox1))->EndInit();
 			this->groupBox3->ResumeLayout(false);
 			this->flowLayoutPanel3->ResumeLayout(false);
 			this->flowLayoutPanel3->PerformLayout();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox2))->EndInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->trackBar1))->EndInit();
 			this->groupBox2->ResumeLayout(false);
 			this->flowLayoutPanel2->ResumeLayout(false);
@@ -1072,6 +1111,10 @@ namespace FinalAppLidar {
 	private: System::Void ActivarGPS_CheckedChanged(System::Object^  sender, System::EventArgs^  e) {
 		if (ActivarGPS->Checked) {
 			ActivarGPS->ImageIndex = 6;
+			button4->Enabled = true;
+			comboBox1->Enabled = true;
+			comboBox2->Enabled = true;
+			comboBox3->Enabled = true;
 			comboBox1->BeginUpdate();
 			cli::array<String^>^ coms = gps->serialPort->GetPortNames();
 			if (coms->Length < 1) {
@@ -1089,19 +1132,23 @@ namespace FinalAppLidar {
 				comboBox1->EndUpdate();
 				comboBox2->SelectedIndex = 1;
 			}
+			comboBox2->SelectedItem = comboBox2->Items[0];
+			comboBox3->SelectedItem = comboBox3->Items[0];
 		}
 		else {
-			Controlador->ArrayGps[START] = false;
-			comboBox1->Items->Clear();
+			pictureBox1->Image = imageList2->Images[0];
+			button4->Enabled = false;
 			button4->ImageIndex = 10;
-			label1->Text = "Satélites:";
+			Controlador->ArrayGps[START] = false;
+			comboBox1->Enabled = false;
+			comboBox2->Enabled = false;
+			comboBox3->Enabled = false;
+			comboBox1->Items->Clear();
+			label1->Text = "Iniciar";
 			gps->serialPort->Close();
 			ActivarGPS->ImageIndex = 7;
 			timer3->Enabled = false;
 		}
-
-
-		//TODO: MANDAR A CONTROL 
 	}
 	private: System::Void ActivarAnalisys_CheckedChanged(System::Object^  sender, System::EventArgs^  e) {
 		if (ActivarAnalisys->Checked)
@@ -1180,6 +1227,8 @@ namespace FinalAppLidar {
 				Controlador->Threads[i]->Abort();
 		}
 		delete Controlador;
+		delete gps;
+		delete Reader;
 		delete timer2;
 		delete timer3;
 	}
@@ -1226,6 +1275,7 @@ namespace FinalAppLidar {
 		try
 		{
 			if (start) {
+				pictureBox1->Image = imageList2->Images[(int)Controlador->ArrayGps[ESTADO]];
 				String^ trama = Controlador->ArrayGps[TRAMA]->ToString();
 				int sig = Convert::ToInt32(Controlador->ArrayGps[QUALITY]);
 				int sat = Convert::ToInt32(Controlador->ArrayGps[SATELITES]);
@@ -1259,11 +1309,12 @@ namespace FinalAppLidar {
 		if ((bool)Controlador->ArrayGps[START]) {
 			button4->ImageIndex = 10;
 			Controlador->ArrayGps[START] = false;
+			pictureBox1->Image = imageList2->Images[0];
 			timer3->Enabled = false;
 		}
 		else
 		{
-			Controlador->ArrayGps[RATE] = Convert::ToInt32(textBox11->Text);
+			Controlador->ArrayGps[RATE] = Convert::ToInt32(comboBox3->SelectedItem);
 			button4->ImageIndex = 11;
 			Controlador->ArrayGps[START] = true;
 			timer3->Enabled = true;
@@ -1271,5 +1322,7 @@ namespace FinalAppLidar {
 
 	}
 
-	};
+	private: System::Void Main_Load(System::Object^  sender, System::EventArgs^  e) {
+	}
+};
 }

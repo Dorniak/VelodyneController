@@ -1,7 +1,6 @@
-﻿  Gps.cpp
-Gps.cpp(25): warning C4101: 'e': unreferenced local variable
-Gps.cpp(55): warning C4101: 'e': unreferenced local variable
-Gps.cpp(73): warning C4101: 'e': unreferenced local variable
+﻿  Main.cpp
+d:\visual studio\finalapplidar\finalapplidar\PostProceso.h(243): warning C4101: 'e': unreferenced local variable
+d:\visual studio\finalapplidar\finalapplidar\Main.h(1300): warning C4101: 'e': unreferenced local variable
   Controller.obj : /DEBUG:FASTLINK is not supported when managed code is present; restarting link with /DEBUG:FULL
   FinalAppLidar.vcxproj -> D:\Visual Studio\FinalAppLidar\Debug\FinalAppLidar.exe
   FinalAppLidar.vcxproj -> D:\Visual Studio\FinalAppLidar\Debug\FinalAppLidar.pdb (Partial PDB)

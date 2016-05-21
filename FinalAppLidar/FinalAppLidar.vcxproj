@@ -154,7 +154,6 @@
     </ClInclude>
     <ClInclude Include="Obstaculo\Obstaculo.h" />
     <ClInclude Include="OpenGl\OpenGl.h" />
-    <ClInclude Include="asd.h" />
     <ClInclude Include="PostProceso.h">
       <FileType>CppForm</FileType>
     </ClInclude>

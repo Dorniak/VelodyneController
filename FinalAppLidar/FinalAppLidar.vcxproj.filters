@@ -71,15 +71,15 @@
     <ClInclude Include="Gps.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="asd.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="PostProceso.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Main.resx">
+      <Filter>Resource Files</Filter>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PostProceso.resx">
       <Filter>Resource Files</Filter>
     </EmbeddedResource>
   </ItemGroup>
