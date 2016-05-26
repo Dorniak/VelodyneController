@@ -1246,6 +1246,8 @@ namespace FinalAppLidar {
 	private: System::Void timer2_Tick(System::Object^  sender, System::EventArgs^  e) {
 
 		if (!Controlador->Flags[FLAG_PAUSA]) {
+			if (Controlador->Flags[FLAG_WARNING])
+				ActivarLector->Checked = false;
 			int fr = Convert::ToInt32(Controlador->ArrayDataReader[FRECUENCY_TIME]);
 			int lec = Convert::ToInt32(Controlador->ArrayDataReader[PROCESS_TIME]);
 			info = Controlador->ArrayDataReader[INFORME]->ToString();

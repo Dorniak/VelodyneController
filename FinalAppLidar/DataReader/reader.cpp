@@ -35,6 +35,8 @@ void DataReader::Read()
 {
 	LaserIpEndPoint = (IPEndPoint^)ArrayDataReader[IP];
 	ClientLIDAR = gcnew UdpClient(LaserIpEndPoint);
+	ClientLIDAR->Client->ReceiveBufferSize *= 2;
+	ClientLIDAR->Client->ReceiveTimeout = 1000;
 	Informar("Inicio");
 	setlocale(LC_NUMERIC, "es_ES");
 	if (Flags[FLAG_LOG]) {
@@ -144,10 +146,36 @@ void DataReader::Read()
 			}
 			azimuth_index = 0, distance_index = 0, intensity_index = 0;
 		}
+		catch (SocketException^ e)
+		{
+			Flags[FLAG_WARNING] = true;
+			
+			System::Windows::Forms::MessageBox::Show("No se reciben datos en el puerto: " + LaserIpEndPoint->Port,"Error", System::Windows::Forms::MessageBoxButtons::OK, System::Windows::Forms::MessageBoxIcon::Error);
+			ClientLIDAR->Close();
+			if (Flags[FLAG_LOG])
+				loger->Close();
+			Puntos->Clear();
+			delete ReceiveBytes;
+			delete azimuths;
+			delete distances;
+			delete intensities;
+			delete p;
+			Esperar();
+		}
 		catch (Exception^ e)
 		{
 			Flags[FLAG_WARNING] = true;
 			System::Windows::Forms::MessageBox::Show(e->ToString());
+			ClientLIDAR->Close();
+			if (Flags[FLAG_LOG])
+				loger->Close();
+			Puntos->Clear();
+			delete ReceiveBytes;
+			delete azimuths;
+			delete distances;
+			delete intensities;
+			delete p;
+			Esperar();
 		}
 		ArrayDataReader[PROCESS_TIME] = process_clock->ElapsedMilliseconds;
 		process_clock->Restart();
