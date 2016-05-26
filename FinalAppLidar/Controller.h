@@ -1,7 +1,7 @@
 #pragma once
-#include "reader.h"
-#include "DataAnalisys.h"
-#include "OpenGl.h"
+#include "DataReader\reader.h"
+#include "DataAnalisys\DataAnalisys.h"
+#include "OpenGl\OpenGl.h"
 #include "stdlib.h"
 #include "Gps.h"
 

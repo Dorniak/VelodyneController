@@ -1,6 +1,17 @@
-﻿  Main.cpp
-d:\visual studio\finalapplidar\finalapplidar\PostProceso.h(243): warning C4101: 'e': unreferenced local variable
-d:\visual studio\finalapplidar\finalapplidar\Main.h(1300): warning C4101: 'e': unreferenced local variable
-  Controller.obj : /DEBUG:FASTLINK is not supported when managed code is present; restarting link with /DEBUG:FULL
-  FinalAppLidar.vcxproj -> D:\Visual Studio\FinalAppLidar\Debug\FinalAppLidar.exe
-  FinalAppLidar.vcxproj -> D:\Visual Studio\FinalAppLidar\Debug\FinalAppLidar.pdb (Partial PDB)
+﻿  Controller.cpp
+d:\visual studio\projects\velodynecontroller\finalapplidar\datareader\../OpenGl/OpenGl.h(5): fatal error C1083: Cannot open include file: 'Punto3D.h': No such file or directory
+  DataAnalisys.cpp
+d:\visual studio\projects\velodynecontroller\finalapplidar\dataanalisys\DataAnalisys.h(2): fatal error C1083: Cannot open include file: 'Obstaculo.h': No such file or directory
+  reader.cpp
+d:\visual studio\projects\velodynecontroller\finalapplidar\datareader\../OpenGl/OpenGl.h(5): fatal error C1083: Cannot open include file: 'Punto3D.h': No such file or directory
+  Gps.cpp
+Gps.cpp(2): fatal error C1083: Cannot open include file: 'Parametros.h': No such file or directory
+  Main.cpp
+d:\visual studio\projects\velodynecontroller\finalapplidar\datareader\../OpenGl/OpenGl.h(5): fatal error C1083: Cannot open include file: 'Punto3D.h': No such file or directory
+  Obstaculo.cpp
+d:\visual studio\projects\velodynecontroller\finalapplidar\obstaculo\Obstaculo.h(2): fatal error C1083: Cannot open include file: 'Punto3D.h': No such file or directory
+  OpenGl.cpp
+d:\visual studio\projects\velodynecontroller\finalapplidar\opengl\OpenGl.h(5): fatal error C1083: Cannot open include file: 'Punto3D.h': No such file or directory
+  PostProceso.cpp
+d:\visual studio\projects\velodynecontroller\finalapplidar\PostProceso.h(2): fatal error C1083: Cannot open include file: 'Parametros.h': No such file or directory
+  Generating Code...

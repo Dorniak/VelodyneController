@@ -1,9 +1,9 @@
 #pragma once
 #pragma warning( disable : 4244 ) //Life is not perfect
-#include "Punto3D.h"
+#include "../Punto3D/Punto3D.h"
 #include <cliext/vector>
-#include "OpenGl.h"
-#include "Parametros.h"
+#include "../OpenGl/OpenGl.h"
+#include "../Flags/Parametros.h"
 
 ref class DataReader
 {

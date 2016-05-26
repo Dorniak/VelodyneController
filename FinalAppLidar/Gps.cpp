@@ -1,6 +1,6 @@
 #include "Gps.h"
 #include "Parametros.h"
-#include "OpenGl.h"
+#include "./OpenGl/OpenGl.h"
 Gps::Gps(cli::array<Object^>^ ArrayGps, cli::array<Thread^>^ Threads_in)
 {
 	parametros = ArrayGps;

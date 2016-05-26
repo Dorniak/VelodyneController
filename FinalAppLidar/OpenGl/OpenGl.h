@@ -2,9 +2,9 @@
 #include <../../packages/nupengl.core.0.1.0.1/build/native/include/GL/freeglut.h>
 #include <math.h>
 #include <stdio.h>
-#include "Punto3D.h"
-#include "Obstaculo.h"
-#include "Parametros.h"
+#include "../Punto3D/Punto3D.h"
+#include "../Obstaculo/Obstaculo.h"
+#include "../para"
 ref class OpenGl {
 public:
 	OpenGl(cli::array<Thread^>^ Threads);
