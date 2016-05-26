@@ -1,5 +1,5 @@
 #pragma once
-#include "Punto3D.h"
+#include "../Punto3D/Punto3D.h"
 #include <limits.h>
 
 using namespace std;

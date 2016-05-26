@@ -133,28 +133,28 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Controller.cpp" />
+    <ClCompile Include="Controller\Controller.cpp" />
     <ClCompile Include="DataAnalisys\DataAnalisys.cpp" />
     <ClCompile Include="DataReader\reader.cpp" />
-    <ClCompile Include="Gps.cpp" />
+    <ClCompile Include="Gps\Gps.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Obstaculo\Obstaculo.cpp" />
     <ClCompile Include="OpenGl\OpenGl.cpp" />
-    <ClCompile Include="PostProceso.cpp" />
+    <ClCompile Include="PostProceso\PostProceso.cpp" />
     <ClCompile Include="Punto3D\Punto3D.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Controller.h" />
+    <ClInclude Include="Controller\Controller.h" />
     <ClInclude Include="DataAnalisys\DataAnalisys.h" />
     <ClInclude Include="DataReader\reader.h" />
-    <ClInclude Include="Flags\Parametros.h" />
-    <ClInclude Include="Gps.h" />
+    <ClInclude Include="Parametros\Parametros.h" />
+    <ClInclude Include="Gps\Gps.h" />
     <ClInclude Include="Main.h">
       <FileType>CppForm</FileType>
     </ClInclude>
     <ClInclude Include="Obstaculo\Obstaculo.h" />
     <ClInclude Include="OpenGl\OpenGl.h" />
-    <ClInclude Include="PostProceso.h">
+    <ClInclude Include="PostProceso\PostProceso.h">
       <FileType>CppForm</FileType>
     </ClInclude>
     <ClInclude Include="Punto3D\Punto3D.h" />
@@ -163,7 +163,7 @@
     <EmbeddedResource Include="Main.resx">
       <DependentUpon>Main.h</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="PostProceso.resx">
+    <EmbeddedResource Include="PostProceso\PostProceso.resx">
       <DependentUpon>PostProceso.h</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>

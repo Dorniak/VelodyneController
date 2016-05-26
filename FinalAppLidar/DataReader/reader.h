@@ -3,7 +3,7 @@
 #include "../Punto3D/Punto3D.h"
 #include <cliext/vector>
 #include "../OpenGl/OpenGl.h"
-#include "../Flags/Parametros.h"
+#include "../Parametros/Parametros.h"
 
 ref class DataReader
 {

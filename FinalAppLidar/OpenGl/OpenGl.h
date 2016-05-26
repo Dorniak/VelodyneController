@@ -1,10 +1,10 @@
 #pragma once
-#include <../../packages/nupengl.core.0.1.0.1/build/native/include/GL/freeglut.h>
+#include "../../packages/nupengl.core.0.1.0.1/build/native/include/GL/freeglut.h"
 #include <math.h>
 #include <stdio.h>
 #include "../Punto3D/Punto3D.h"
 #include "../Obstaculo/Obstaculo.h"
-#include "../para"
+#include "../Parametros/Parametros.h"
 ref class OpenGl {
 public:
 	OpenGl(cli::array<Thread^>^ Threads);

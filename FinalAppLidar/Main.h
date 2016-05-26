@@ -1,6 +1,6 @@
 #pragma once
-#include "Controller.h"
-#include "PostProceso.h"
+#include "Controller\Controller.h"
+#include "PostProceso\PostProceso.h"
 
 namespace FinalAppLidar {
 
