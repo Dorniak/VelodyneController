@@ -143,9 +143,9 @@ namespace FinalAppLidar {
 	private: System::Windows::Forms::Label^  label17;
 	private: System::Windows::Forms::ComboBox^  comboBox3;
 
-private: System::Windows::Forms::ImageList^  imageList2;
-private: System::Windows::Forms::PictureBox^  pictureBox1;
-private: System::Windows::Forms::PictureBox^  pictureBox2;
+	private: System::Windows::Forms::ImageList^  imageList2;
+	private: System::Windows::Forms::PictureBox^  pictureBox1;
+	private: System::Windows::Forms::PictureBox^  pictureBox2;
 
 
 
@@ -1255,7 +1255,7 @@ private: System::Windows::Forms::PictureBox^  pictureBox2;
 				toolStripLabel1->Text = "Frecuencia: " + (1 / fr) + " Hz";
 			}
 			/*else {
-				toolStripLabel1->Text = "Frecuencia: 0 Hz";
+			toolStripLabel1->Text = "Frecuencia: 0 Hz";
 			}*/
 			toolStripLabel2->Text = "Lector: " + lec + " ms";
 			Consola->AppendText(info);
@@ -1324,5 +1324,5 @@ private: System::Windows::Forms::PictureBox^  pictureBox2;
 
 	private: System::Void Main_Load(System::Object^  sender, System::EventArgs^  e) {
 	}
-};
+	};
 }

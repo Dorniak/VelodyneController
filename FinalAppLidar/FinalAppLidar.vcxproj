@@ -147,11 +147,11 @@
     <ClInclude Include="Controller\Controller.h" />
     <ClInclude Include="DataAnalisys\DataAnalisys.h" />
     <ClInclude Include="DataReader\reader.h" />
-    <ClInclude Include="Parametros\Parametros.h" />
-    <ClInclude Include="Gps\Gps.h" />
     <ClInclude Include="Main.h">
       <FileType>CppForm</FileType>
     </ClInclude>
+    <ClInclude Include="Parametros\Parametros.h" />
+    <ClInclude Include="Gps\Gps.h" />
     <ClInclude Include="Obstaculo\Obstaculo.h" />
     <ClInclude Include="OpenGl\OpenGl.h" />
     <ClInclude Include="PostProceso\PostProceso.h">
@@ -160,9 +160,7 @@
     <ClInclude Include="Punto3D\Punto3D.h" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Main.resx">
-      <DependentUpon>Main.h</DependentUpon>
-    </EmbeddedResource>
+    <EmbeddedResource Include="Main.resx" />
     <EmbeddedResource Include="PostProceso\PostProceso.resx">
       <DependentUpon>PostProceso.h</DependentUpon>
     </EmbeddedResource>

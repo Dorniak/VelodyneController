@@ -33,20 +33,17 @@
     <ClCompile Include="Punto3D\Punto3D.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Controller.cpp">
+    <ClCompile Include="Controller\Controller.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Gps.cpp">
+    <ClCompile Include="Gps\Gps.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="PostProceso.cpp">
+    <ClCompile Include="PostProceso\PostProceso.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Main.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="DataAnalisys\DataAnalisys.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -62,24 +59,27 @@
     <ClInclude Include="Punto3D\Punto3D.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Controller.h">
+    <ClInclude Include="Controller\Controller.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Flags\Parametros.h">
+    <ClInclude Include="Parametros\Parametros.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Gps.h">
+    <ClInclude Include="Gps\Gps.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="PostProceso.h">
+    <ClInclude Include="PostProceso\PostProceso.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Main.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Main.resx">
+    <EmbeddedResource Include="PostProceso\PostProceso.resx">
       <Filter>Resource Files</Filter>
     </EmbeddedResource>
-    <EmbeddedResource Include="PostProceso.resx">
+    <EmbeddedResource Include="Main.resx">
       <Filter>Resource Files</Filter>
     </EmbeddedResource>
   </ItemGroup>
