@@ -10,9 +10,10 @@ public:
 	bool valido;
 	Punto3D::Punto3D(const Punto3D %copy);
 #pragma region Constructors Definitions
-	Punto3D(double d, double i, double r, double a);
+	Punto3D(double d, double i, double r, double a, long f);
 	Punto3D(double xx, double yy, double zz);
-	Punto3D();
+	Punto3D(long f, double a);
+	Punto3D::Punto3D();
 #pragma endregion
 
 #pragma region  Setters Definitions
@@ -60,5 +61,6 @@ private:
 	double x;			// X coordinate of the point
 	double y;			// Y coordinate of the point
 	double z;			// Z coordinate of the point
+	long frame;
 #pragma endregion
 };

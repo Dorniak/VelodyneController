@@ -11,7 +11,7 @@
 
 
 //Numero de parametros de los arrays
-#define SIZE_ARRAY_READER 14
+#define SIZE_ARRAY_READER 16
 #define SIZE_ARRAY_ANALISYS 7
 //Posicion parametros array Reader
 #define PATH_LOG 0
@@ -28,6 +28,8 @@
 #define FRECUENCY_TIME 11
 #define PROCESS_TIME 12
 #define FRECUENCY 13
+#define HAY 14
+#define MAXIMO 15
 
 #define NUMBER_OF_BLOCKS 12
 #define NUMBER_OF_CHANNELS 32
@@ -74,6 +76,14 @@
 #define THREAD_ANALISIS 1
 #define THREAD_OPENGL 2
 #define THREAD_GPS 3 
+
+//Constantes Logger
+#define SIZE_ARRAY_LOGGER 1
+#define BUFFER 0
+
+
+
+
 //Includes para las clases Controller Reader DataAnalisys y OpenGl
 using namespace std;
 using namespace System;

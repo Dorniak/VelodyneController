@@ -4,6 +4,7 @@
 #include "../OpenGl/OpenGl.h"
 #include "stdlib.h"
 #include "../Gps/Gps.h"
+#include "../Logger/Logger.h"
 
 ref class Controller {
 public:
@@ -38,6 +39,11 @@ public:
 	/// Array de parámetros de la clase <see cref="reader"/>.
 	/// </summary>
 	cli::array<Object^>^ ArrayDataReader;
+
+	/// <summary>
+	/// Array de parámetros de la clase <see cref="reader"/>.
+	/// </summary>
+	cli::array<Object^>^ ArrayLogger;
 
 	/// <summary>
 	/// Array de parámetros de la clase <see cref="Gps"/>.

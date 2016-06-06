@@ -4,7 +4,7 @@
 #include <cliext/vector>
 #include "../OpenGl/OpenGl.h"
 #include "../Parametros/Parametros.h"
-
+#include "../Logger/Logger.h"
 ref class DataReader
 {
 
@@ -18,7 +18,7 @@ public:
 	/// <param name="Threads">Array de Threads de la capa controladora.</param>
 	/// <param name="Dibujador_in">Objeto OpenGl para la representación.</param>
 	/// <param name="gps_in">Array de datos del objeto Gps</param>
-	DataReader(List<Punto3D^>^ puntosController, cli::array<Object^>^ ParamReader, cli::array<bool>^ Flags, cli::array<Thread^>^ Threads, OpenGl^ Dibujador_in, cli::array<Object^>^ gps_in);
+	DataReader(List<Punto3D^>^ puntosController, cli::array<Object^>^ ParamReader, cli::array<bool>^ Flags, cli::array<Thread^>^ Threads, OpenGl^ Dibujador_in, cli::array<Object^>^ gps_in,Logger^ lg);
 	
 	/// <summary>
 	/// Destructor de la clase DataReader.
@@ -79,14 +79,15 @@ private:
 	long frame;
 
 	/// <summary>
-	/// Variable para almacenar la ubicaión de los logs.
-	/// </summary>
-	String^ path;
-
-	/// <summary>
 	/// Variable para guardar el puntero de acceso al objeto dibujador.
 	/// </summary>
 	OpenGl^ Dibujador;
+
+
+	/// <summary>
+	/// Objeto para el logeo de datos
+	/// </summary>
+	Logger^ log;
 
 	/// <summary>
 	/// Array de parámetros propio de la clase. Se obtiene de la capa controladora.
@@ -116,8 +117,7 @@ private:
 	/// <summary>
 	/// Variables necesarias para la calibración de las coordenadas del laser.
 	/// </summary>
-	double CALIBRATE_X, CALIBRATE_Y, CALIBRATE_Z, CALIBRATE_R, CALIBRATE_P, CALIBRATE_W, max, min,recorrido_disparo,recorrido_recarga;
-	int azimuth_index, distance_index, intensity_index;
+	double CALIBRATE_X, CALIBRATE_Y, CALIBRATE_Z, CALIBRATE_R, CALIBRATE_P, CALIBRATE_W, max, min, recorrido_disparo, recorrido_recarga;
 
 	/// <summary>
 	/// Lista interna para guardar los puntos. Esta lista es la que se copia a <see cref="puntosController"/>.
@@ -140,14 +140,11 @@ private:
 	Thread^ thread_reader;
 
 	/// <summary>
-	/// Objeto stream usado para la generación de los logs.
-	/// </summary>
-	StreamWriter^ loger;
-
-	/// <summary>
 	/// Copia el contenido de <see cref="Puntos"/> a <see cref="puntosController"/> para subirlo a la capa controladora.
  	/// </summary>
 	void copiarPuntos();
+
+	bool timeToSplit(int azimuth_index, cli::array<Double>^ azimuths);
 
 	/// <summary>
 	/// Función de entrada y pausa del thread. Se queda a  la espera de la activación del flag de lectura.
@@ -159,5 +156,10 @@ private:
 	/// </summary>
 	/// <param name="Entrada">String a sacar por pantalla.</param>
 	void Informar(String^ Entrada);
+
+	/// <summary>
+	/// Calibra la posición del laser.
+	/// </summary>
+	void calibrate();
 };
 

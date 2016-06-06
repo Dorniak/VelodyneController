@@ -12,6 +12,7 @@ Punto3D::Punto3D(const Punto3D %copy)
 	x = copy.x;
 	y = copy.y;
 	z = copy.z;
+	frame = copy.frame;
 }
 
 /// <summary>
@@ -21,11 +22,12 @@ Punto3D::Punto3D(const Punto3D %copy)
 /// <param name="i">The intensity.</param>
 /// <param name="r">The horizontal angle.</param>
 /// <param name="a">The vertical angle.</param>
-Punto3D::Punto3D(double d, double i, double r, double a) {
+Punto3D::Punto3D(double d, double i, double r, double a,long f) {
 	Distance = d;
 	Intensity = i;
 	Azimuth = r;
 	Angle = a;
+	frame = f;
 	valido = true;
 }
 Punto3D::Punto3D(double xx, double yy, double zz)
@@ -42,11 +44,23 @@ Punto3D::Punto3D(double xx, double yy, double zz)
 /// <summary>
 /// Initializes a new instance of the <see cref="Punto3D"/> class.
 /// </summary>
+Punto3D::Punto3D(long f, double a) {
+	Distance = 0;
+	frame = f;
+	Intensity = 0;
+	Azimuth = a;
+	Angle = 0;
+	x = 0;
+	y = 0;
+	z = 0;
+	valido = false;
+}
 Punto3D::Punto3D() {
-	Distance = -1;
-	Intensity = -1;
-	Azimuth = -1;
-	Angle = -1;
+	Distance = 0;
+	Intensity = 0;
+	Azimuth = 0;
+	Angle = 0;
+	frame = -1;
 	x = 0;
 	y = 0;
 	z = 0;
@@ -113,9 +127,7 @@ void Punto3D::setAzimuth(double r) {
 /// <param name="channel">The channel.</param>
 void Punto3D::setAngle(int channel)
 {
-	if (channel > 15)
-		channel -= 16;
-	switch (channel)
+	switch (channel%16)
 	{
 	case 0: Angle = -15; break;
 	case 1: Angle = 1; break;
@@ -213,7 +225,7 @@ double Punto3D::getModule()
 
 String^ Punto3D::visualize()
 {
-	return Azimuth + "," + x + "," + y + "," + z + "," + Distance+","+ Intensity +","+Angle;
+	return frame +","+ Azimuth + "," + x + "," + y + "," + z + "," + Distance+","+ Intensity +","+Angle;
 
 }
 

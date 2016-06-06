@@ -25,14 +25,14 @@ int window_y;
 
 int hazPerspectiva = 0;
 
-GLint ancho = 400;
-GLint alto = 400;
+GLint ancho = 600;
+GLint alto = 600;
 //  variables representing the window size
-int window_width = 600;
-int window_height = 600;
+int window_width = 900;
+int window_height = 700;
 
 //  variable representing the window title
-char *window_title = "Sample OpenGL FreeGlut App";
+char *window_title = "Visor Lidar";
 
 
 void OpenGl::Informar(String ^ Entrada)
@@ -49,6 +49,7 @@ void OpenGl::threadconstructor()
 	char **argv;
 	glutInit(&argc, argv);
 	trabajo();
+	
 	//  Start GLUT event processing loop
 	glutDisplayFunc(display);
 	glutMainLoop();
@@ -218,7 +219,6 @@ void display() {
 	glVertex3f(0.0f, 0.0f, 1000.0f);
 	glVertex3f(0.0f, 0.0f, 0.0f);
 	glVertex3f(0.0f, 0.0f, -1000.0f);
-	glEnd();
 #pragma endregion
 	glColor3f(1.0f, 1.0f, 1.0f);      // activamos el color blanco
 #pragma region Circunferencias
@@ -314,7 +314,7 @@ void display() {
 	//-------------------------------------------------------------------------
 	//  Mete en el buffer la lista de obstaculos
 	//-------------------------------------------------------------------------
-	glPointSize(2);
+	glPointSize(4);
 	glBegin(GL_LINE_STRIP);
 	glColor3f(1.0f, 1.0f, 1.0f);      // activamos el color blanco
 	for (int j = 0; j < OpenGl::obstaculos->Count; j = j + 8) {
@@ -351,6 +351,16 @@ void display() {
 		glBegin(GL_LINE);
 		glVertex3d(OpenGl::obstaculos[j + 3]->getCoordinatesX(), OpenGl::obstaculos[j + 3]->getCoordinatesY(), OpenGl::obstaculos[j + 3]->getCoordinatesZ());
 		glVertex3d(OpenGl::obstaculos[j + 7]->getCoordinatesX(), OpenGl::obstaculos[j + 7]->getCoordinatesY(), OpenGl::obstaculos[j + 7]->getCoordinatesZ());
+		glEnd();//////////////AITOR
+		glBegin(GL_LINES);
+		glColor3f(1.0f, 1.0f, 1.0f);
+		for (int i = -100;i <= 100;i+=2)
+		{
+			glVertex3f((float)i, (float)-100, 0);
+			glVertex3f((float)i, (float)100, 0);
+			glVertex3f((float)-100,(float)i,0);
+			glVertex3f((float)100, (float)i,0);
+		}
 		glEnd();
 	}
 #pragma endregion

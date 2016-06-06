@@ -1,7 +1,7 @@
 #include "reader.h"
 #include <locale.h>
 
-DataReader::DataReader(List<Punto3D^>^ puntosController_in, cli::array<Object^>^ ParamReader_in, cli::array<bool>^ Flags_in, cli::array<Thread^>^ Threads_in, OpenGl^ Dibujador_in, cli::array<Object^>^ gps_in)
+DataReader::DataReader(List<Punto3D^>^ puntosController_in, cli::array<Object^>^ ParamReader_in, cli::array<bool>^ Flags_in, cli::array<Thread^>^ Threads_in, OpenGl^ Dibujador_in, cli::array<Object^>^ gps_in,Logger^ lg)
 {
 	try
 	{
@@ -10,13 +10,12 @@ DataReader::DataReader(List<Punto3D^>^ puntosController_in, cli::array<Object^>^
 		ArrayDataReader = ParamReader_in;
 		ArrayDataReader[INFORME] = "";
 		ArrayGps = gps_in;
+		log = lg;
 		this->puntosController = puntosController_in;
 		this->Dibujador = Dibujador_in;
-		if (!thread_reader) {
-			thread_reader = gcnew Thread(gcnew ThreadStart(this, &DataReader::Esperar));
-		}
-		thread_reader->Start();
+		thread_reader = gcnew Thread(gcnew ThreadStart(this, &DataReader::Esperar));
 		this->Threads[THREAD_READER] = thread_reader;
+		thread_reader->Start();
 	}
 	catch (Exception^ e)
 	{
@@ -35,33 +34,10 @@ void DataReader::Read()
 {
 	LaserIpEndPoint = (IPEndPoint^)ArrayDataReader[IP];
 	ClientLIDAR = gcnew UdpClient(LaserIpEndPoint);
-	ClientLIDAR->Client->ReceiveBufferSize *= 2;
 	ClientLIDAR->Client->ReceiveTimeout = 1000;
-	Informar("Inicio");
+	ClientLIDAR->Client->ReceiveBufferSize *= 2;
+	calibrate();
 	setlocale(LC_NUMERIC, "es_ES");
-	if (Flags[FLAG_LOG]) {
-		Informar("Log activo");
-		path = (String^)ArrayDataReader[PATH_LOG] + "\\" + DateTime::Now.ToString("dd - MMMM - yyyy - HH - mm - ss");
-		Directory::CreateDirectory(path);
-		frame = 0;
-		loger = gcnew StreamWriter(path + "\\log.log", false, Encoding::UTF8, 4096);
-		loger->AutoFlush = false;
-	}
-	else {
-		Informar("Log apagado");
-	}
-	Informar("Calibracion");
-	CALIBRATE_X = Convert::ToDouble(ArrayDataReader[PCALIBRATE_X]);
-	CALIBRATE_Y = Convert::ToDouble(ArrayDataReader[PCALIBRATE_Y]);
-	CALIBRATE_Z = Convert::ToDouble(ArrayDataReader[PCALIBRATE_Z]);
-	CALIBRATE_R = Convert::ToDouble(ArrayDataReader[PCALIBRATE_R]);
-	CALIBRATE_P = Convert::ToDouble(ArrayDataReader[PCALIBRATE_P]);
-	CALIBRATE_W = Convert::ToDouble(ArrayDataReader[PCALIBRATE_W]);
-	max = Convert::ToDouble(ArrayDataReader[MAX_DISTANCE]);
-	min = Convert::ToDouble(ArrayDataReader[MIN_DISTANCE]);
-	azimuth_index = 0;
-	distance_index = 0;
-	intensity_index = 0;
 	cli::array<Byte>^ ReceiveBytes;
 	cli::array<Double>^ azimuths;
 	cli::array<Double>^ distances;
@@ -70,87 +46,67 @@ void DataReader::Read()
 	recorrido_disparo = (2 * Convert::ToInt32(ArrayDataReader[FRECUENCY]) * 0.000002304 * 180);
 	recorrido_recarga = (2 * Convert::ToInt32(ArrayDataReader[FRECUENCY]) * 0.00001843 * 180);
 	bool corte = false;
-	double azi = -1;
-	long StartingTime = Stopwatch::GetTimestamp();
-	long EndingTime;
+	double last_azimuth_before = -1;
 	Stopwatch^ frecuency_clock = gcnew Stopwatch();
 	Stopwatch^ process_clock = gcnew Stopwatch();
-	frecuency_clock->Start();
 	long ElapsedTime;
 	double ElapsedSeconds;
 	ArrayDataReader[FRECUENCY_TIME] = 0;
 	ArrayDataReader[PROCESS_TIME] = 0;
-	bool primer = false;
+	bool first_line = false;
+	if (Flags[FLAG_LOG])
+		log->init();
+	StringBuilder^ buffer = gcnew StringBuilder(1000000);
+	frecuency_clock->Start();
+
 	while (!Flags[FLAG_WARNING] && !Flags[FLAG_PAUSA]) {
-		try
-		{
-			Informar("Interior del while");
-			ReceiveBytes = ClientLIDAR->Receive(LaserIpEndPoint);
-			process_clock->Start();
-			Informar("Puntos Recibidos");
-			azimuths = InterpolateAzimuth(ReceiveBytes, &corte, &azi);
-			distances = ExtractDistances(ReceiveBytes);
-			intensities = ExtractIntensities(ReceiveBytes);
-			Informar("Inicio de bloque");
-			for (int block = 0; block < 12; block++) {
-				for (int i = 0; i < NUMBER_OF_CHANNELS; i++) {
-					//Corte de vuelta
-					if ((azimuth_index > 0) && (azimuths[azimuth_index] < azimuths[azimuth_index - 1])) {//(azimuths[azimuth_index] - azimuths[azimuth_index - 1]) < -2) {
-						ArrayDataReader[FRECUENCY_TIME] = frecuency_clock->ElapsedMilliseconds / 1000;
-						copiarPuntos();
-						frame++;
-						frecuency_clock->Restart();
-						primer = true;
-					}
-					else if ((azimuth_index == 0) && (azimuths[azimuth_index + 1] < azimuths[azimuth_index])) {
-						ArrayDataReader[FRECUENCY_TIME] = frecuency_clock->ElapsedMilliseconds / 1000;
-						copiarPuntos();
-						frame++;
-						frecuency_clock->Restart();
-						primer = true;
-					}
-					else if (corte) {
-						corte = false;
-						ArrayDataReader[FRECUENCY_TIME] = frecuency_clock->ElapsedMilliseconds / 1000;
-						copiarPuntos();
-						frame++;
-						frecuency_clock->Restart();
-						primer = true;
-					}
-					if ((distances[distance_index] >= min) && (distances[distance_index] <= max)) {
-						p = gcnew Punto3D(distances[distance_index], intensities[intensity_index], azimuths[azimuth_index], getAngle(i));
-						p->CalculateCoordinates(CALIBRATE_X, CALIBRATE_Y, CALIBRATE_Z, CALIBRATE_P, CALIBRATE_R, CALIBRATE_Y);
-						Puntos->Add(p);
-						if (Flags[FLAG_LOG]) {
-							if (!primer) {
-								//Azimuth, X, Y, Z, Distance;
-								loger->WriteLine(frame + "," + p->visualize());
-							}
-							else {
-								loger->WriteLine(frame + "," + p->visualize() + ArrayGps[TRAMA]->ToString());
-								primer = false;
-							}
-						}
-					}
-					else {
-						p = gcnew Punto3D();
-						Puntos->Add(p);
-					}
-					distance_index++;
-					intensity_index++;
-					azimuth_index++;
-				}
-				if (Flags[FLAG_LOG]) {
-					loger->Flush();
-				}
+		/*	try
+			{*/
+		ReceiveBytes = ClientLIDAR->Receive(LaserIpEndPoint);
+		ArrayDataReader[HAY] = ClientLIDAR->Client->Available + "\n";
+		ArrayDataReader[MAXIMO] = ClientLIDAR->Client->ReceiveBufferSize + "\n";
+		process_clock->Start();
+		azimuths = InterpolateAzimuth(ReceiveBytes, &corte, &last_azimuth_before);
+		distances = ExtractDistances(ReceiveBytes);
+		intensities = ExtractIntensities(ReceiveBytes);
+
+		for (int i = 0; i < NUMBER_OF_CHANNELS*NUMBER_OF_BLOCKS; i++) {
+			bool a = timeToSplit(i, azimuths);
+			if (corte || a) {
+				ArrayDataReader[FRECUENCY_TIME] = frecuency_clock->ElapsedMilliseconds / 1000;
+				log->addToBuffer(Puntos);
+				copiarPuntos();
+				frame++;
+				first_line = true;
+				corte = false;
+				frecuency_clock->Restart();
 			}
-			azimuth_index = 0, distance_index = 0, intensity_index = 0;
+			if ((distances[i] >= min) && (distances[i] <= max)) {
+				p = gcnew Punto3D(distances[i], intensities[i], azimuths[i], getAngle(i),frame);
+				p->CalculateCoordinates(CALIBRATE_X, CALIBRATE_Y, CALIBRATE_Z, CALIBRATE_P, CALIBRATE_R, CALIBRATE_Y);
+				Puntos->Add(p);
+			}
+			else {
+				p = gcnew Punto3D(frame, azimuths[i]);
+				Puntos->Add(p);
+			}
+			//if (Flags[FLAG_LOG]) {
+			//	if (!first_line) {
+			//		//Azimuth, X, Y, Z, Distance;
+			//		buffer->AppendLine(frame + "," + p->visualize());
+			//	}
+			//	else {
+			//		buffer->AppendLine(frame + "," + p->visualize() + ArrayGps[TRAMA]->ToString());
+			//		first_line = false;
+			//	}
+			//}
+			
 		}
+		/*}
 		catch (SocketException^ e)
 		{
 			Flags[FLAG_WARNING] = true;
-			
-			System::Windows::Forms::MessageBox::Show("No se reciben datos en el puerto: " + LaserIpEndPoint->Port,"Error", System::Windows::Forms::MessageBoxButtons::OK, System::Windows::Forms::MessageBoxIcon::Error);
+			System::Windows::Forms::MessageBox::Show("No se reciben datos en el puerto: " + LaserIpEndPoint->Port, "Error", System::Windows::Forms::MessageBoxButtons::OK, System::Windows::Forms::MessageBoxIcon::Error);
 			ClientLIDAR->Close();
 			if (Flags[FLAG_LOG])
 				loger->Close();
@@ -165,7 +121,7 @@ void DataReader::Read()
 		catch (Exception^ e)
 		{
 			Flags[FLAG_WARNING] = true;
-			System::Windows::Forms::MessageBox::Show(e->ToString());
+			System::Windows::Forms::MessageBox::Show(e->ToString(), "Error", System::Windows::Forms::MessageBoxButtons::OK, System::Windows::Forms::MessageBoxIcon::Error);
 			ClientLIDAR->Close();
 			if (Flags[FLAG_LOG])
 				loger->Close();
@@ -176,13 +132,12 @@ void DataReader::Read()
 			delete intensities;
 			delete p;
 			Esperar();
-		}
+		}*/
 		ArrayDataReader[PROCESS_TIME] = process_clock->ElapsedMilliseconds;
 		process_clock->Restart();
 	}
 	ClientLIDAR->Close();
-	if (Flags[FLAG_LOG])
-		loger->Close();
+	log->close();
 	Puntos->Clear();
 	delete ReceiveBytes;
 	delete azimuths;
@@ -196,8 +151,6 @@ void DataReader::Esperar()
 {
 	Informar("ESTOY EN ESPERA");
 	while (Flags[FLAG_WARNING] || Flags[FLAG_PAUSA]) {
-		//	if (Flags[FLAG_WARNING])
-		//		Kill();
 		Sleep(250);
 	}
 	Read();
@@ -230,15 +183,23 @@ cli::array<Double>^ DataReader::InterpolateAzimuth(cli::array<Byte>^ &ReceiveByt
 		for (int j = 0; j < 32; j++) {
 			if (j < 16)
 			{
-				result[j + (32 * k)] = azimuths[k] + (j*recorrido_disparo);//0.0165887
+				result[j + (32 * k)] = azimuths[k] + (j*recorrido_disparo);//0.0165887 PARA 20 HZ
 			}
 			else
 			{
-				result[j + (32 * k)] = azimuths[k] + ((j*recorrido_disparo) + recorrido_recarga);//0.1326959
+				result[j + (32 * k)] = azimuths[k] + ((j*recorrido_disparo) + recorrido_recarga);//0.1326959 para 20hz
 			}
 
 			if (result[j + (32 * k)] >= 360) {
 				result[j + (32 * k)] -= 360;
+			}
+			if (j + k>0) {
+				double b = result[j + (32 * k) - 1];
+				double a = result[j + (32 * k)];
+				if ((b - a > 5.0) && (b - a < 15.0)) {
+
+					int a = 2;
+				}
 			}
 		}
 	}
@@ -299,26 +260,37 @@ cli::array<Double>^ DataReader::ExtractIntensities(cli::array<Byte>^ &ReceiveByt
 void DataReader::Informar(String ^ Entrada)
 {
 	ArrayDataReader[INFORME] += DateTime::Now.ToString("HH - mm - ss") + "]" + Entrada + "\r\n";
+
 }
+
+void DataReader::calibrate()
+{
+	CALIBRATE_X = Convert::ToDouble(ArrayDataReader[PCALIBRATE_X]);
+	CALIBRATE_Y = Convert::ToDouble(ArrayDataReader[PCALIBRATE_Y]);
+	CALIBRATE_Z = Convert::ToDouble(ArrayDataReader[PCALIBRATE_Z]);
+	CALIBRATE_R = Convert::ToDouble(ArrayDataReader[PCALIBRATE_R]);
+	CALIBRATE_P = Convert::ToDouble(ArrayDataReader[PCALIBRATE_P]);
+	CALIBRATE_W = Convert::ToDouble(ArrayDataReader[PCALIBRATE_W]);
+	max = Convert::ToDouble(ArrayDataReader[MAX_DISTANCE]);
+	min = Convert::ToDouble(ArrayDataReader[MIN_DISTANCE]);
+}
+
 
 void DataReader::copiarPuntos()
 {
-	Informar("Copiar puntos");
 	puntosController->Clear();
 	puntosController->AddRange(Puntos);
 
 	if (Flags[FLAG_OPENGL]) {
-		Informar("OpenGl activo");
-		if (puntosController->Count > 2000) {
+		if (puntosController->Count > 1000) {
 			Dibujador->modificarPuntos(puntosController);
 			Dibujador->listo = true;
 		}
 	}
 	//Controller de colision
 	if (!Flags[FLAG_TRATAMIENTO] && Flags[FLAG_ANALISYS]) {
-		Informar("Warning");
 		Flags[FLAG_WARNING] = true;
-		//mensaje pantalla
+		System::Windows::Forms::MessageBox::Show("Colisión de Threads   Reader <--->Analisis", "Error", System::Windows::Forms::MessageBoxButtons::OK, System::Windows::Forms::MessageBoxIcon::Error);
 	}
 	Flags[FLAG_TRATAMIENTO] = false;
 	Puntos->Clear();
@@ -326,9 +298,7 @@ void DataReader::copiarPuntos()
 
 double DataReader::getAngle(int channel)
 {
-	if (channel > 15)
-		channel -= 16;
-	switch (channel)
+	switch (channel % 16)
 	{
 	case 0: return -15;
 	case 1: return 1;
@@ -348,3 +318,12 @@ double DataReader::getAngle(int channel)
 	case 15: return 15;
 	}
 }
+bool DataReader::timeToSplit(int azimuth_index, cli::array<Double>^ azimuths) {
+	if ((azimuth_index > 0) && (azimuths[azimuth_index] < azimuths[azimuth_index - 1]))
+		return true;
+	else if ((azimuth_index == 0) && (azimuths[azimuth_index + 1] < azimuths[azimuth_index]))
+		return true;
+	return false;
+}
+
+
