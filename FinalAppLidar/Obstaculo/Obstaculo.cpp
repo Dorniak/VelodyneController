@@ -223,23 +223,23 @@ void Obstaculo::prepareObstacle()
 			s = i;
 		}
 		//Punto mas a la derecha
-		if (y > y1) {
-			y1 = y;
+		if (x > x1) {
+			x1 = x;
 			e = i;
 		}
 		//Punto mas a la izquierda
-		if (y < y2) {
-			y2 = y;
+		if (x < x2) {
+			x2 = x;
 			w = i;
 		}
 		//Punto mas lejano
-		if (x > x1) {
-			x1 = x;
+		if (y > y1) {
+			y1 = y;
 			f = i;
 		}
 		//Punto mas cercano
-		if (x < x2) {
-			x2 = x;
+		if (y < y2) {
+			y2 = y;
 			cl = i;
 		}
 	}

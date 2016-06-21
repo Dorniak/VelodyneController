@@ -122,7 +122,7 @@ private:
 	/// <summary>
 	/// Lista interna para guardar los puntos. Esta lista es la que se copia a <see cref="puntosController"/>.
 	/// </summary>
-	List<Punto3D^>^ Puntos = gcnew List<Punto3D^>;
+	List<Punto3D^>^ Puntos;
 
 	/// <summary>
 	/// Cliente para la lectura de datos por UDP.
