@@ -36,9 +36,9 @@
 
 
 //Analisys puntos
-#define VERTICAL_TOLERANCE 10
-#define DIAGONAL_TOLERANCE 10
-#define HORIZONTAL_TOLERANCE 10
+#define VERTICAL_TOLERANCE 0.01
+#define DIAGONAL_TOLERANCE 0.01
+#define HORIZONTAL_TOLERANCE 0.01
 
 
 //Posicion parametros array DataAnalisys
