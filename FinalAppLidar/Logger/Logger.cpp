@@ -8,6 +8,7 @@ Logger::Logger()
 	Buffer2 = gcnew List<Punto3D^>(14000);
 	sb = gcnew StringBuilder(1000000);
 	pts = Buffer1;
+	gps = "";
 	buff = false;
 	THREAD_ON = true;
 	thread_logger = gcnew Thread(gcnew ThreadStart(this, &Logger::StartLoggin));
@@ -42,10 +43,10 @@ void Logger::StartLoggin()
 			recordData();
 		}
 		else
-		Thread::Sleep(10);
+			Thread::Sleep(10);
 	}
 	if (log)
-	log->Close();
+		log->Close();
 	delete Buffer1;
 	delete Buffer2;
 	delete	sb;
@@ -53,20 +54,13 @@ void Logger::StartLoggin()
 	delete log;
 }
 
-void Logger::cleanBuffer()
-{
-	if (buff)
-		Buffer1->Clear();
-	else
-		Buffer2->Clear();
-}
-
 void Logger::recordData()
 {
 	try
 	{
 		if (buff) {
-			for (int i = 0; i < Buffer1->Count; i++)
+			sb->AppendLine(Buffer1[0]->visualize() + gps);
+			for (int i = 1; i < Buffer1->Count; i++)
 			{
 				sb->AppendLine(Buffer1[i]->visualize());
 			}
@@ -74,30 +68,39 @@ void Logger::recordData()
 			Buffer1->Clear();
 		}
 		else {
-			for (int i = 0; i < Buffer2->Count; i++)
+			sb->AppendLine(Buffer2[0]->visualize() + gps);
+			for (int i = 1; i < Buffer2->Count; i++)
 			{
 				sb->AppendLine(Buffer2[i]->visualize());
 			}
 			log->Write(sb);
 			Buffer2->Clear();
-
 		}
+		sb->Clear();
 	}
-	catch (Exception^) 
+	catch (Exception^)
 	{
 
 	}
 }
 
-void Logger::addToBuffer(List<Punto3D^>^ in)
+void Logger::addToBuffer(List<Punto3D^>^ in, String^ gps_in)
 {
-		pts->AddRange(in);
+	pts->AddRange(in);
+	gps = gps_in;
 }
 
 void Logger::close()
 {
-	log->Close();
+	try
+	{
+		log->Close();
+	}
+	catch (Exception^)
+	{
+
+	}
 }
-void Logger::kill(){
+void Logger::kill() {
 	THREAD_ON = false;
 }

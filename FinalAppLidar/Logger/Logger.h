@@ -13,9 +13,8 @@ public:
 	void setPath(String^ p);
 	void init();
 	void swapBuffers();
-	void cleanBuffer();
 	void recordData();
-	void addToBuffer(List<Punto3D^>^ in);
+	void addToBuffer(List<Punto3D^>^ i,String^ gps_in);
 	void close();
 	void kill();
 	bool THREAD_ON;
@@ -29,5 +28,6 @@ private:
 	String^ path;
 	StringBuilder^ sb;
 	StreamWriter^ log;
+	String^ gps;
 };
 

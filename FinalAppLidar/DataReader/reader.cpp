@@ -1,20 +1,20 @@
 #include "reader.h"
 #include <locale.h>
 
-DataReader::DataReader(List<Punto3D^>^ puntosController_in, cli::array<Object^>^ ParamReader_in, cli::array<bool>^ Flags_in, cli::array<Thread^>^ Threads_in, OpenGl^ Dibujador_in, cli::array<Object^>^ gps_in,Logger^ lg)
+DataReader::DataReader(List<Punto3D^>^ puntosController_in, cli::array<Object^>^ ParamReader_in, cli::array<bool>^ Flags_in, cli::array<Thread^>^ Threads_in, OpenGl^ Dibujador_in, cli::array<Object^>^ gps_in, Logger^ lg)
 {
 	try
 	{
 		this->Threads = Threads_in;
 		this->Flags = Flags_in;
 		ArrayDataReader = ParamReader_in;
-		ArrayDataReader[INFORME] = "";
 		ArrayGps = gps_in;
 		log = lg;
 		this->puntosController = puntosController_in;
 		this->Dibujador = Dibujador_in;
 		thread_reader = gcnew Thread(gcnew ThreadStart(this, &DataReader::Esperar));
 		this->Threads[THREAD_READER] = thread_reader;
+		Puntos = gcnew List<Punto3D^>(16000);
 		thread_reader->Start();
 	}
 	catch (Exception^ e)
@@ -32,16 +32,15 @@ DataReader::~DataReader()
 
 void DataReader::Read()
 {
-	LaserIpEndPoint = (IPEndPoint^)ArrayDataReader[IP];
-	ClientLIDAR = gcnew UdpClient(LaserIpEndPoint);
+	ClientLIDAR = gcnew UdpClient((IPEndPoint^)ArrayDataReader[IP]);
 	ClientLIDAR->Client->ReceiveTimeout = 1000;
 	ClientLIDAR->Client->ReceiveBufferSize *= 2;
 	calibrate();
 	setlocale(LC_NUMERIC, "es_ES");
-	cli::array<Byte>^ ReceiveBytes;
-	cli::array<Double>^ azimuths;
-	cli::array<Double>^ distances;
-	cli::array<Double>^ intensities;
+	cli::array<Byte>^ ReceiveBytes = gcnew cli::array<Byte>(1206);
+	cli::array<Double>^ azimuths = gcnew cli::array<Double>(384);
+	cli::array<Double>^ distances = gcnew cli::array<Double>(384);;
+	cli::array<Double>^ intensities = gcnew cli::array<Double>(384);
 	Punto3D^ p;
 	recorrido_disparo = (2 * Convert::ToInt32(ArrayDataReader[FRECUENCY]) * 0.000002304 * 180);
 	recorrido_recarga = (2 * Convert::ToInt32(ArrayDataReader[FRECUENCY]) * 0.00001843 * 180);
@@ -49,67 +48,50 @@ void DataReader::Read()
 	double last_azimuth_before = -1;
 	Stopwatch^ frecuency_clock = gcnew Stopwatch();
 	Stopwatch^ process_clock = gcnew Stopwatch();
-	long ElapsedTime;
-	double ElapsedSeconds;
 	ArrayDataReader[FRECUENCY_TIME] = 0;
 	ArrayDataReader[PROCESS_TIME] = 0;
 	bool first_line = false;
 	if (Flags[FLAG_LOG])
 		log->init();
-	StringBuilder^ buffer = gcnew StringBuilder(1000000);
 	frecuency_clock->Start();
 
 	while (!Flags[FLAG_WARNING] && !Flags[FLAG_PAUSA]) {
-		/*	try
-			{*/
-		ReceiveBytes = ClientLIDAR->Receive(LaserIpEndPoint);
-		ArrayDataReader[HAY] = ClientLIDAR->Client->Available + "\n";
-		ArrayDataReader[MAXIMO] = ClientLIDAR->Client->ReceiveBufferSize + "\n";
-		process_clock->Start();
-		azimuths = InterpolateAzimuth(ReceiveBytes, &corte, &last_azimuth_before);
-		distances = ExtractDistances(ReceiveBytes);
-		intensities = ExtractIntensities(ReceiveBytes);
+		try
+		{
+			ReceiveBytes = ClientLIDAR->Receive(LaserIpEndPoint);
+			process_clock->Start();
+			azimuths = InterpolateAzimuth(ReceiveBytes, &corte, &last_azimuth_before);
+			distances = ExtractDistances(ReceiveBytes);
+			intensities = ExtractIntensities(ReceiveBytes);
 
-		for (int i = 0; i < NUMBER_OF_CHANNELS*NUMBER_OF_BLOCKS; i++) {
-			bool a = timeToSplit(i, azimuths);
-			if (corte || a) {
-				ArrayDataReader[FRECUENCY_TIME] = frecuency_clock->ElapsedMilliseconds / 1000;
-				log->addToBuffer(Puntos);
-				copiarPuntos();
-				frame++;
-				first_line = true;
-				corte = false;
-				frecuency_clock->Restart();
+			for (int i = 0; i < NUMBER_OF_CHANNELS*NUMBER_OF_BLOCKS; i++) {
+				if (corte || timeToSplit(i, azimuths)) {
+					ArrayDataReader[FRECUENCY_TIME] = frecuency_clock->ElapsedMilliseconds / 1000;
+					log->addToBuffer(Puntos, (String^)ArrayGps[TRAMA]);
+					copiarPuntos();
+					frame++;
+					first_line = true;
+					corte = false;
+					frecuency_clock->Restart();
+				}
+				if ((distances[i] >= min) && (distances[i] <= max)) {
+					p = gcnew Punto3D(distances[i], intensities[i], azimuths[i], getAngle(i), frame);
+					p->CalculateCoordinates(CALIBRATE_X, CALIBRATE_Y, CALIBRATE_Z, CALIBRATE_P, CALIBRATE_R, CALIBRATE_Y);
+					Puntos->Add(p);
+				}
+				else {
+					p = gcnew Punto3D(frame, azimuths[i]);
+					Puntos->Add(p);
+				}
 			}
-			if ((distances[i] >= min) && (distances[i] <= max)) {
-				p = gcnew Punto3D(distances[i], intensities[i], azimuths[i], getAngle(i),frame);
-				p->CalculateCoordinates(CALIBRATE_X, CALIBRATE_Y, CALIBRATE_Z, CALIBRATE_P, CALIBRATE_R, CALIBRATE_Y);
-				Puntos->Add(p);
-			}
-			else {
-				p = gcnew Punto3D(frame, azimuths[i]);
-				Puntos->Add(p);
-			}
-			//if (Flags[FLAG_LOG]) {
-			//	if (!first_line) {
-			//		//Azimuth, X, Y, Z, Distance;
-			//		buffer->AppendLine(frame + "," + p->visualize());
-			//	}
-			//	else {
-			//		buffer->AppendLine(frame + "," + p->visualize() + ArrayGps[TRAMA]->ToString());
-			//		first_line = false;
-			//	}
-			//}
-			
 		}
-		/*}
 		catch (SocketException^ e)
 		{
 			Flags[FLAG_WARNING] = true;
 			System::Windows::Forms::MessageBox::Show("No se reciben datos en el puerto: " + LaserIpEndPoint->Port, "Error", System::Windows::Forms::MessageBoxButtons::OK, System::Windows::Forms::MessageBoxIcon::Error);
 			ClientLIDAR->Close();
 			if (Flags[FLAG_LOG])
-				loger->Close();
+				log->close();
 			Puntos->Clear();
 			delete ReceiveBytes;
 			delete azimuths;
@@ -124,7 +106,7 @@ void DataReader::Read()
 			System::Windows::Forms::MessageBox::Show(e->ToString(), "Error", System::Windows::Forms::MessageBoxButtons::OK, System::Windows::Forms::MessageBoxIcon::Error);
 			ClientLIDAR->Close();
 			if (Flags[FLAG_LOG])
-				loger->Close();
+				log->close();
 			Puntos->Clear();
 			delete ReceiveBytes;
 			delete azimuths;
@@ -132,7 +114,7 @@ void DataReader::Read()
 			delete intensities;
 			delete p;
 			Esperar();
-		}*/
+		}
 		ArrayDataReader[PROCESS_TIME] = process_clock->ElapsedMilliseconds;
 		process_clock->Restart();
 	}
@@ -149,7 +131,6 @@ void DataReader::Read()
 
 void DataReader::Esperar()
 {
-	Informar("ESTOY EN ESPERA");
 	while (Flags[FLAG_WARNING] || Flags[FLAG_PAUSA]) {
 		Sleep(250);
 	}

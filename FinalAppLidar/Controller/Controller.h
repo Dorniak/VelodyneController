@@ -58,5 +58,7 @@ public:
 	List<int>^ Conclusiones;
 
 private:
-
+	void InitArrays();
+	void InitFlags();
+	void InitObjects();
 };
