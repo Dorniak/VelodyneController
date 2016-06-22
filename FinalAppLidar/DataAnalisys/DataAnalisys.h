@@ -1,10 +1,9 @@
 #pragma once
-#include "Obstaculo.h"
+#include "../Obstaculo/Obstaculo.h"
 #include <math.h>
-#include "OpenGl.h"
+#include "../OpenGl/OpenGl.h"
 #include <timeApi.h>
-#include <stdlib.h>
-#include "Parametros.h"
+#include "../Parametros/Parametros.h"
 
 ref class DataAnalisys {
 public:
@@ -12,22 +11,15 @@ public:
 	DataAnalisys(List<Punto3D^>^ puntosController, List<Obstaculo^>^ ObstaculosController, cli::array<Object^>^ ParamAnalisys, List<int>^ Conclusiones, cli::array<bool>^ Flags, cli::array<Thread^>^ Threads, OpenGl^ Dibujador);
 	//Funcion de thread
 	void AnalisysThread();
-	void AnalisysThread2();
 	void Esperar();
-	void Esperar2();
 	//Funcion para abortar el thread
 	void Kill();
 
 private:
-
-	int numCercanos;
-	int localizador;
-	int Obstmenor;
-	bool iguales;
-
 	void Informar(String^ Entrada);
 	String^* Informe;
 	OpenGl^ Dibujador;
+	double tolerancia;
 	//Funcion que copia los obstaculos de la vuelta actual a la anterior y al control
 	void copiarObstaculos();
 	//Puntero al array de thread
@@ -57,16 +49,14 @@ private:
 	//numero de barridos que es variable por la configuracion del laser
 	int NUMERO_COLUMNAS;
 	//Lista de obstaculos obtenidos en el analisys de la vuelta actual
-	List<Obstaculo^>^ Obstaculos;
+	List<Obstaculo^>^ Obstaculos = gcnew List<Obstaculo^>();
 	//Lista de obstaculos de la vuelta anterior
-	List<Obstaculo^>^ ObstaculosvAnt;
+	List<Obstaculo^>^ ObstaculosvAnt = gcnew List<Obstaculo^>();
 	//Lista usada para ordenacion
-	cli::array<bool>^ Cercanos;
-	cli::array<Punto3D^>^ PCercanos;
+	cli::array<bool>^ Cercanos = gcnew cli::array<bool>(4);
+	cli::array<Punto3D^>^ PCercanos = gcnew cli::array<Punto3D^>(4);
 	//Funcion encargada de agrupar puntos en obstaculos
 	void Segmentacion(List<Punto3D^>^ matrix, double apertura);
-
-	void ResetParametros();
 
 	void prepararObstaculos();
 	//Funcion encargada de eliminar obstaculos no validos
@@ -93,5 +83,4 @@ private:
 	//Objeto thread del analisys
 	Thread^ thread_analysis;
 	void MoverObstaculo(int Obst1, int Obst2);
-	int cambios;
 };
