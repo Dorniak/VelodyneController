@@ -20,6 +20,7 @@ Obstaculo::Obstaculo(const Obstaculo % copy)
 /// </summary>
 Obstaculo::Obstaculo() {
 	Velocity = 0;
+	components = gcnew List<Punto3D^>();
 	Center = gcnew Punto3D();
 	North = gcnew Punto3D();
 	South = gcnew Punto3D();
@@ -28,7 +29,7 @@ Obstaculo::Obstaculo() {
 	Closer = gcnew Punto3D();
 	Farthest = gcnew Punto3D();
 	Center = gcnew Punto3D();
-	components = gcnew List<Punto3D^>();
+	
 }
 
 #pragma endregion

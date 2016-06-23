@@ -6,7 +6,7 @@ DataAnalisys::DataAnalisys(List<Punto3D^>^ puntosController, List<Obstaculo^>^ O
 		this->Threads = Threads;
 		this->Flags = Flags;
 		parametros = ParamAnalisys;
-		parametros[INFORME_ANALISYS] = " ";
+		parametros[INFORME_ANALISYS] = "";
 		this->Conclusiones = Conclusiones;
 		matriz = puntosController;
 		ObstaculosvAnt = ObstaculosController;
@@ -37,9 +37,8 @@ void DataAnalisys::AnalisysThread()
 	Informar("Iniciando Thread Analisis");
 	while (Flags[FLAG_ANALISYS] && !Flags[FLAG_WARNING] && !Flags[FLAG_PAUSA])
 	{
-		Informar("Interior del while");
-		try
-		{
+		/*try
+		{*/
 			if (!Flags[FLAG_TRATAMIENTO]) {
 				Informar("Tratamiento");
 				resolutionH = Convert::ToDouble(parametros[HORIZONTAL_RESOLUTION]);//Resolucion
@@ -47,6 +46,7 @@ void DataAnalisys::AnalisysThread()
 				VCOCHE = Convert::ToDouble(parametros[CAR_VELOCITY]);//Vcoche
 				apertura = Convert::ToDouble(parametros[OPENING]);//Apertura
 				NUMERO_COLUMNAS = matriz->Count / NUMERO_FILAS;
+				
 
 				if (/*VCOCHE > 5*/true) {
 					if (!comprobarBloqueo(matriz))
@@ -74,13 +74,15 @@ void DataAnalisys::AnalisysThread()
 				//Actualizar consignas en el vector de conclusiones
 				Conclusiones[0] = consigna_velocidad;
 				Conclusiones[1] = consigna_volante;
+				Flags[FLAG_TRATAMIENTO] = true;
+				matriz->Clear();
 			}
-		}
+		/*}
 		catch (Exception^ e)
 		{
 			Informar("Excepcion" + e->ToString());
 			Flags[FLAG_WARNING] = true;
-		}
+		}*/
 	}
 	//En caso de que se desactive y se reactive despues hay que limpiar los objetos
 	ObstaculosvAnt->Clear();
@@ -89,7 +91,7 @@ void DataAnalisys::AnalisysThread()
 
 void DataAnalisys::Esperar()
 {
-	while (Flags[FLAG_WARNING] || Flags[FLAG_PAUSA]) {
+	while (Flags[FLAG_WARNING] || Flags[FLAG_PAUSA] || !Flags[FLAG_ANALISYS]) {
 		Sleep(200);
 	}
 	AnalisysThread();
@@ -102,6 +104,7 @@ void DataAnalisys::Informar(String ^ Entrada)
 
 void DataAnalisys::copiarObstaculos()
 {
+	Informar("Copiar Obstaculos");
 	//Controller de collision
 	if (Flags[FLAG_TRATAMIENTO]) {
 		Flags[FLAG_WARNING] = true;
@@ -132,7 +135,6 @@ void DataAnalisys::Segmentacion(List<Punto3D^>^ matrix, double apertura)
 	{
 		for (int columna = inicio; columna < final; columna++)//Recorrido de columnas
 		{
-
 			//Se comprubea si el punto a tratar Existe
 			if (matrix[convaPos(columna, fila)]->valido && (matrix[convaPos(columna, fila)]->getAzimuth()>(180 - apertura)) && (matrix[convaPos(columna, fila)]->getAzimuth() < (180 + apertura)))
 			{
@@ -140,9 +142,11 @@ void DataAnalisys::Segmentacion(List<Punto3D^>^ matrix, double apertura)
 				//En caso de que sea el primer punto se asigna directamente al obstaculo 0
 				if (columna == 0 && fila == inicio)
 				{
+					zero = matrix[convaPos(columna, fila)];
+					uno = matrix[convaPos(1, 0)];
 					//Mete al final del vector de obstaculos un obstaculo que crea
 					Obstaculos->Add(gcnew Obstaculo());
-					matrix[convaPos(columna, fila)]->setObstacle(Obstaculos->Count - 1);
+					matrix[convaPos(columna, fila)]->setObstacle(0);
 					//Accede al obstaculo 0, al vector de componentes, mente el punto en el vector de componentes
 					Obstaculos[Obstaculos->Count - 1]->components->Add(matrix[convaPos(columna, fila)]);
 				}
@@ -203,8 +207,15 @@ void DataAnalisys::Segmentacion(List<Punto3D^>^ matrix, double apertura)
 						Obstaculos[Obstaculos->Count - 1]->components->Add(matrix[convaPos(columna, fila)]);
 					}
 					else if (numCercanos == 1) {
-						matrix[convaPos(columna, fila)]->setObstacle(PCercanos[localizador]->getObstacle());
-						Obstaculos[matrix[convaPos(columna, fila)]->getObstacle()]->components->Add(matrix[convaPos(columna, fila)]);
+						if (PCercanos[localizador]->getObstacle() != -1) {
+							matrix[convaPos(columna, fila)]->setObstacle(PCercanos[localizador]->getObstacle());
+							Obstaculos[matrix[convaPos(columna, fila)]->getObstacle()]->components->Add(matrix[convaPos(columna, fila)]);
+						}
+						else {
+							Obstaculos->Add(gcnew Obstaculo());
+							matrix[convaPos(columna, fila)]->setObstacle(Obstaculos->Count - 1);
+							Obstaculos[Obstaculos->Count - 1]->components->Add(matrix[convaPos(columna, fila)]);
+						}
 					}
 					else {
 						for (int recorrido2 = 0; recorrido2 < 4; recorrido2++)
@@ -332,16 +343,19 @@ bool DataAnalisys::comprobarBloqueo(List<Punto3D^>^ matriz)
 	//Devuelve true cuando hay bloqueo
 	int medio = (matriz->Count / 16) / 2;
 	Punto3D^ prueba;
+	if (medio > 35) {
 
-	for (int k = medio - 30; k < medio + 30; k++) {
-		for (int i = 0; i < NUMERO_FILAS; i++) {
-			if (matriz[convaPos(k, i)]->valido && matriz[convaPos(k, i)]->getDistance() < 15 && matriz[convaPos(k, i)]->getCoordinatesZ() > ALTURA_MINIMA_OBST) {//Altura de bloquepmayor k 0.2
-				prueba = matriz[convaPos(k, i)];
-				return true;
+		for (int k = medio - 30; k < medio + 30; k++) {
+			for (int i = 0; i < NUMERO_FILAS; i++) {
+				if (matriz[convaPos(k, i)]->valido && (matriz[convaPos(k, i)]->getDistance() < 15) && (matriz[convaPos(k, i)]->getCoordinatesZ() > ALTURA_MINIMA_OBST)) {//Altura de bloquepmayor k 0.2
+					prueba = matriz[convaPos(k, i)];
+					return false;//true
+				}
 			}
 		}
+		return false;
 	}
-	return false;
+	else return false;
 }
 
 bool DataAnalisys::puntosCercanosH(Punto3D^ p1, Punto3D^ p2)
@@ -376,20 +390,22 @@ int DataAnalisys::convaPos(int columna, int fila) {
 
 	switch (fila)
 	{
-	case 1: fila = 2;
-	case 2: fila = 4;
-	case 3: fila = 6;
-	case 4: fila = 8;
-	case 5: fila = 10;
-	case 6: fila = 12;
-	case 7: fila = 14;
-	case 8: fila = 1;
-	case 9: fila = 3;
-	case 10: fila = 5;
-	case 11: fila = 7;
-	case 12: fila = 9;
-	case 13: fila = 11;
-	case 14: fila = 13;
+	case 0: fila = 15;
+	case 1: fila = 13;
+	case 2: fila = 11;
+	case 3: fila = 9;
+	case 4: fila = 7;
+	case 5: fila = 5;
+	case 6: fila = 3;
+	case 7: fila = 1;
+	case 8: fila = 14;
+	case 9: fila = 12;
+	case 10: fila = 10;
+	case 11: fila = 8;
+	case 12: fila = 6;
+	case 13: fila = 4;
+	case 14: fila = 2;
+	case 15: fila = 0;
 	default: break;
 	}
 	return columna * 16 + fila;

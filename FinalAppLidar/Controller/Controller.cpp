@@ -31,5 +31,7 @@ void Controller::InitObjects()
 	Obstaculos = gcnew List<Obstaculo^>(NUMBER_OBSTACLES);
 	Puntos = gcnew List<Punto3D^>(NUMBER_OF_POINTS);
 	Conclusiones = gcnew List<int>();
+	Conclusiones->Add(0);
+	Conclusiones->Add(0);
 }
 //TODO: INPLEMENTAR LA INTERPRETACIÓN DE CONCLUSIONES.

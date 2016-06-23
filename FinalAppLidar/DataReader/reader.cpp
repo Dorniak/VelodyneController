@@ -12,6 +12,7 @@ DataReader::DataReader(List<Punto3D^>^ puntosController_in, cli::array<Object^>^
 		log = lg;
 		this->puntosController = puntosController_in;
 		this->Dibujador = Dibujador_in;
+		ArrayDataReader[INFORME] = "";
 		thread_reader = gcnew Thread(gcnew ThreadStart(this, &DataReader::Esperar));
 		this->Threads[THREAD_READER] = thread_reader;
 		Puntos = gcnew List<Punto3D^>(16000);
@@ -259,6 +260,7 @@ void DataReader::calibrate()
 
 void DataReader::copiarPuntos()
 {
+	Informar("Copiar Puntos");
 	puntosController->Clear();
 	puntosController->AddRange(Puntos);
 
@@ -270,9 +272,8 @@ void DataReader::copiarPuntos()
 	}
 	//Controller de colision
 	if (!Flags[FLAG_TRATAMIENTO] && Flags[FLAG_ANALISYS]) {
-		Flags[FLAG_WARNING] = true;
-		System::Windows::Forms::MessageBox::Show("Colisión de Threads   Reader <--->Analisis", "Error", System::Windows::Forms::MessageBoxButtons::OK, System::Windows::Forms::MessageBoxIcon::Error);
-	}
+		//Flags[FLAG_WARNING] = true;
+		}
 	Flags[FLAG_TRATAMIENTO] = false;
 	Puntos->Clear();
 }

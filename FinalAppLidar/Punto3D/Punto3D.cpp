@@ -237,9 +237,9 @@ Punto3D^ Punto3D::operator-(Punto3D^ v)
 {
 	Punto3D^ result = gcnew Punto3D();
 
-	result->x = x - v->x;
-	result->y = y - v->y;
-	result->z = z - v->z;
+	result->x = this->x - v->x;
+	result->y = this->y - v->y;
+	result->z = this->z - v->z;
 	result->valido = valido;
 	return result;
 }

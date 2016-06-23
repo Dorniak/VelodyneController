@@ -25,11 +25,12 @@ namespace FinalAppLidar {
 			Controlador->ArrayGps[TIPO_TRAMA] = "";
 			Controlador->ArrayGps[TRAMA] = "";
 			Controlador->ArrayGps[COM] = "COM1";
+			info = "";
 			gps = gcnew	Gps(Controlador->ArrayGps, Controlador->Threads);
 			Dibujador = gcnew OpenGl(Controlador->Threads);
 			Log = gcnew Logger();
 			Reader = gcnew DataReader(Controlador->Puntos, Controlador->ArrayDataReader, Controlador->Flags, Controlador->Threads, Dibujador, Controlador->ArrayGps,Log);
-			//Analisys = gcnew DataAnalisys(Controlador->Puntos,Controlador->Obstaculos,Controlador->ArrayDataAnalisys,Controlador->Conclusiones, Controlador->Flags, Controlador->Threads,Dibujador);
+			Analisys = gcnew DataAnalisys(Controlador->Puntos,Controlador->Obstaculos,Controlador->ArrayDataAnalisys,Controlador->Conclusiones, Controlador->Flags, Controlador->Threads,Dibujador);
 			groupBox2->Visible = false;
 			groupBox3->Visible = false;
 			groupBox4->Visible = false;
@@ -93,7 +94,7 @@ namespace FinalAppLidar {
 	private: System::Windows::Forms::TextBox^  Consola;
 
 	private: System::Windows::Forms::Label^  label4;
-	private: System::Windows::Forms::TextBox^  textBox4;
+	private: System::Windows::Forms::TextBox^  Frecuency_box;
 
 	private: System::Windows::Forms::TextBox^  Minimo;
 	private: System::Windows::Forms::Label^  label5;
@@ -147,7 +148,7 @@ namespace FinalAppLidar {
 	private: System::Windows::Forms::ImageList^  imageList2;
 	private: System::Windows::Forms::PictureBox^  pictureBox1;
 
-	private: System::Windows::Forms::Timer^  timer1;
+
 
 
 
@@ -202,7 +203,7 @@ namespace FinalAppLidar {
 			this->flowLayoutPanel3 = (gcnew System::Windows::Forms::FlowLayoutPanel());
 			this->ActivarAnalisys = (gcnew System::Windows::Forms::CheckBox());
 			this->label4 = (gcnew System::Windows::Forms::Label());
-			this->textBox4 = (gcnew System::Windows::Forms::TextBox());
+			this->Frecuency_box = (gcnew System::Windows::Forms::TextBox());
 			this->label12 = (gcnew System::Windows::Forms::Label());
 			this->trackBar1 = (gcnew System::Windows::Forms::TrackBar());
 			this->label13 = (gcnew System::Windows::Forms::Label());
@@ -241,7 +242,6 @@ namespace FinalAppLidar {
 			this->ConsolaA = (gcnew System::Windows::Forms::TextBox());
 			this->textBox1 = (gcnew System::Windows::Forms::TextBox());
 			this->imageList2 = (gcnew System::Windows::Forms::ImageList(this->components));
-			this->timer1 = (gcnew System::Windows::Forms::Timer(this->components));
 			this->toolStrip1->SuspendLayout();
 			this->tabControl1->SuspendLayout();
 			this->tabPage1->SuspendLayout();
@@ -561,7 +561,7 @@ namespace FinalAppLidar {
 			// 
 			this->flowLayoutPanel3->Controls->Add(this->ActivarAnalisys);
 			this->flowLayoutPanel3->Controls->Add(this->label4);
-			this->flowLayoutPanel3->Controls->Add(this->textBox4);
+			this->flowLayoutPanel3->Controls->Add(this->Frecuency_box);
 			this->flowLayoutPanel3->Controls->Add(this->label12);
 			this->flowLayoutPanel3->Controls->Add(this->trackBar1);
 			this->flowLayoutPanel3->Controls->Add(this->label13);
@@ -597,14 +597,14 @@ namespace FinalAppLidar {
 			this->label4->TabIndex = 3;
 			this->label4->Text = L"Frecuencia:";
 			// 
-			// textBox4
+			// Frecuency_box
 			// 
-			this->textBox4->Location = System::Drawing::Point(116, 10);
-			this->textBox4->Margin = System::Windows::Forms::Padding(3, 10, 3, 3);
-			this->textBox4->Name = L"textBox4";
-			this->textBox4->Size = System::Drawing::Size(28, 20);
-			this->textBox4->TabIndex = 4;
-			this->textBox4->Text = L"20";
+			this->Frecuency_box->Location = System::Drawing::Point(116, 10);
+			this->Frecuency_box->Margin = System::Windows::Forms::Padding(3, 10, 3, 3);
+			this->Frecuency_box->Name = L"Frecuency_box";
+			this->Frecuency_box->Size = System::Drawing::Size(28, 20);
+			this->Frecuency_box->TabIndex = 4;
+			this->Frecuency_box->Text = L"20";
 			// 
 			// label12
 			// 
@@ -983,10 +983,6 @@ namespace FinalAppLidar {
 			this->imageList2->Images->SetKeyName(0, L"1463785692_Circle_Red.png");
 			this->imageList2->Images->SetKeyName(1, L"1463785696_Circle_Green.png");
 			// 
-			// timer1
-			// 
-			this->timer1->Tick += gcnew System::EventHandler(this, &Main::timer1_Tick);
-			// 
 			// Main
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
@@ -1040,11 +1036,10 @@ namespace FinalAppLidar {
 			Controlador->ArrayDataReader[PCALIBRATE_R] = Convert::ToDouble(textBox6->Text);
 			Controlador->ArrayDataReader[PCALIBRATE_P] = Convert::ToDouble(textBox8->Text);
 			Controlador->ArrayDataReader[PCALIBRATE_W] = Convert::ToDouble(textBox10->Text);
-			Controlador->ArrayDataReader[FRECUENCY] = Convert::ToInt32(textBox4->Text);
+			Controlador->ArrayDataReader[FRECUENCY] = Convert::ToInt32(Frecuency_box->Text);
 			Controlador->Flags[FLAG_PAUSA] = false;
 			Controlador->Flags[FLAG_WARNING] = false;
-			timer1->Enabled = true;
-
+			
 
 			//Bloquear botones al pulsar el activar
 			ActivarOpenGl->Enabled = false;
@@ -1063,7 +1058,7 @@ namespace FinalAppLidar {
 			ActivarLector->ImageIndex = 3;
 		}
 		else {
-			timer1->Enabled = false;
+		
 			Controlador->Flags[FLAG_PAUSA] = true;
 			ActivarLector->ImageIndex = 2;
 			ActivarOpenGl->Enabled = true;
@@ -1145,10 +1140,10 @@ namespace FinalAppLidar {
 	private: System::Void ActivarAnalisys_CheckedChanged(System::Object^  sender, System::EventArgs^  e) {
 		if (ActivarAnalisys->Checked)
 		{
-			Controlador->ArrayDataAnalisys[HORIZONTAL_RESOLUTION] = 15;//TODO::Cambiar
-			Controlador->ArrayDataAnalisys[VERTICAL_RESOLUTION] = 15;//TODO::Cambiar
+			Controlador->ArrayDataAnalisys[HORIZONTAL_RESOLUTION] = ((2 * Convert::ToInt32(Frecuency_box->Text) * 0.000002304 * 180) * 16) + (2 * 20 * 0.00001843 * 180);
+			Controlador->ArrayDataAnalisys[VERTICAL_RESOLUTION] = 2;
 			Controlador->ArrayDataAnalisys[CAR_VELOCITY] = 5;//TODO::Cambiar
-			Controlador->ArrayDataAnalisys[OPENING] = 15;//TODO::Cambiar
+			Controlador->ArrayDataAnalisys[OPENING] = 180;//TODO::Cambiar
 			Controlador->ArrayDataAnalisys[INFORME_ANALISYS] = " ";//TODO::Cambiar
 			ActivarAnalisys->ImageIndex = 6;
 			Controlador->Flags[FLAG_ANALISYS] = true;
@@ -1316,11 +1311,6 @@ namespace FinalAppLidar {
 			timer3->Enabled = true;
 		}
 
-	}
-
-	private: System::Void timer1_Tick(System::Object^  sender, System::EventArgs^  e) {
-		ConsolaA->AppendText(Controlador->ArrayDataReader[HAY]->ToString());
-		textBox1->AppendText(Controlador->ArrayDataReader[MAXIMO]->ToString());
 	}
 	
 };

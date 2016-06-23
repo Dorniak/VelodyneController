@@ -12,7 +12,8 @@ public:
 	void Esperar();
 
 private:
-	
+	Punto3D zero;
+	Punto3D uno;
 	int NUMERO_COLUMNAS;
 	int numCercanos;
 	int localizador;
@@ -24,20 +25,20 @@ private:
 	double  consigna_velocidad;
 	double  consigna_volante;
 	double VCOCHE;
+	bool iguales;
 	double resolutionH;
 	double resolutionV;
 	double tolerancia;
-	bool iguales;
 	String^* Informe;
 	OpenGl^ Dibujador;
 	cli::array<Object^>^ parametros;
 	cli::array<Thread^>^ Threads;
 	cli::array<bool>^ Flags;
-	cli::array<bool>^ Cercanos = gcnew cli::array<bool>(4);
-	cli::array<Punto3D^>^ PCercanos = gcnew cli::array<Punto3D^>(4);
+	cli::array<bool>^ Cercanos;
+	cli::array<Punto3D^>^ PCercanos;
 	List<int>^ Conclusiones;
-	List<Obstaculo^>^ Obstaculos = gcnew List<Obstaculo^>();
-	List<Obstaculo^>^ ObstaculosvAnt = gcnew List<Obstaculo^>();
+	List<Obstaculo^>^ Obstaculos;
+	List<Obstaculo^>^ ObstaculosvAnt;
 	List<Punto3D^>^ matriz;
 	void Segmentacion(List<Punto3D^>^ matrix, double apertura);
 	void Informar(String^ Entrada);
