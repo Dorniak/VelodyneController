@@ -55,10 +55,24 @@ public:
 	/// </summary>
 	cli::array<Thread^>^ Threads;
 
+	/// <summary>
+	/// Lista de conclusiones.
+	/// </summary>
 	List<int>^ Conclusiones;
 
 private:
+	/// <summary>
+	/// Inicializa todos los arrays.
+	/// </summary>
 	void InitArrays();
+
+	/// <summary>
+	/// Inicializa todos los flags
+	/// </summary>
 	void InitFlags();
+
+	/// <summary>
+	/// Inicializa todos los objetos.
+	/// </summary>
 	void InitObjects();
 };

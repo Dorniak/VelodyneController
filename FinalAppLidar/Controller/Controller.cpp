@@ -6,7 +6,8 @@ Controller::Controller()
 	InitArrays();
 	InitObjects();
 }
-void Controller::InitArrays() {
+void Controller::InitArrays()
+{
 	ArrayDataAnalisys = gcnew cli::array<Object^>(SIZE_ARRAY_ANALISYS);
 	ArrayDataReader = gcnew cli::array<Object^>(SIZE_ARRAY_READER);
 	ArrayGps = gcnew cli::array<Object^>(SIZE_ARRAY_GPS);
@@ -16,7 +17,8 @@ void Controller::InitArrays() {
 		ArrayDataAnalisys[i] = 0;
 	}
 }
-void Controller::InitFlags() {
+void Controller::InitFlags()
+{
 	Flags = gcnew cli::array<bool>(SIZE_ARRAY_FLAGS);
 	for (int a = 0; a < SIZE_ARRAY_FLAGS; a++) {
 		Flags[a] = false;
@@ -24,9 +26,10 @@ void Controller::InitFlags() {
 	Flags[FLAG_PAUSA] = true;
 	Flags[FLAG_TRATAMIENTO] = true;
 }
-void Controller::InitObjects() {
-	Obstaculos = gcnew List<Obstaculo^>(100);
-	Puntos = gcnew List<Punto3D^>(16000);
+void Controller::InitObjects()
+{
+	Obstaculos = gcnew List<Obstaculo^>(NUMBER_OBSTACLES);
+	Puntos = gcnew List<Punto3D^>(NUMBER_OF_POINTS);
 	Conclusiones = gcnew List<int>();
 }
 //TODO: INPLEMENTAR LA INTERPRETACIÓN DE CONCLUSIONES.

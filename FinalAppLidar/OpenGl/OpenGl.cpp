@@ -92,7 +92,7 @@ void OpenGl::modificarPuntos(List<Punto3D^>^ listEntradaPuntos)
 void OpenGl::modificarObstaculos(List<Obstaculo^>^ listEntradaObstaculos)
 {
 	for (int recorridoO = 0; recorridoO < listEntradaObstaculos->Count; recorridoO++) {
-		if (recorridoO == NUM_OBSTACULOS)
+		if (recorridoO == NUMBER_OBSTACLES)
 		{
 			break;
 		}
@@ -146,7 +146,7 @@ void OpenGl::iniciarPuntos()
 void OpenGl::iniciarObstaculos()
 {
 	Punto3D^ b;
-	for (int llenarObstaculos = 0; llenarObstaculos < 8 * NUM_OBSTACULOS; llenarObstaculos++) {
+	for (int llenarObstaculos = 0; llenarObstaculos < 8 * NUMBER_OBSTACLES; llenarObstaculos++) {
 		b = gcnew Punto3D(0, 0, 0);
 		obstaculos->Add(b);
 	}

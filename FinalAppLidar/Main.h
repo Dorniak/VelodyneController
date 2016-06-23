@@ -146,7 +146,7 @@ namespace FinalAppLidar {
 
 	private: System::Windows::Forms::ImageList^  imageList2;
 	private: System::Windows::Forms::PictureBox^  pictureBox1;
-	private: System::Windows::Forms::PictureBox^  pictureBox2;
+
 	private: System::Windows::Forms::Timer^  timer1;
 
 
@@ -203,7 +203,6 @@ namespace FinalAppLidar {
 			this->ActivarAnalisys = (gcnew System::Windows::Forms::CheckBox());
 			this->label4 = (gcnew System::Windows::Forms::Label());
 			this->textBox4 = (gcnew System::Windows::Forms::TextBox());
-			this->pictureBox2 = (gcnew System::Windows::Forms::PictureBox());
 			this->label12 = (gcnew System::Windows::Forms::Label());
 			this->trackBar1 = (gcnew System::Windows::Forms::TrackBar());
 			this->label13 = (gcnew System::Windows::Forms::Label());
@@ -252,7 +251,6 @@ namespace FinalAppLidar {
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox1))->BeginInit();
 			this->groupBox3->SuspendLayout();
 			this->flowLayoutPanel3->SuspendLayout();
-			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox2))->BeginInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->trackBar1))->BeginInit();
 			this->groupBox2->SuspendLayout();
 			this->flowLayoutPanel2->SuspendLayout();
@@ -564,7 +562,6 @@ namespace FinalAppLidar {
 			this->flowLayoutPanel3->Controls->Add(this->ActivarAnalisys);
 			this->flowLayoutPanel3->Controls->Add(this->label4);
 			this->flowLayoutPanel3->Controls->Add(this->textBox4);
-			this->flowLayoutPanel3->Controls->Add(this->pictureBox2);
 			this->flowLayoutPanel3->Controls->Add(this->label12);
 			this->flowLayoutPanel3->Controls->Add(this->trackBar1);
 			this->flowLayoutPanel3->Controls->Add(this->label13);
@@ -608,16 +605,6 @@ namespace FinalAppLidar {
 			this->textBox4->Size = System::Drawing::Size(28, 20);
 			this->textBox4->TabIndex = 4;
 			this->textBox4->Text = L"20";
-			// 
-			// pictureBox2
-			// 
-			this->pictureBox2->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"pictureBox2.Image")));
-			this->pictureBox2->Location = System::Drawing::Point(150, 3);
-			this->pictureBox2->Name = L"pictureBox2";
-			this->pictureBox2->Size = System::Drawing::Size(16, 16);
-			this->pictureBox2->SizeMode = System::Windows::Forms::PictureBoxSizeMode::AutoSize;
-			this->pictureBox2->TabIndex = 10;
-			this->pictureBox2->TabStop = false;
 			// 
 			// label12
 			// 
@@ -1029,7 +1016,6 @@ namespace FinalAppLidar {
 			this->groupBox3->ResumeLayout(false);
 			this->flowLayoutPanel3->ResumeLayout(false);
 			this->flowLayoutPanel3->PerformLayout();
-			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox2))->EndInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->trackBar1))->EndInit();
 			this->groupBox2->ResumeLayout(false);
 			this->flowLayoutPanel2->ResumeLayout(false);

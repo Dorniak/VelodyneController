@@ -9,11 +9,12 @@ Gps::Gps(cli::array<Object^>^ ArrayGps, cli::array<Thread^>^ Threads_in)
 	Threads_in[THREAD_GPS] = gps_thread;
 	gps_thread->Start();
 }
-void Gps::Read() {
-	
+void Gps::Read()
+{
+
 	serialPort->Open();
-	
-	if (!serialPort->IsOpen){
+
+	if (!serialPort->IsOpen) {
 		MessageBox::Show("Error al conectar en el puerto" + parametros[COM], "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
 		Esperar();
 	}
@@ -34,14 +35,15 @@ void Gps::Read() {
 		if (data->Contains("GGA"))
 			ExtraerGGA(data);
 		if (data->Contains(parametros[TIPO_TRAMA]->ToString()))
-			parametros[TRAMA] = "," + data->Substring(0,data->Length-1);
+			parametros[TRAMA] = "," + data->Substring(0, data->Length - 1);
 	}
 	parametros[TRAMA] = "";
 	serialPort->Close();
 	Esperar();
 }
 
-void Gps::Esperar() {
+void Gps::Esperar()
+{
 	parametros[ESTADO] = 0;
 	while (!Convert::ToBoolean(parametros[START]))
 	{
@@ -61,11 +63,12 @@ void Gps::Esperar() {
 	}
 	Read();
 }
-void Gps::ExtraerGGA(String^ data) {
+void Gps::ExtraerGGA(String^ data)
+{
 	try
 	{
 		cli::array<String^>^ partes = data->Split(',');
-		
+
 		if (parametros[QUALITY] != partes[6])
 			parametros[QUALITY] = partes[6];
 		if (parametros[SATELITES] != partes[7] && partes[7] != "")

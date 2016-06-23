@@ -1,7 +1,6 @@
 #pragma once
-//Posicion parametros array Flags
+//##########################  FLAGS  ########################## 
 #define SIZE_ARRAY_FLAGS 6
-
 #define FLAG_TRATAMIENTO 0
 #define FLAG_LOG 1
 #define FLAG_WARNING 2
@@ -9,11 +8,8 @@
 #define FLAG_ANALISYS 4
 #define FLAG_OPENGL 5
 
-
-//Numero de parametros de los arrays
+//##########################  READER  ########################## 
 #define SIZE_ARRAY_READER 16
-#define SIZE_ARRAY_ANALISYS 7
-//Posicion parametros array Reader
 #define PATH_LOG 0
 #define IP 1
 #define PCALIBRATE_X 2
@@ -34,14 +30,8 @@
 #define NUMBER_OF_BLOCKS 12
 #define NUMBER_OF_CHANNELS 32
 
-
-//Analisys puntos
-#define VERTICAL_TOLERANCE 10
-#define DIAGONAL_TOLERANCE 10
-#define HORIZONTAL_TOLERANCE 10
-
-
-//Posicion parametros array DataAnalisys
+//##########################  ANÁLISIS  ########################## 
+#define SIZE_ARRAY_ANALISYS 7
 #define HORIZONTAL_RESOLUTION 0
 #define VERTICAL_RESOLUTION 1
 #define OPENING 2
@@ -50,17 +40,19 @@
 #define TOLERANCE 5
 #define INFORMEA 6
 
-//Constantes DataAnalisys
+#define VERTICAL_TOLERANCE 10
+#define DIAGONAL_TOLERANCE 10
+#define HORIZONTAL_TOLERANCE 10
 #define NUMERO_FILAS 16 //Coincide con el numero de canales
 #define TAMAÑO_MINIMO_OBSTACULO 20
 #define TIEMPO_MARGEN 0.3 //TODO: Ajustar parametro
 #define DISTANCIA_MAXIMA 2
 #define PI Math::PI
 
-//Constantes OpenGl
-#define NUM_OBSTACULOS 10
+//##########################  OPENGL  ########################## 
+#define NUMBER_OBSTACLES 25
 
-//Constantes GPS
+//##########################  GPS  ########################## 
 #define SIZE_ARRAY_GPS 8
 #define TIPO_TRAMA 0
 #define TRAMA 1
@@ -70,34 +62,28 @@
 #define SATELITES 5
 #define RATE 6
 #define ESTADO 7
-//THREADS
+
+//##########################  THREADS  ########################## 
 #define NUMERO_THREADS 4 
 #define THREAD_READER 0
 #define THREAD_ANALISIS 1
 #define THREAD_OPENGL 2
 #define THREAD_GPS 3 
 
-//Constantes Logger
+//##########################  LOGGER  ########################## 
 #define SIZE_ARRAY_LOGGER 1
 #define BUFFER 0
 
-
-
+//##########################  CONTROLLER  ########################## 
+#define NUMBER_OF_POINTS 16000
 
 //Includes para las clases Controller Reader DataAnalisys y OpenGl
 using namespace std;
 using namespace System;
+using namespace System::IO;
 using namespace System::Net;
 using namespace System::Text;
-using namespace System::Net::Sockets;
-using namespace System::IO;
-using namespace System::Text;
 using namespace System::Threading;
-using namespace System::Collections::Generic;
 using namespace System::Diagnostics;
-
-
-
-ref class Parametros {
-
-};
+using namespace System::Net::Sockets;
+using namespace System::Collections::Generic;

@@ -84,9 +84,9 @@ void Logger::recordData()
 	}
 }
 
-void Logger::addToBuffer(List<Punto3D^>^ in, String^ gps_in)
+void Logger::addToBuffer(List<Punto3D^>^ pointlist, String^ gps_in)
 {
-	pts->AddRange(in);
+	pts->AddRange(pointlist);
 	gps = gps_in;
 }
 
