@@ -215,31 +215,46 @@ double Punto3D::distanceToPoint(Punto3D^ p)
 
 Punto3D^ Punto3D::operator+(Punto3D^ v)
 {
-	x = x + v->x;
-	y = y + v->y;
-	z = z + v->z;
+	Punto3D^ result = gcnew Punto3D();
+
+	result->x = x + v->x;
+	result->y = y + v->y;
+	result->z = z + v->z;
+	result->valido = valido;
+	return result;
 }
 Punto3D^ Punto3D::operator*(double d)
 {
-	x = x * d;
-	y = y * d;
-	z = z * d;
+	Punto3D^ result = gcnew Punto3D();
+
+	result->x = x * d;
+	result->y = y * d;
+	result->z = z * d;
+	result->valido = valido;
+	return result;
 }
 Punto3D^ Punto3D::operator-(Punto3D^ v)
 {
-	x = x - v->x;
-	y = y - v->y;
-	z = z - v->z;
+	Punto3D^ result = gcnew Punto3D();
+
+	result->x = x - v->x;
+	result->y = y - v->y;
+	result->z = z - v->z;
+	result->valido = valido;
+	return result;
 }
 Punto3D^ Punto3D::operator=(Punto3D^ v)
 {
-	x = v->x;
-	y = v->y;
-	z = v->z;
+	Punto3D^ result = gcnew Punto3D();
 
-	Angle = v->Angle;
-	Azimuth = v->Azimuth;
-	Distance = v->Distance;
-	frame = v->frame;
+	result->x = v->x;
+	result->y = v->y;
+	result->z = v->z;
+	result->Angle = v->Angle;
+	result->Azimuth = v->Azimuth;
+	result->Distance = v->Distance;
+	result->valido = valido;
+	result->frame = frame;
+	return result;
 }
 #pragma endregion

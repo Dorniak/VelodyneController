@@ -1,24 +1,36 @@
-﻿Controller\Controller.cpp(16): warning C4965: implicit box of integer 0; use nullptr or explicit cast
-DataAnalisys\DataAnalisys.cpp(26): warning C4101: 'e': unreferenced local variable
-DataAnalisys\DataAnalisys.cpp(92): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
-DataAnalisys\DataAnalisys.cpp(93): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
-DataAnalisys\DataAnalisys.cpp(97): warning C4101: 'e': unreferenced local variable
-DataAnalisys\DataAnalisys.cpp(151): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
-DataAnalisys\DataAnalisys.cpp(230): warning C4101: 'VarX': unreferenced local variable
-DataAnalisys\DataAnalisys.cpp(230): warning C4101: 'VarY': unreferenced local variable
-DataAnalisys\DataAnalisys.cpp(236): warning C4101: 'Obs': unreferenced local variable
-DataAnalisys\DataAnalisys.cpp(318): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
+﻿  Controller.cpp
+Controller\Controller.cpp(17): warning C4965: implicit box of integer 0; use nullptr or explicit cast
+  DataAnalisys.cpp
+DataAnalisys\DataAnalisys.cpp(75): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
+DataAnalisys\DataAnalisys.cpp(76): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
+DataAnalisys\DataAnalisys.cpp(307): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
+  reader.cpp
 DataReader\reader.cpp(51): warning C4965: implicit box of integer 0; use nullptr or explicit cast
 DataReader\reader.cpp(52): warning C4965: implicit box of integer 0; use nullptr or explicit cast
 DataReader\reader.cpp(88): warning C4101: 'e': unreferenced local variable
-Gps\Gps.cpp(27): warning C4101: 'e': unreferenced local variable
-Gps\Gps.cpp(45): warning C4965: implicit box of integer 0; use nullptr or explicit cast
-Gps\Gps.cpp(58): warning C4101: 'e': unreferenced local variable
-Gps\Gps.cpp(74): warning C4101: 'e': unreferenced local variable
-d:\owncloud\visual studio\projects\velodynecontroller\finalapplidar\PostProceso\PostProceso.h(243): warning C4101: 'e': unreferenced local variable
-d:\owncloud\visual studio\projects\velodynecontroller\finalapplidar\Main.h(1310): warning C4101: 'e': unreferenced local variable
-OpenGl\OpenGl.cpp(431): warning C4305: 'argument': truncation from 'double' to 'GLfloat'
-OpenGl\OpenGl.cpp(434): warning C4305: 'argument': truncation from 'double' to 'GLfloat'
+  Gps.cpp
+Gps\Gps.cpp(28): warning C4101: 'e': unreferenced local variable
+Gps\Gps.cpp(47): warning C4965: implicit box of integer 0; use nullptr or explicit cast
+Gps\Gps.cpp(60): warning C4101: 'e': unreferenced local variable
+Gps\Gps.cpp(77): warning C4101: 'e': unreferenced local variable
+  Logger.cpp
+  Main.cpp
+d:\documentos\github\velodynecontroller\finalapplidar\PostProceso\PostProceso.h(243): warning C4101: 'e': unreferenced local variable
+d:\documentos\github\velodynecontroller\finalapplidar\Main.h(1296): warning C4101: 'e': unreferenced local variable
+  Obstaculo.cpp
+  OpenGl.cpp
+OpenGl\OpenGl.cpp(72): warning C4101: 'e': unreferenced local variable
+OpenGl\OpenGl.cpp(435): warning C4305: 'argument': truncation from 'double' to 'GLfloat'
 OpenGl\OpenGl.cpp(438): warning C4305: 'argument': truncation from 'double' to 'GLfloat'
-d:\owncloud\visual studio\projects\velodynecontroller\finalapplidar\opengl\opengl.cpp(50): warning C4700: uninitialized local variable 'argv' used
-d:\owncloud\visual studio\projects\velodynecontroller\finalapplidar\datareader\reader.cpp(301): warning C4715: 'DataReader::getAngle': not all control paths return a value
+OpenGl\OpenGl.cpp(442): warning C4305: 'argument': truncation from 'double' to 'GLfloat'
+  PostProceso.cpp
+d:\documentos\github\velodynecontroller\finalapplidar\postproceso\PostProceso.h(212): warning C4244: '=': conversion from '__int64' to 'int', possible loss of data
+d:\documentos\github\velodynecontroller\finalapplidar\postproceso\PostProceso.h(243): warning C4101: 'e': unreferenced local variable
+  Punto3D.cpp
+  Generating Code...
+d:\documentos\github\velodynecontroller\finalapplidar\opengl\opengl.cpp(50): warning C4700: uninitialized local variable 'argv' used
+d:\documentos\github\velodynecontroller\finalapplidar\datareader\reader.cpp(301): warning C4715: 'DataReader::getAngle': not all control paths return a value
+  .NETFramework,Version=v4.5.2.AssemblyAttributes.cpp
+  Controller.obj : /DEBUG:FASTLINK is not supported when managed code is present; restarting link with /DEBUG:FULL
+  FinalAppLidar.vcxproj -> D:\Documentos\GitHub\VelodyneController\Debug\FinalAppLidar.exe
+  FinalAppLidar.vcxproj -> D:\Documentos\GitHub\VelodyneController\Debug\FinalAppLidar.pdb (Partial PDB)

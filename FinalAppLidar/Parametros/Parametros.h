@@ -1,6 +1,7 @@
 #pragma once
 //##########################  FLAGS  ########################## 
 #define SIZE_ARRAY_FLAGS 6
+
 #define FLAG_TRATAMIENTO 0
 #define FLAG_LOG 1
 #define FLAG_WARNING 2
@@ -10,6 +11,7 @@
 
 //##########################  READER  ########################## 
 #define SIZE_ARRAY_READER 16
+
 #define PATH_LOG 0
 #define IP 1
 #define PCALIBRATE_X 2
@@ -31,18 +33,19 @@
 #define NUMBER_OF_CHANNELS 32
 
 //##########################  ANÁLISIS  ########################## 
-#define SIZE_ARRAY_ANALISYS 7
+#define SIZE_ARRAY_ANALISYS 6
+
 #define HORIZONTAL_RESOLUTION 0
 #define VERTICAL_RESOLUTION 1
 #define OPENING 2
 #define CAR_VELOCITY 3
 #define INFORME_ANALISYS 4
 #define TOLERANCE 5
-#define INFORMEA 6
 
-#define VERTICAL_TOLERANCE 10
-#define DIAGONAL_TOLERANCE 10
-#define HORIZONTAL_TOLERANCE 10
+#define ALTURA_MINIMA_OBST 0.2
+#define VERTICAL_TOLERANCE 1200
+#define DIAGONAL_TOLERANCE 500
+#define HORIZONTAL_TOLERANCE 500
 #define NUMERO_FILAS 16 //Coincide con el numero de canales
 #define TAMAÑO_MINIMO_OBSTACULO 20
 #define TIEMPO_MARGEN 0.3 //TODO: Ajustar parametro
@@ -50,10 +53,11 @@
 #define PI Math::PI
 
 //##########################  OPENGL  ########################## 
-#define NUMBER_OBSTACLES 25
+#define NUMBER_OBSTACLES 250
 
 //##########################  GPS  ########################## 
 #define SIZE_ARRAY_GPS 8
+
 #define TIPO_TRAMA 0
 #define TRAMA 1
 #define START 2
@@ -65,6 +69,7 @@
 
 //##########################  THREADS  ########################## 
 #define NUMERO_THREADS 4 
+
 #define THREAD_READER 0
 #define THREAD_ANALISIS 1
 #define THREAD_OPENGL 2

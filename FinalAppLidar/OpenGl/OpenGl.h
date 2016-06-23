@@ -1,5 +1,6 @@
 #pragma once
 #include "../../packages/nupengl.core.0.1.0.1/build/native/include/GL/freeglut.h"
+//../../packages/nupengl.core.0.1.0.1/build/native/include/GL/freeglut.h
 #include <math.h>
 #include <stdio.h>
 #include "../Punto3D/Punto3D.h"
@@ -23,5 +24,5 @@ private:
 	void iniciarPuntos();
 	void iniciarObstaculos();
 	int puntosAnterior;
-	
+
 };

@@ -1149,7 +1149,7 @@ namespace FinalAppLidar {
 			Controlador->ArrayDataAnalisys[VERTICAL_RESOLUTION] = 15;//TODO::Cambiar
 			Controlador->ArrayDataAnalisys[CAR_VELOCITY] = 5;//TODO::Cambiar
 			Controlador->ArrayDataAnalisys[OPENING] = 15;//TODO::Cambiar
-			Controlador->ArrayDataAnalisys[INFORMEA] = " ";//TODO::Cambiar
+			Controlador->ArrayDataAnalisys[INFORME_ANALISYS] = " ";//TODO::Cambiar
 			ActivarAnalisys->ImageIndex = 6;
 			Controlador->Flags[FLAG_ANALISYS] = true;
 		}
@@ -1256,9 +1256,9 @@ namespace FinalAppLidar {
 			toolStripLabel2->Text = "Lector: " + lec + " ms";
 			Consola->AppendText(info);
 			if (Controlador->Flags[FLAG_ANALISYS]) {
-				info2 = Controlador->ArrayDataAnalisys[INFORMEA]->ToString();
+				info2 = Controlador->ArrayDataAnalisys[INFORME_ANALISYS]->ToString();
 				ConsolaA->AppendText(info2);
-				Controlador->ArrayDataAnalisys[INFORMEA] = "";
+				Controlador->ArrayDataAnalisys[INFORME_ANALISYS] = "";
 			}
 		}
 	}
