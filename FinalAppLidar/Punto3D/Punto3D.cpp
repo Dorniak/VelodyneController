@@ -133,25 +133,25 @@ void Punto3D::setAngle(int channel)
 
 int Punto3D::getObstacle()
 {
-	return Obstacle;
+	return  this->Obstacle;
 }
 
 double Punto3D::getCoordinatesX() {
-	return x;
+	return  this->x;
 }
 
 double Punto3D::getCoordinatesY() {
-	return y;
+	return this->y;
 }
 
 double Punto3D::getCoordinatesZ()
 {
-	return z;
+	return  this->z;
 }
 
 double Punto3D::getDistance()
 {
-	return Distance;
+	return this->Distance;
 }
 
 double Punto3D::getIntensity()

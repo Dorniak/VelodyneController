@@ -10,6 +10,7 @@ ref class OpenGl {
 public:
 	OpenGl(cli::array<Thread^>^ Threads);
 	void limpiarListas(int a);
+	void limpiarListas();
 	void modificarPuntos(List<Punto3D^>^ listEntradaPuntos);
 	void modificarObstaculos(List<Obstaculo^>^ listEntradaObstaculos);
 	static List<Punto3D^>^ puntos = gcnew List<Punto3D^>();

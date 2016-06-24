@@ -40,6 +40,7 @@ private:
 	List<Obstaculo^>^ Obstaculos;
 	List<Obstaculo^>^ ObstaculosvAnt;
 	List<Punto3D^>^ matriz;
+	List<Punto3D^>^ matriz_pointer;
 	void Segmentacion(List<Punto3D^>^ matrix, double apertura);
 	void Informar(String^ Entrada);
 	void ResetParametros();

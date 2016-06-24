@@ -1,3 +1,7 @@
-﻿  Controller.obj : /DEBUG:FASTLINK is not supported when managed code is present; restarting link with /DEBUG:FULL
+﻿  DataAnalisys.cpp
+DataAnalisys\DataAnalisys.cpp(77): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
+DataAnalisys\DataAnalisys.cpp(78): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
+DataAnalisys\DataAnalisys.cpp(325): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
+  Controller.obj : /DEBUG:FASTLINK is not supported when managed code is present; restarting link with /DEBUG:FULL
   FinalAppLidar.vcxproj -> D:\Documentos\GitHub\VelodyneController\Debug\FinalAppLidar.exe
   FinalAppLidar.vcxproj -> D:\Documentos\GitHub\VelodyneController\Debug\FinalAppLidar.pdb (Partial PDB)
