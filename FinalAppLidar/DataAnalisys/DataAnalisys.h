@@ -12,8 +12,6 @@ public:
 	void Esperar();
 
 private:
-	Punto3D zero;
-	Punto3D uno;
 	int NUMERO_COLUMNAS;
 	int numCercanos;
 	int localizador;

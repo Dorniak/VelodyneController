@@ -76,7 +76,9 @@ void Logger::recordData()
 			log->Write(sb);
 			Buffer2->Clear();
 		}
+
 		sb->Clear();
+		sb->Remove(0, sb->Length - 1);
 	}
 	catch (Exception^)
 	{

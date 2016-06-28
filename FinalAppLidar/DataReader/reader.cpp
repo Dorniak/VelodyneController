@@ -68,7 +68,8 @@ void DataReader::Read()
 			for (int i = 0; i < NUMBER_OF_CHANNELS*NUMBER_OF_BLOCKS; i++) {
 				if (corte || timeToSplit(i, azimuths)) {
 					ArrayDataReader[FRECUENCY_TIME] = frecuency_clock->ElapsedMilliseconds / 1000;
-					log->addToBuffer(Puntos, (String^)ArrayGps[TRAMA]);
+					if (Flags[FLAG_LOG])
+						log->addToBuffer(Puntos, (String^)ArrayGps[TRAMA]);
 					copiarPuntos();
 					frame++;
 					first_line = true;
@@ -89,7 +90,7 @@ void DataReader::Read()
 		catch (SocketException^ e)
 		{
 			Flags[FLAG_WARNING] = true;
-			System::Windows::Forms::MessageBox::Show("No se reciben datos en el puerto: " + LaserIpEndPoint->Port, "Error", System::Windows::Forms::MessageBoxButtons::OK, System::Windows::Forms::MessageBoxIcon::Error);
+		//	System::Windows::Forms::MessageBox::Show("No se reciben datos en el puerto: " + LaserIpEndPoint->Port, "Error", System::Windows::Forms::MessageBoxButtons::OK, System::Windows::Forms::MessageBoxIcon::Error);
 			ClientLIDAR->Close();
 			if (Flags[FLAG_LOG])
 				log->close();
@@ -261,6 +262,10 @@ void DataReader::calibrate()
 void DataReader::copiarPuntos()
 {
 	Informar("Copiar Puntos");
+	for (int i = 0; i < puntosController->Count; i++)
+	{
+		delete puntosController[i];
+	}
 	puntosController->Clear();
 	puntosController->AddRange(Puntos);
 
@@ -275,6 +280,10 @@ void DataReader::copiarPuntos()
 		//Flags[FLAG_WARNING] = true;
 		}
 	Flags[FLAG_TRATAMIENTO] = false;
+	for (int i = 0; i < Puntos->Count; i++)
+	{
+		delete Puntos[i];
+	}
 	Puntos->Clear();
 }
 
