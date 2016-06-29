@@ -42,11 +42,14 @@ void OpenGl::Informar(String ^ Entrada)
 
 void OpenGl::threadconstructor()
 {
+	while (!flags[FLAG_OPENGL]) {
+		Sleep(500);
+	}
 	Informar("THREAD OPENGL");
 	iniciarPuntos();
 	iniciarObstaculos();
 	int argc = 0;
-	char **argv;
+	char **argv =nullptr;
 	glutInit(&argc, argv);
 	trabajo();
 	//  Start GLUT event processing loop
@@ -57,8 +60,9 @@ void OpenGl::threadconstructor()
 //-------------------------------------------------------------------------
 //  Program Main method.
 //-------------------------------------------------------------------------
-OpenGl::OpenGl(cli::array<Thread^>^ Threads)
+OpenGl::OpenGl(cli::array<Thread^>^ Threads, cli::array<bool>^ Flags)
 {
+	flags = Flags;
 	try
 	{
 		Informe = gcnew String("");
@@ -69,7 +73,7 @@ OpenGl::OpenGl(cli::array<Thread^>^ Threads)
 		ThreadDIO->Start();
 		this->Threads[THREAD_OPENGL] = ThreadDIO;
 	}
-	catch (Exception^ e)
+	catch (Exception^)
 	{
 		//System::Windows::Forms::MessageBox::Show(e->ToString());
 	}
@@ -193,7 +197,7 @@ void OpenGl::modificarObstaculos(List<Obstaculo^>^ listEntradaObstaculos)
 void OpenGl::iniciarPuntos()
 {
 	Punto3D^ a;
-	for (int llenarPuntos = 0; llenarPuntos < 250000; llenarPuntos++) {
+	for (int llenarPuntos = 0; llenarPuntos < NUMBER_OF_POINTS*1.1; llenarPuntos++) {
 		a = gcnew Punto3D(0, 0, 0);
 		puntos->Add(a);
 	}
@@ -487,14 +491,14 @@ void keyboard(unsigned char key, int x, int y) {
 		exit(0);
 		break;
 	case 43:
-		glScalef(1.1, 1.1, 1.1);
+		glScalef(1.1f, 1.1f, 1.1f);
 		break;
 	case 45:
-		glScalef(0.9, 0.9, 0.9);
+		glScalef(0.9f, 0.9f, 0.9f);
 		break;
 	case 32:
 		glLoadIdentity();
-		glScalef(0.05, 0.05, 0.05);
+		glScalef(0.05f, 0.05f, 0.05f);
 		break;
 	}
 	glutPostRedisplay();

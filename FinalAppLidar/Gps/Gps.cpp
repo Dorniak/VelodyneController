@@ -25,7 +25,7 @@ void Gps::Read()
 		{
 			data = serialPort->ReadLine();
 		}
-		catch (Exception^ e)
+		catch (Exception^)
 		{
 			parametros[START] = false;
 			serialPort->Close();
@@ -44,7 +44,7 @@ void Gps::Read()
 
 void Gps::Esperar()
 {
-	parametros[ESTADO] = 0;
+	parametros[ESTADO] = safe_cast<System::Object^>(0);;
 	while (!Convert::ToBoolean(parametros[START]))
 	{
 		Sleep(100);
@@ -57,7 +57,7 @@ void Gps::Esperar()
 		serialPort->BaudRate = Convert::ToInt32(parametros[RATE]);
 		serialPort->ReadTimeout = 1500;
 	}
-	catch (Exception^ e)
+	catch (Exception^)
 	{
 		MessageBox::Show("Error al configurara el puerto serie", "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
 	}
@@ -74,7 +74,7 @@ void Gps::ExtraerGGA(String^ data)
 		if (parametros[SATELITES] != partes[7] && partes[7] != "")
 			parametros[SATELITES] = partes[7];
 	}
-	catch (Exception^ e)
+	catch (Exception^ )
 	{
 
 	}

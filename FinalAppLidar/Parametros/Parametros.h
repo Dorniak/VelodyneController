@@ -80,7 +80,7 @@
 #define BUFFER 0
 
 //##########################  CONTROLLER  ########################## 
-#define NUMBER_OF_POINTS 16000
+#define NUMBER_OF_POINTS 15000
 
 //Includes para las clases Controller Reader DataAnalisys y OpenGl
 using namespace std;

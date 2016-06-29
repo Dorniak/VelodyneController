@@ -1,5 +1,5 @@
 #include "DataAnalisys.h"
-DataAnalisys::DataAnalisys(List<Punto3D^>^ puntosController, List<Obstaculo^>^ ObstaculosController, cli::array<Object^>^ ParamAnalisys, List<int>^ Conclusiones, cli::array<bool>^ Flags, cli::array<Thread^>^ Threads, OpenGl^ Dibujador)
+DataAnalisys::DataAnalisys(List<Punto3D^>^ puntosController, List<Obstaculo^>^ ObstaculosController, cli::array<Object^>^ ParamAnalisys, List<double>^ Conclusiones, cli::array<bool>^ Flags, cli::array<Thread^>^ Threads, OpenGl^ Dibujador)
 {
 	try {
 		this->Informe = Informe;
@@ -9,9 +9,9 @@ DataAnalisys::DataAnalisys(List<Punto3D^>^ puntosController, List<Obstaculo^>^ O
 		parametros[INFORME_ANALISYS] = "";
 		this->Conclusiones = Conclusiones;
 		matriz_pointer = puntosController;
-		matriz = gcnew List<Punto3D^>();
+		matriz = gcnew List<Punto3D^>(NUMBER_OF_POINTS);
 		ObstaculosvAnt = ObstaculosController;
-		Obstaculos = gcnew List<Obstaculo^>();
+		Obstaculos = gcnew List<Obstaculo^>(NUMBER_OBSTACLES);
 		Cercanos = gcnew cli::array<bool>(4);
 		cambios = 0;
 		PCercanos = gcnew cli::array<Punto3D^>(4);
@@ -340,7 +340,7 @@ void DataAnalisys::relacionarVel(int i, int j)
 	Obstaculos[i]->calculateTimeToCollision(VCOCHE);
 }
 
-void DataAnalisys::relacionarPos(int i, int j, int VelC, int Res)
+void DataAnalisys::relacionarPos(int i, int j, double VelC, double Res)
 {
 	Obstaculos[i]->setDirection(ObstaculosvAnt[j]->getCenter());
 	Obstaculos[i]->calculatePrediceCenter();
@@ -373,6 +373,7 @@ bool DataAnalisys::comprobarBloqueo(List<Punto3D^>^ matriz)
 
 		}
 	}
+	return false;
 }
 
 bool DataAnalisys::puntosCercanosH(Punto3D^ p1, Punto3D^ p2)

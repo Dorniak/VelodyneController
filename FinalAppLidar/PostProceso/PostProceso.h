@@ -202,8 +202,8 @@ namespace FinalAppLidar {
 			 }
 			 void Splitter() {
 				 String^ linea = "";
-				 int frame = 0;
-				 int anterior = 0;
+				 Int64 frame = 0;
+				 Int64 anterior = 0;
 				 StreamReader^ file_in = File::OpenText(path_in);
 				 StreamWriter^ file_out = File::CreateText(path_out + "Frame_" + frame + ".csv");
 				 file_out->WriteLine("Azimuth,X,Y,Z,Distancia,Intensidad,Angulo,GPS");
@@ -240,7 +240,7 @@ namespace FinalAppLidar {
 		{
 			Directory::CreateDirectory(path_out);
 		}
-		catch (Exception^ e)
+		catch (Exception^)
 		{
 			MessageBox::Show("Error al crear el directorio " + path_out, "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
 		}

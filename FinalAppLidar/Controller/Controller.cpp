@@ -14,7 +14,7 @@ void Controller::InitArrays()
 	Threads = gcnew cli::array<Thread^>(NUMERO_THREADS);
 	for (int i = 0; i < SIZE_ARRAY_ANALISYS - 1; i++)
 	{
-		ArrayDataAnalisys[i] = 0;
+		ArrayDataAnalisys[i] = safe_cast<System::Object^>(0);
 	}
 }
 void Controller::InitFlags()
@@ -30,7 +30,7 @@ void Controller::InitObjects()
 {
 	Obstaculos = gcnew List<Obstaculo^>(NUMBER_OBSTACLES);
 	Puntos = gcnew List<Punto3D^>(NUMBER_OF_POINTS);
-	Conclusiones = gcnew List<int>();
+	Conclusiones = gcnew List<double>();
 	Conclusiones->Add(0);
 	Conclusiones->Add(0);
 }

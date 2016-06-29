@@ -46,9 +46,15 @@ public:
 	/// </summary>
 	void close();
 
+	void Esperar();
+
+	void cleanBuffer();
+
 	/// <summary>
-	/// Mata el hilo.
+	/// Para de guardar datos.
 	/// </summary>
+	void Stop();
+
 	void kill();
 
 private:
@@ -106,5 +112,7 @@ private:
 	/// String que contiene la trama GPS.
 	/// </summary>
 	String^ gps;
+
+	bool kill_me;
 };
 

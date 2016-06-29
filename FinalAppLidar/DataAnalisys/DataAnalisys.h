@@ -7,7 +7,7 @@
 
 ref class DataAnalisys {
 public:
-	DataAnalisys(List<Punto3D^>^ puntosController, List<Obstaculo^>^ ObstaculosController, cli::array<Object^>^ ParamAnalisys, List<int>^ Conclusiones, cli::array<bool>^ Flags, cli::array<Thread^>^ Threads, OpenGl^ Dibujador);
+	DataAnalisys(List<Punto3D^>^ puntosController, List<Obstaculo^>^ ObstaculosController, cli::array<Object^>^ ParamAnalisys, List<double>^ Conclusiones, cli::array<bool>^ Flags, cli::array<Thread^>^ Threads, OpenGl^ Dibujador);
 	void AnalisysThread();
 	void Esperar();
 
@@ -34,7 +34,7 @@ private:
 	cli::array<bool>^ Flags;
 	cli::array<bool>^ Cercanos;
 	cli::array<Punto3D^>^ PCercanos;
-	List<int>^ Conclusiones;
+	List<double>^ Conclusiones;
 	List<Obstaculo^>^ Obstaculos;
 	List<Obstaculo^>^ ObstaculosvAnt;
 	List<Punto3D^>^ matriz;
@@ -48,7 +48,7 @@ private:
 	void RelacionarObstaculos();
 	void relacionarVel(int i, int j);
 	void MoverObstaculo(int Obst1, int Obst2);
-	void relacionarPos(int i, int j, int VelC, int Res);
+	void relacionarPos(int i, int j, double VelC, double Res);
 	bool comprobarBloqueo(List<Punto3D^>^ matriz);
 	bool puntosCercanosV(Punto3D ^ p1, Punto3D ^ p2);
 	bool puntosCercanosD(Punto3D ^ p1, Punto3D ^ p2);

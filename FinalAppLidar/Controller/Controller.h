@@ -58,7 +58,7 @@ public:
 	/// <summary>
 	/// Lista de conclusiones.
 	/// </summary>
-	List<int>^ Conclusiones;
+	List<double>^ Conclusiones;
 
 private:
 	/// <summary>

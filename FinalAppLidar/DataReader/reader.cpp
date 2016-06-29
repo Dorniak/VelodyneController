@@ -15,7 +15,7 @@ DataReader::DataReader(List<Punto3D^>^ puntosController_in, cli::array<Object^>^
 		ArrayDataReader[INFORME] = "";
 		thread_reader = gcnew Thread(gcnew ThreadStart(this, &DataReader::Esperar));
 		this->Threads[THREAD_READER] = thread_reader;
-		Puntos = gcnew List<Punto3D^>(16000);
+		Puntos = gcnew List<Punto3D^>(NUMBER_OF_POINTS);
 		thread_reader->Start();
 	}
 	catch (Exception^ e)
@@ -49,8 +49,8 @@ void DataReader::Read()
 	double last_azimuth_before = -1;
 	Stopwatch^ frecuency_clock = gcnew Stopwatch();
 	Stopwatch^ process_clock = gcnew Stopwatch();
-	ArrayDataReader[FRECUENCY_TIME] = 0;
-	ArrayDataReader[PROCESS_TIME] = 0;
+	ArrayDataReader[FRECUENCY_TIME] = safe_cast<System::Object^>(0);
+	ArrayDataReader[PROCESS_TIME] = safe_cast<System::Object^>(0);
 	bool first_line = false;
 	if (Flags[FLAG_LOG])
 		log->init();
@@ -87,10 +87,11 @@ void DataReader::Read()
 				}
 			}
 		}
-		catch (SocketException^ e)
+		catch (SocketException^)
 		{
 			Flags[FLAG_WARNING] = true;
-		//	System::Windows::Forms::MessageBox::Show("No se reciben datos en el puerto: " + LaserIpEndPoint->Port, "Error", System::Windows::Forms::MessageBoxButtons::OK, System::Windows::Forms::MessageBoxIcon::Error);
+			log->Stop();
+			System::Windows::Forms::MessageBox::Show("No se reciben datos en el puerto " , "Error", System::Windows::Forms::MessageBoxButtons::OK, System::Windows::Forms::MessageBoxIcon::Error);
 			ClientLIDAR->Close();
 			if (Flags[FLAG_LOG])
 				log->close();
@@ -107,6 +108,7 @@ void DataReader::Read()
 			Flags[FLAG_WARNING] = true;
 			System::Windows::Forms::MessageBox::Show(e->ToString(), "Error", System::Windows::Forms::MessageBoxButtons::OK, System::Windows::Forms::MessageBoxIcon::Error);
 			ClientLIDAR->Close();
+			log->Stop();
 			if (Flags[FLAG_LOG])
 				log->close();
 			Puntos->Clear();
@@ -120,6 +122,7 @@ void DataReader::Read()
 		ArrayDataReader[PROCESS_TIME] = process_clock->ElapsedMilliseconds;
 		process_clock->Restart();
 	}
+	log->Stop();
 	ClientLIDAR->Close();
 	log->close();
 	Puntos->Clear();
@@ -133,6 +136,7 @@ void DataReader::Read()
 
 void DataReader::Esperar()
 {
+	log->Stop();
 	while (Flags[FLAG_WARNING] || Flags[FLAG_PAUSA]) {
 		Sleep(250);
 	}
@@ -308,6 +312,7 @@ double DataReader::getAngle(int channel)
 	case 14: return -1;
 	case 15: return 15;
 	}
+	return -99;
 }
 bool DataReader::timeToSplit(int azimuth_index, cli::array<Double>^ azimuths) {
 	if ((azimuth_index > 0) && (azimuths[azimuth_index] < azimuths[azimuth_index - 1]))

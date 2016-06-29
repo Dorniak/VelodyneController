@@ -27,7 +27,7 @@ namespace FinalAppLidar {
 			Controlador->ArrayGps[COM] = "COM1";
 			info = "";
 			gps = gcnew	Gps(Controlador->ArrayGps, Controlador->Threads);
-			Dibujador = gcnew OpenGl(Controlador->Threads);
+			Dibujador = gcnew OpenGl(Controlador->Threads, Controlador->Flags);
 			Log = gcnew Logger();
 			Reader = gcnew DataReader(Controlador->Puntos, Controlador->ArrayDataReader, Controlador->Flags, Controlador->Threads, Dibujador, Controlador->ArrayGps,Log);
 			Analisys = gcnew DataAnalisys(Controlador->Puntos,Controlador->Obstaculos,Controlador->ArrayDataAnalisys,Controlador->Conclusiones, Controlador->Flags, Controlador->Threads,Dibujador);
@@ -1208,6 +1208,7 @@ namespace FinalAppLidar {
 	}
 	private: System::Void Main_FormClosing(System::Object^  sender, System::Windows::Forms::FormClosingEventArgs^  e) {
 		gps->serialPort->Close();
+		Log->Stop();
 		Log->kill();
 		for (int i = 0; i < Controlador->Threads->Length; i++)
 		{
@@ -1288,7 +1289,7 @@ namespace FinalAppLidar {
 				label1->Text = "Satélites:";
 			}
 		}
-		catch (Exception^ e)
+		catch (Exception^)
 		{
 
 		}
