@@ -104,6 +104,8 @@ public:
 	/// <returns>Número de obstaculo</returns>
 	int getObstacle();
 
+	long getFrame();
+
 	/// <summary>
 	/// Obtiene la coordenada X.
 	/// </summary>

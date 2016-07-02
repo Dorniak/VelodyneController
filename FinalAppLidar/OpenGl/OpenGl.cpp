@@ -45,6 +45,7 @@ void OpenGl::threadconstructor()
 	while (!flags[FLAG_OPENGL]) {
 		Sleep(500);
 	}
+
 	Informar("THREAD OPENGL");
 	iniciarPuntos();
 	iniciarObstaculos();
@@ -239,6 +240,8 @@ void trabajo()
 	glutInitDisplayMode(GLUT_RGBA | GLUT_DOUBLE);
 	glutCreateWindow(window_title);
 	init();
+	glLoadIdentity();
+	glScalef(0.05f, 0.05f, 0.05f);
 	glutKeyboardFunc(keyboard);
 	glutSpecialFunc(specialKeys);
 	glutTimerFunc(2000, timerFunc, 0);
@@ -483,9 +486,6 @@ void keyboard(unsigned char key, int x, int y) {
 		break;
 	case 'r':
 		glScalef(1.0, 1.0, 1.0);
-		break;
-	case '9':
-		OpenGl::puntos[1]->setCoordinatesX(2);
 		break;
 	case 27:
 		exit(0);

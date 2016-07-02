@@ -136,6 +136,10 @@ int Punto3D::getObstacle()
 	return  this->Obstacle;
 }
 
+long Punto3D::getFrame()
+{
+	return frame;
+}
 double Punto3D::getCoordinatesX() {
 	return  this->x;
 }

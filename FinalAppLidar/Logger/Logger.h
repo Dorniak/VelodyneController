@@ -101,13 +101,13 @@ private:
 	/// <summary>
 	/// Generador de strings que aloja la memoria de forma dinámica. Por rendimiento.
 	/// </summary>
-	StringBuilder^ sb;
+//	StringBuilder^ sb;
 
 	/// <summary>
 	/// Stream para escribir a disco.
 	/// </summary>
-	StreamWriter^ log;
-
+	FileStream^ fs; 
+	BinaryWriter^ writer;
 	/// <summary>
 	/// String que contiene la trama GPS.
 	/// </summary>

@@ -1,17 +1,15 @@
 ﻿#include "Logger.h"
 #include "../Parametros/Parametros.h"
 
-
 Logger::Logger()
 {
 	Buffer1 = gcnew List<Punto3D^>(NUMBER_OF_POINTS);
 	Buffer2 = gcnew List<Punto3D^>(NUMBER_OF_POINTS);
-	sb = gcnew StringBuilder(NUMBER_OF_POINTS * 77, NUMBER_OF_POINTS * 85); //77 = Caracteres por punto.
 	pts = Buffer1;
 	kill_me = false;
 	gps = "";
 	buff = false;
-	thread_logger = gcnew Thread(gcnew ThreadStart(this, &Logger::StartLoggin));
+	thread_logger = gcnew Thread(gcnew ThreadStart(this, &Logger::Esperar));
 	thread_logger->Start();
 }
 
@@ -24,7 +22,8 @@ void Logger::init()
 {
 	path += "\\" + DateTime::Now.ToString("dd-MMMM-yyyy-HH-mm-ss");
 	Directory::CreateDirectory(path);
-	log = gcnew StreamWriter(path + "\\log.log", false, Encoding::UTF8, 4096);
+	fs = gcnew FileStream(path + "\\log.bin", FileMode::Create);
+	writer = gcnew BinaryWriter(fs);
 	THREAD_ON = true;
 }
 void Logger::swapBuffers()
@@ -45,11 +44,12 @@ void Logger::StartLoggin()
 			cleanBuffer();
 		}
 	}
-	if (log)
-		log->Close();
+	if (writer) {
+		writer->Close();
+		fs->Close();
+	}
 	Buffer1->Clear();
 	Buffer2->Clear();
-	sb->Clear();
 	pts->Clear();
 	Esperar();
 }
@@ -59,32 +59,40 @@ void Logger::recordData()
 	try
 	{
 		if (buff) {
-			sb->AppendLine(Buffer1[0]->visualize() + gps);
 			for (int i = 1; i < Buffer1->Count; i++)
 			{
-				sb->AppendLine(Buffer1[i]->visualize());
+				writer->Write(Buffer1[i]->getFrame());
+				writer->Write(Buffer1[i]->getAzimuth());
+				writer->Write(Buffer1[i]->getCoordinatesX());
+				writer->Write(Buffer1[i]->getCoordinatesY());
+				writer->Write(Buffer1[i]->getCoordinatesZ());
+				writer->Write(Buffer1[i]->getDistance());
+				writer->Write(Buffer1[i]->getAngle());
 			}
-			log->Write(sb);
 		}
 		else {
-			sb->AppendLine(Buffer2[0]->visualize() + gps);
 			for (int i = 1; i < Buffer2->Count; i++)
 			{
-				sb->AppendLine(Buffer2[i]->visualize());
+				writer->Write(Buffer2[i]->getFrame());
+				writer->Write(Buffer2[i]->getAzimuth());
+				writer->Write(Buffer2[i]->getCoordinatesX());
+				writer->Write(Buffer2[i]->getCoordinatesY());
+				writer->Write(Buffer2[i]->getCoordinatesZ());
+				writer->Write(Buffer2[i]->getDistance());
+				writer->Write(Buffer2[i]->getAngle());
 			}
-			log->Write(sb);
 		}
-		sb->Clear();
-		log->Flush();
+		writer->Flush();
 	}
 	catch (Exception^ e)
 	{
 		System::Windows::Forms::MessageBox::Show("Error al guardar los datos: " + e->Message, "Error", System::Windows::Forms::MessageBoxButtons::OK, System::Windows::Forms::MessageBoxIcon::Error);
-		if (log)
-			log->Close();
+		if (writer) {
+			writer->Close();
+			fs->Close();
+		}
 		Buffer1->Clear();
 		Buffer2->Clear();
-		sb->Clear();
 		pts->Clear();
 		Esperar();
 	}
@@ -100,11 +108,11 @@ void Logger::close()
 {
 	try
 	{
-		log->Close();
+		writer->Close();
+		fs->Close();
 	}
 	catch (Exception^)
 	{
-
 	}
 }
 
@@ -117,20 +125,19 @@ void Logger::cleanBuffer() {
 		else {
 			Buffer2->Clear();
 		}
-		sb->Clear();
 	}
 	catch (Exception^ e)
 	{
 		System::Windows::Forms::MessageBox::Show("Error al limpiar los buffers: " + e->Message, "Error", System::Windows::Forms::MessageBoxButtons::OK, System::Windows::Forms::MessageBoxIcon::Error);
-		if (log)
-			log->Close();
+		if (writer) {
+			writer->Close();
+			fs->Close();
+		}
 		Buffer1->Clear();
 		Buffer2->Clear();
-		sb->Clear();
 		pts->Clear();
 		Esperar();
 	}
-
 }
 void Logger::Stop() {
 	THREAD_ON = false;
@@ -141,7 +148,6 @@ void Logger::kill() {
 }
 
 void Logger::Esperar() {
-
 	while (!THREAD_ON)
 	{
 		Thread::Sleep(250);
