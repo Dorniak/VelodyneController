@@ -22,7 +22,7 @@ public:
 	/// <summary>
 	/// Crea el directorio y inicializa el stream.
 	/// </summary>
-	void init();
+	void init(double x, double y, double z, double r, double p, double w, int frecuency);
 
 	/// <summary>
 	/// Intercambia los buffers.
@@ -114,5 +114,7 @@ private:
 	String^ gps;
 
 	bool kill_me;
+	int grabar;
+	int guardar;
 };
 

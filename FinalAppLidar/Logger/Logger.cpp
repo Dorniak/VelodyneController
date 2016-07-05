@@ -9,6 +9,8 @@ Logger::Logger()
 	kill_me = false;
 	gps = "";
 	buff = false;
+	guardar = 0;
+	grabar = 0;
 	thread_logger = gcnew Thread(gcnew ThreadStart(this, &Logger::Esperar));
 	thread_logger->Start();
 }
@@ -18,12 +20,19 @@ void Logger::setPath(String^ p)
 	path = p;
 }
 
-void Logger::init()
+void Logger::init(double x, double y,double z,double r,double p, double w,int frecuency)
 {
 	path += "\\" + DateTime::Now.ToString("dd-MMMM-yyyy-HH-mm-ss");
 	Directory::CreateDirectory(path);
 	fs = gcnew FileStream(path + "\\log.bin", FileMode::Create);
 	writer = gcnew BinaryWriter(fs);
+	writer->Write(x);
+	writer->Write(y);
+	writer->Write(z);
+	writer->Write(r);
+	writer->Write(p); 
+	writer->Write(y);
+	writer->Write(frecuency);
 	THREAD_ON = true;
 }
 void Logger::swapBuffers()
@@ -56,6 +65,7 @@ void Logger::StartLoggin()
 
 void Logger::recordData()
 {
+	grabar++;
 	try
 	{
 		if (buff) {
@@ -63,9 +73,9 @@ void Logger::recordData()
 			{
 				writer->Write(Buffer1[i]->getFrame());
 				writer->Write(Buffer1[i]->getAzimuth());
-				writer->Write(Buffer1[i]->getCoordinatesX());
-				writer->Write(Buffer1[i]->getCoordinatesY());
-				writer->Write(Buffer1[i]->getCoordinatesZ());
+				//writer->Write(Buffer1[i]->getCoordinatesX());
+				//writer->Write(Buffer1[i]->getCoordinatesY());
+				//writer->Write(Buffer1[i]->getCoordinatesZ());
 				writer->Write(Buffer1[i]->getDistance());
 				writer->Write(Buffer1[i]->getAngle());
 			}
@@ -75,9 +85,9 @@ void Logger::recordData()
 			{
 				writer->Write(Buffer2[i]->getFrame());
 				writer->Write(Buffer2[i]->getAzimuth());
-				writer->Write(Buffer2[i]->getCoordinatesX());
-				writer->Write(Buffer2[i]->getCoordinatesY());
-				writer->Write(Buffer2[i]->getCoordinatesZ());
+				//writer->Write(Buffer2[i]->getCoordinatesX());
+				//writer->Write(Buffer2[i]->getCoordinatesY());
+				//writer->Write(Buffer2[i]->getCoordinatesZ());
 				writer->Write(Buffer2[i]->getDistance());
 				writer->Write(Buffer2[i]->getAngle());
 			}
@@ -100,6 +110,7 @@ void Logger::recordData()
 
 void Logger::addToBuffer(List<Punto3D^>^ pointlist, String^ gps_in)
 {
+	guardar++;
 	pts->AddRange(pointlist);
 	gps = gps_in;
 }

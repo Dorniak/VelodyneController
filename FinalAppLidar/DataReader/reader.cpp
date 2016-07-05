@@ -53,7 +53,7 @@ void DataReader::Read()
 	ArrayDataReader[PROCESS_TIME] = safe_cast<System::Object^>(0);
 	bool first_line = false;
 	if (Flags[FLAG_LOG])
-		log->init();
+		log->init(CALIBRATE_X, CALIBRATE_Y, CALIBRATE_Z, CALIBRATE_R, CALIBRATE_P, CALIBRATE_W, (int)ArrayDataReader[FRECUENCY]);
 	frecuency_clock->Start();
 
 	while (!Flags[FLAG_WARNING] && !Flags[FLAG_PAUSA]) {
