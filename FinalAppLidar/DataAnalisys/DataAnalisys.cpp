@@ -13,7 +13,6 @@ DataAnalisys::DataAnalisys(List<Punto3D^>^ puntosController, List<Obstaculo^>^ O
 		ObstaculosvAnt = ObstaculosController;
 		Obstaculos = gcnew List<Obstaculo^>(NUMBER_OBSTACLES);
 		Cercanos = gcnew cli::array<bool>(4);
-		cambios = 0;
 		PCercanos = gcnew cli::array<Punto3D^>(4);
 		if (!thread_analysis) {
 			thread_analysis = gcnew Thread(gcnew ThreadStart(this, &DataAnalisys::Esperar));
@@ -243,7 +242,6 @@ void DataAnalisys::Segmentacion(List<Punto3D^>^ matrix, double apertura)
 									if (Cercanos[recorrido3]) {
 										if (PCercanos[recorrido3]->getObstacle() != Obstmenor && Obstmenor != -1) {
 											MoverObstaculo(PCercanos[recorrido3]->getObstacle(), Obstmenor);
-											cambios++;
 										}
 									}
 								}
@@ -325,7 +323,7 @@ void DataAnalisys::RelacionarObstaculos()
 			}
 			else if (Obstaculos[i]->getCenter()->distanceToPoint(ObstaculosvAnt[j]->getCenter()) < DISTANCIA_MAXIMA /*&& fabs(Obstaculos[i].getYaw() - Obstaculos[i].getYaw()) < 5*/)
 			{
-				relacionarPos(i, j, VCOCHE, resolutionH);
+				relacionarPos(i, j, resolutionH);//TODO::Cambiar resolucion por frecuencia
 				indice = j;
 			}
 		}
@@ -340,11 +338,11 @@ void DataAnalisys::relacionarVel(int i, int j)
 	Obstaculos[i]->calculateTimeToCollision(VCOCHE);
 }
 
-void DataAnalisys::relacionarPos(int i, int j, double VelC, double Res)
+void DataAnalisys::relacionarPos(int i, int j, double Frecuency)
 {
 	Obstaculos[i]->setDirection(ObstaculosvAnt[j]->getCenter());
 	Obstaculos[i]->calculatePrediceCenter();
-	Obstaculos[i]->setVelocity(VCOCHE, resolutionH);
+	Obstaculos[i]->setVelocity(VCOCHE, Frecuency);
 }
 
 bool DataAnalisys::comprobarBloqueo(List<Punto3D^>^ matriz)
