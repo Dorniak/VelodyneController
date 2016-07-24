@@ -82,6 +82,11 @@
 //##########################  CONTROLLER  ########################## 
 #define NUMBER_OF_POINTS 15000
 
+
+// Modo caja orientada o modo caja normal
+#define MODO_CAJA 1 //0 ==> orientada
+					//1 ==> normal
+
 //Includes para las clases Controller Reader DataAnalisys y OpenGl
 using namespace std;
 using namespace System;
