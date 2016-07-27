@@ -146,6 +146,7 @@
     <ClCompile Include="Controller\Controller.cpp" />
     <ClCompile Include="DataAnalisys\DataAnalisys.cpp" />
     <ClCompile Include="DataReader\reader.cpp" />
+    <ClCompile Include="DetectorMuro.cpp" />
     <ClCompile Include="Gps\Gps.cpp" />
     <ClCompile Include="Logger\Logger.cpp" />
     <ClCompile Include="Main.cpp" />
@@ -158,6 +159,7 @@
     <ClInclude Include="Controller\Controller.h" />
     <ClInclude Include="DataAnalisys\DataAnalisys.h" />
     <ClInclude Include="DataReader\reader.h" />
+    <ClInclude Include="DetectorMuro.h" />
     <ClInclude Include="Logger\Logger.h" />
     <ClInclude Include="Main.h">
       <FileType>CppForm</FileType>

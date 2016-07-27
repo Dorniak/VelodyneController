@@ -2,6 +2,7 @@
 #include "Controller\Controller.h"
 #include "PostProceso\PostProceso.h"
 #include "Logger\Logger.h"
+#include "DetectorMuro.h"
 namespace FinalAppLidar {
 
 	using namespace System;
@@ -31,6 +32,7 @@ namespace FinalAppLidar {
 			Log = gcnew Logger();
 			Reader = gcnew DataReader(Controlador->Puntos, Controlador->ArrayDataReader, Controlador->Flags, Controlador->Threads, Dibujador, Controlador->ArrayGps,Log);
 			Analisys = gcnew DataAnalisys(Controlador->Puntos,Controlador->Obstaculos,Controlador->ArrayDataAnalisys,Controlador->Conclusiones, Controlador->Flags, Controlador->Threads,Dibujador);
+			Muro = gcnew DetectorMuro(Controlador->Puntos, Controlador->Obstaculos, Controlador->Conclusiones, Controlador->Flags);
 			groupBox2->Visible = false;
 			groupBox3->Visible = false;
 			groupBox4->Visible = false;
@@ -55,7 +57,7 @@ namespace FinalAppLidar {
 
 	private:
 		bool Iniciado = false;
-
+	private: DetectorMuro^ Muro;
 	private: Logger^ Log;
 	private: Gps^ gps;
 	private: DataReader^ Reader;
@@ -147,6 +149,7 @@ namespace FinalAppLidar {
 
 	private: System::Windows::Forms::ImageList^  imageList2;
 	private: System::Windows::Forms::PictureBox^  pictureBox1;
+private: System::Windows::Forms::ListBox^  listBox1;
 
 
 
@@ -242,6 +245,7 @@ namespace FinalAppLidar {
 			this->ConsolaA = (gcnew System::Windows::Forms::TextBox());
 			this->textBox1 = (gcnew System::Windows::Forms::TextBox());
 			this->imageList2 = (gcnew System::Windows::Forms::ImageList(this->components));
+			this->listBox1 = (gcnew System::Windows::Forms::ListBox());
 			this->toolStrip1->SuspendLayout();
 			this->tabControl1->SuspendLayout();
 			this->tabPage1->SuspendLayout();
@@ -563,6 +567,7 @@ namespace FinalAppLidar {
 			this->flowLayoutPanel3->Controls->Add(this->label4);
 			this->flowLayoutPanel3->Controls->Add(this->Frecuency_box);
 			this->flowLayoutPanel3->Controls->Add(this->label12);
+			this->flowLayoutPanel3->Controls->Add(this->listBox1);
 			this->flowLayoutPanel3->Controls->Add(this->trackBar1);
 			this->flowLayoutPanel3->Controls->Add(this->label13);
 			this->flowLayoutPanel3->Dock = System::Windows::Forms::DockStyle::Fill;
@@ -619,7 +624,7 @@ namespace FinalAppLidar {
 			// trackBar1
 			// 
 			this->trackBar1->BackColor = System::Drawing::SystemColors::ButtonHighlight;
-			this->trackBar1->Location = System::Drawing::Point(3, 65);
+			this->trackBar1->Location = System::Drawing::Point(3, 83);
 			this->trackBar1->Maximum = 100;
 			this->trackBar1->Name = L"trackBar1";
 			this->trackBar1->Size = System::Drawing::Size(174, 45);
@@ -631,7 +636,7 @@ namespace FinalAppLidar {
 			// label13
 			// 
 			this->label13->AutoSize = true;
-			this->label13->Location = System::Drawing::Point(3, 113);
+			this->label13->Location = System::Drawing::Point(3, 131);
 			this->label13->Name = L"label13";
 			this->label13->Padding = System::Windows::Forms::Padding(10, 0, 0, 0);
 			this->label13->Size = System::Drawing::Size(40, 13);
@@ -983,6 +988,15 @@ namespace FinalAppLidar {
 			this->imageList2->Images->SetKeyName(0, L"1463785692_Circle_Red.png");
 			this->imageList2->Images->SetKeyName(1, L"1463785696_Circle_Green.png");
 			// 
+			// listBox1
+			// 
+			this->listBox1->FormattingEnabled = true;
+			this->listBox1->Items->AddRange(gcnew cli::array< System::Object^  >(2) { L"Normal", L"Muro" });
+			this->listBox1->Location = System::Drawing::Point(66, 47);
+			this->listBox1->Name = L"listBox1";
+			this->listBox1->Size = System::Drawing::Size(120, 30);
+			this->listBox1->TabIndex = 7;
+			// 
 			// Main
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
@@ -1140,13 +1154,19 @@ namespace FinalAppLidar {
 	private: System::Void ActivarAnalisys_CheckedChanged(System::Object^  sender, System::EventArgs^  e) {
 		if (ActivarAnalisys->Checked)
 		{
-			Controlador->ArrayDataAnalisys[HORIZONTAL_RESOLUTION] = ((2 * Convert::ToInt32(Frecuency_box->Text) * 0.000002304 * 180) * 16) + (2 * 20 * 0.00001843 * 180);
-			Controlador->ArrayDataAnalisys[VERTICAL_RESOLUTION] = 2;
-			Controlador->ArrayDataAnalisys[CAR_VELOCITY] = 5;//TODO::Cambiar
-			Controlador->ArrayDataAnalisys[OPENING] = 180;//TODO::Cambiar
-			Controlador->ArrayDataAnalisys[INFORME_ANALISYS] = " ";//TODO::Cambiar
-			ActivarAnalisys->ImageIndex = 6;
-			Controlador->Flags[FLAG_ANALISYS] = true;
+			if (listBox1->SelectedIndex == 0) {
+				Controlador->ArrayDataAnalisys[HORIZONTAL_RESOLUTION] = ((2 * Convert::ToInt32(Frecuency_box->Text) * 0.000002304 * 180) * 16) + (2 * 20 * 0.00001843 * 180);
+				Controlador->ArrayDataAnalisys[VERTICAL_RESOLUTION] = 2;
+				Controlador->ArrayDataAnalisys[CAR_VELOCITY] = 5;//TODO::Cambiar
+				Controlador->ArrayDataAnalisys[OPENING] = 180;//TODO::Cambiar
+				Controlador->ArrayDataAnalisys[INFORME_ANALISYS] = " ";//TODO::Cambiar
+				ActivarAnalisys->ImageIndex = 6;
+				Controlador->Flags[FLAG_ANALISYS] = true;
+			}
+			else {
+				ActivarAnalisys->ImageIndex = 6;
+				Controlador->Flags[FLAG_ANALISYS_MURO] = true;
+			}
 		}
 		else
 		{

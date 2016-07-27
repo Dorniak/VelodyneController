@@ -1,6 +1,6 @@
 #pragma once
 //##########################  FLAGS  ########################## 
-#define SIZE_ARRAY_FLAGS 6
+#define SIZE_ARRAY_FLAGS 7
 
 #define FLAG_TRATAMIENTO 0
 #define FLAG_LOG 1
@@ -8,6 +8,7 @@
 #define FLAG_PAUSA 3
 #define FLAG_ANALISYS 4
 #define FLAG_OPENGL 5
+#define FLAG_ANALISYS_MURO 6
 
 //##########################  READER  ########################## 
 #define SIZE_ARRAY_READER 16
