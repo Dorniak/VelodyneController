@@ -28,7 +28,7 @@ namespace FinalAppLidar {
 			Controlador->ArrayGps[COM] = "COM1";
 			info = "";
 			gps = gcnew	Gps(Controlador->ArrayGps, Controlador->Threads);
-			Dibujador = gcnew OpenGl(Controlador->Threads, Controlador->Flags);
+			Dibujador = gcnew OpenGl(Controlador->Threads);
 			Log = gcnew Logger();
 			Reader = gcnew DataReader(Controlador->Puntos, Controlador->ArrayDataReader, Controlador->Flags, Controlador->Threads, Dibujador, Controlador->ArrayGps,Log);
 			Analisys = gcnew DataAnalisys(Controlador->Puntos,Controlador->Obstaculos,Controlador->ArrayDataAnalisys,Controlador->Conclusiones, Controlador->Flags, Controlador->Threads,Dibujador);
@@ -1160,6 +1160,7 @@ private: System::Windows::Forms::ListBox^  listBox1;
 				Controlador->ArrayDataAnalisys[CAR_VELOCITY] = 5;//TODO::Cambiar
 				Controlador->ArrayDataAnalisys[OPENING] = 180;//TODO::Cambiar
 				Controlador->ArrayDataAnalisys[INFORME_ANALISYS] = " ";//TODO::Cambiar
+				Controlador->ArrayDataAnalisys[FRECUENCIA] = Convert::ToInt32(Frecuency_box->Text);
 				ActivarAnalisys->ImageIndex = 6;
 				Controlador->Flags[FLAG_ANALISYS] = true;
 			}

@@ -47,6 +47,7 @@ void DataAnalisys::AnalisysThread()
 				VCOCHE = Convert::ToDouble(parametros[CAR_VELOCITY]);//Vcoche
 				apertura = Convert::ToDouble(parametros[OPENING]);//Apertura
 				NUMERO_COLUMNAS = matriz->Count / NUMERO_FILAS;
+				frecuencia = Convert::ToInt32(parametros[FRECUENCIA]);
 				
 
 				if (/*VCOCHE > 5*/true) {
@@ -57,7 +58,7 @@ void DataAnalisys::AnalisysThread()
 						if (Obstaculos->Count > 0) {
 							EliminarObstaculos();//Elimina obstaculos no validos
 							prepararObstaculos();//Geometria del obstaculo
-							//RelacionarObstaculos();//Tracking
+							RelacionarObstaculos();//Tracking
 
 							copiarObstaculos();//Copiar el vector de obstaculos obtenido en Controller y comprueba colisiones
 						}
@@ -79,7 +80,7 @@ void DataAnalisys::AnalisysThread()
 				matriz->Clear();
 			}
 		/*}
-		catch (Exception^ e)
+		catch (Exception^)
 		{
 			Informar("Excepcion" + e->ToString());
 			Flags[FLAG_WARNING] = true;
@@ -170,7 +171,7 @@ void DataAnalisys::Segmentacion(List<Punto3D^>^ matrix, double apertura)
 									PCercanos[1] = matrix[convaPos(columna - 1, fila - 1)];
 								}
 							}
-							if (columna < NUMERO_COLUMNAS - 2)
+							if (columna < NUMERO_COLUMNAS - 1)
 							{
 								//Punto de encima a la derecha columna+1 fila-1
 								if (puntosCercanosD(matrix[convaPos(columna, fila)], matrix[convaPos(columna + 1, fila - 1)]))
@@ -258,8 +259,119 @@ void DataAnalisys::Segmentacion(List<Punto3D^>^ matrix, double apertura)
 				}
 			}
 			catch (Exception^) {
-
 			}
+		}
+	}
+	//Tratamiento de la linea del 0
+
+	for (int fila = 0; fila < NUMERO_FILAS; fila++) {
+		try {
+			ResetParametros();
+			//Comprobar punto de arriba
+			if (matrix[convaPos(NUMERO_COLUMNAS - 1, fila)]->valido) {
+				if (fila == 0) {
+					//punto horizontal
+					if (puntosCercanosH(matrix[convaPos(NUMERO_COLUMNAS - 1, fila)], matrix[convaPos(0, fila)]))
+					{
+						Cercanos[1] = true;
+						PCercanos[1] = matrix[convaPos(0, fila)];
+					}
+					//Punto diagonal abajo
+					if (puntosCercanosD(matrix[convaPos(NUMERO_COLUMNAS - 1, fila)], matrix[convaPos(0, fila + 1)]))
+					{
+						Cercanos[2] = true;
+						PCercanos[2] = matrix[convaPos(0, fila + 1)];
+					}
+				}
+				//Comprobar punto de abajo
+				else if (fila == NUMERO_FILAS - 1) {
+					//Punto diagonal arriba
+					if (puntosCercanosD(matrix[convaPos(NUMERO_COLUMNAS - 1, fila)], matrix[convaPos(0, fila - 1)]))
+					{
+						Cercanos[0] = true;
+						PCercanos[0] = matrix[convaPos(0, fila - 1)];
+					}
+					//punto horizontal
+					if (puntosCercanosH(matrix[convaPos(NUMERO_COLUMNAS - 1, fila)], matrix[convaPos(0, fila)]))
+					{
+						Cercanos[1] = true;
+						PCercanos[1] = matrix[convaPos(0, fila)];
+					}
+				}
+				//Comprobar punto centrales
+				else {
+					//Punto diagonal arriba
+					if (puntosCercanosD(matrix[convaPos(NUMERO_COLUMNAS - 1, fila)], matrix[convaPos(0, fila - 1)]))
+					{
+						Cercanos[0] = true;
+						PCercanos[0] = matrix[convaPos(0, fila - 1)];
+					}
+					//punto horizontal
+					if (puntosCercanosH(matrix[convaPos(NUMERO_COLUMNAS - 1, fila)], matrix[convaPos(0, fila)]))
+					{
+						Cercanos[1] = true;
+						PCercanos[1] = matrix[convaPos(0, fila)];
+					}
+					//Punto diagonal abajo
+					if (puntosCercanosD(matrix[convaPos(NUMERO_COLUMNAS - 1, fila)], matrix[convaPos(0, fila + 1)]))
+					{
+						Cercanos[2] = true;
+						PCercanos[2] = matrix[convaPos(0, fila + 1)];
+					}
+				}
+				numCercanos = 0;
+				for (int recorrido = 0; recorrido < 4; recorrido++)
+				{
+					if (Cercanos[recorrido])
+					{
+						numCercanos++;
+						localizador = recorrido;
+					}
+				}
+				if (numCercanos == 0)
+				{
+				}
+				else if (numCercanos == 1) {
+					if (PCercanos[localizador]->getObstacle() != -1) {
+						matrix[convaPos(NUMERO_COLUMNAS - 1, fila)]->setObstacle(PCercanos[localizador]->getObstacle());
+						Obstaculos[matrix[convaPos(NUMERO_COLUMNAS - 1, fila)]->getObstacle()]->components->Add(matrix[convaPos(NUMERO_COLUMNAS - 1, fila)]);
+					}
+				}
+				else {
+					for (int recorrido2 = 0; recorrido2 < 4; recorrido2++)
+					{
+						if (Cercanos[recorrido2]) {
+							if (Obstmenor == -1) {
+								Obstmenor = PCercanos[recorrido2]->getObstacle();
+							}
+							else if (PCercanos[recorrido2]->getObstacle() != Obstmenor) {
+								iguales = false;
+								if (PCercanos[recorrido2]->getObstacle() < Obstmenor)
+								{
+									Obstmenor = PCercanos[recorrido2]->getObstacle();
+								}
+							}
+						}
+					}
+					if (iguales) {
+						matrix[convaPos(NUMERO_COLUMNAS - 1, fila)]->setObstacle(Obstmenor);
+						Obstaculos[Obstmenor]->components->Add(matrix[convaPos(NUMERO_COLUMNAS - 1, fila)]);
+					}
+					else {
+						for (int recorrido3 = 0; recorrido3 < 4; recorrido3++) {
+							if (Cercanos[recorrido3]) {
+								if (PCercanos[recorrido3]->getObstacle() != Obstmenor && Obstmenor != -1) {
+									MoverObstaculo(PCercanos[recorrido3]->getObstacle(), Obstmenor);
+								}
+							}
+						}
+						matrix[convaPos(NUMERO_COLUMNAS - 1, fila)]->setObstacle(Obstmenor);
+						Obstaculos[Obstmenor]->components->Add(matrix[convaPos(NUMERO_COLUMNAS - 1, fila)]);
+					}
+				}
+			}
+		}
+		catch (Exception^) {
 		}
 	}
 }
@@ -323,7 +435,7 @@ void DataAnalisys::RelacionarObstaculos()
 			}
 			else if (Obstaculos[i]->getCenter()->distanceToPoint(ObstaculosvAnt[j]->getCenter()) < DISTANCIA_MAXIMA /*&& fabs(Obstaculos[i].getYaw() - Obstaculos[i].getYaw()) < 5*/)
 			{
-				relacionarPos(i, j, resolutionH);//TODO::Cambiar resolucion por frecuencia
+				relacionarPos(i, j, frecuencia);
 				indice = j;
 			}
 		}
@@ -347,28 +459,16 @@ void DataAnalisys::relacionarPos(int i, int j, double Frecuency)
 
 bool DataAnalisys::comprobarBloqueo(List<Punto3D^>^ matriz)
 {
-
 	//Devuelve true cuando hay bloqueo
 	int medio = (matriz->Count / 16) / 2;
 	Punto3D^ prueba;
-	if (medio > 35) {
 
-		for (int k = medio - 30; k < medio + 30; k++) {
-			for (int i = 0; i < NUMERO_FILAS; i++) {
-				try {
-					if (matriz[convaPos(k, i)]->valido && (matriz[convaPos(k, i)]->getDistance() < 15) && (matriz[convaPos(k, i)]->getCoordinatesZ() > ALTURA_MINIMA_OBST)) {//Altura de bloquepmayor k 0.2
-						prueba = matriz[convaPos(k, i)];
-						return false;//true
-					}
-					else return false;
-
-				}
-				catch (Exception^) {
-					return false;
-				}
-				return false;
+	for (int k = medio*0.95; k < medio*1.05; k++) {//5 % de vision delantera
+		for (int i = 0; i < NUMERO_FILAS; i++) {
+			if (matriz[convaPos(k, i)] && matriz[convaPos(k, i)]->valido && matriz[convaPos(k, i)]->getDistance() < 15 && matriz[convaPos(k, i)]->getCoordinatesZ() > ALTURA_MINIMA_OBST) {//Altura de bloquepmayor k 0.2
+				prueba = matriz[convaPos(k, i)];
+				return true;
 			}
-
 		}
 	}
 	return false;

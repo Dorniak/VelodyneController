@@ -12,6 +12,7 @@ public:
 	void Esperar();
 
 private:
+	int frecuencia;
 	/// <summary>
 	/// Numero de columnas de la vuelta actual considerando la lista de entrada como una matriz de 16 filas y n columnas
 	/// </summary>

@@ -7,7 +7,7 @@
 #include "../Parametros/Parametros.h"
 ref class OpenGl {
 public:
-	OpenGl(cli::array<Thread^>^ Threads, cli::array<bool>^ Flags);
+	OpenGl(cli::array<Thread^>^ Threads);
 	cli::array<bool>^ flags;
 	void limpiarListas(int a);
 	void limpiarListas();

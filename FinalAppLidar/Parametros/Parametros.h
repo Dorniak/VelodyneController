@@ -34,7 +34,7 @@
 #define NUMBER_OF_CHANNELS 32
 
 //##########################  ANÁLISIS  ########################## 
-#define SIZE_ARRAY_ANALISYS 6
+#define SIZE_ARRAY_ANALISYS 7
 
 #define HORIZONTAL_RESOLUTION 0
 #define VERTICAL_RESOLUTION 1
@@ -42,6 +42,7 @@
 #define CAR_VELOCITY 3
 #define INFORME_ANALISYS 4
 #define TOLERANCE 5
+#define FRECUENCIA 6
 
 #define ALTURA_MINIMA_OBST 0.2
 #define VERTICAL_TOLERANCE 1200
@@ -50,7 +51,7 @@
 #define NUMERO_FILAS 16 //Coincide con el numero de canales
 #define TAMAÑO_MINIMO_OBSTACULO 20
 #define TIEMPO_MARGEN 0.3 //TODO: Ajustar parametro
-#define DISTANCIA_MAXIMA 2
+#define DISTANCIA_MAXIMA 4
 #define PI Math::PI
 
 //##########################  OPENGL  ########################## 

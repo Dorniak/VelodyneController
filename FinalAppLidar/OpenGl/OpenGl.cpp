@@ -42,15 +42,11 @@ void OpenGl::Informar(String ^ Entrada)
 
 void OpenGl::threadconstructor()
 {
-	while (!flags[FLAG_OPENGL]) {
-		Sleep(500);
-	}
-
 	Informar("THREAD OPENGL");
 	iniciarPuntos();
 	iniciarObstaculos();
 	int argc = 0;
-	char **argv =nullptr;
+	char **argv;
 	glutInit(&argc, argv);
 	trabajo();
 	//  Start GLUT event processing loop
@@ -61,9 +57,8 @@ void OpenGl::threadconstructor()
 //-------------------------------------------------------------------------
 //  Program Main method.
 //-------------------------------------------------------------------------
-OpenGl::OpenGl(cli::array<Thread^>^ Threads, cli::array<bool>^ Flags)
+OpenGl::OpenGl(cli::array<Thread^>^ Threads)
 {
-	flags = Flags;
 	try
 	{
 		Informe = gcnew String("");
@@ -201,7 +196,7 @@ void OpenGl::modificarObstaculos(List<Obstaculo^>^ listEntradaObstaculos)
 void OpenGl::iniciarPuntos()
 {
 	Punto3D^ a;
-	for (int llenarPuntos = 0; llenarPuntos < NUMBER_OF_POINTS*1.1; llenarPuntos++) {
+	for (int llenarPuntos = 0; llenarPuntos < 250000; llenarPuntos++) {
 		a = gcnew Punto3D(0, 0, 0);
 		puntos->Add(a);
 	}
@@ -220,7 +215,7 @@ void OpenGl::limpiarListas(int a)
 		puntos[recorrerListaPuntos]->setCoordinatesY(0);
 		puntos[recorrerListaPuntos]->setCoordinatesZ(0);
 	}
-	
+
 }
 void OpenGl::limpiarListas()
 {
@@ -243,8 +238,6 @@ void trabajo()
 	glutInitDisplayMode(GLUT_RGBA | GLUT_DOUBLE);
 	glutCreateWindow(window_title);
 	init();
-	glLoadIdentity();
-	glScalef(0.05f, 0.05f, 0.05f);
 	glutKeyboardFunc(keyboard);
 	glutSpecialFunc(specialKeys);
 	glutTimerFunc(2000, timerFunc, 0);
@@ -490,18 +483,21 @@ void keyboard(unsigned char key, int x, int y) {
 	case 'r':
 		glScalef(1.0, 1.0, 1.0);
 		break;
+	case '9':
+		OpenGl::puntos[1]->setCoordinatesX(2);
+		break;
 	case 27:
 		exit(0);
 		break;
 	case 43:
-		glScalef(1.1f, 1.1f, 1.1f);
+		glScalef((GLfloat)1.1, (GLfloat) 1.1, (GLfloat) 1.1);
 		break;
 	case 45:
-		glScalef(0.9f, 0.9f, 0.9f);
+		glScalef((GLfloat)0.9, (GLfloat) 0.9, (GLfloat) 0.9);
 		break;
 	case 32:
 		glLoadIdentity();
-		glScalef(0.05f, 0.05f, 0.05f);
+		glScalef((GLfloat)0.05, (GLfloat) 0.05, (GLfloat) 0.05);
 		break;
 	}
 	glutPostRedisplay();
