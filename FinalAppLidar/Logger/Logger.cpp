@@ -26,13 +26,14 @@ void Logger::init(double x, double y,double z,double r,double p, double w,int fr
 	Directory::CreateDirectory(path);
 	fs = gcnew FileStream(path + "\\log.bin", FileMode::Create);
 	writer = gcnew BinaryWriter(fs);
-	writer->Write(x);
-	writer->Write(y);
-	writer->Write(z);
-	writer->Write(r);
-	writer->Write(p); 
-	writer->Write(y);
-	writer->Write(frecuency);
+
+	//writer->Write(x);
+	//writer->Write(y);
+	//writer->Write(z);
+	//writer->Write(r);
+	//writer->Write(p); 
+	//writer->Write(y);
+	//writer->Write(frecuency);
 	THREAD_ON = true;
 }
 void Logger::swapBuffers()
@@ -73,9 +74,9 @@ void Logger::recordData()
 			{
 				writer->Write(Buffer1[i]->getFrame());
 				writer->Write(Buffer1[i]->getAzimuth());
-				//writer->Write(Buffer1[i]->getCoordinatesX());
-				//writer->Write(Buffer1[i]->getCoordinatesY());
-				//writer->Write(Buffer1[i]->getCoordinatesZ());
+				writer->Write(Buffer1[i]->getCoordinatesX());
+				writer->Write(Buffer1[i]->getCoordinatesY());
+				writer->Write(Buffer1[i]->getCoordinatesZ());
 				writer->Write(Buffer1[i]->getDistance());
 				writer->Write(Buffer1[i]->getAngle());
 			}
@@ -85,9 +86,9 @@ void Logger::recordData()
 			{
 				writer->Write(Buffer2[i]->getFrame());
 				writer->Write(Buffer2[i]->getAzimuth());
-				//writer->Write(Buffer2[i]->getCoordinatesX());
-				//writer->Write(Buffer2[i]->getCoordinatesY());
-				//writer->Write(Buffer2[i]->getCoordinatesZ());
+				writer->Write(Buffer2[i]->getCoordinatesX());
+				writer->Write(Buffer2[i]->getCoordinatesY());
+				writer->Write(Buffer2[i]->getCoordinatesZ());
 				writer->Write(Buffer2[i]->getDistance());
 				writer->Write(Buffer2[i]->getAngle());
 			}
