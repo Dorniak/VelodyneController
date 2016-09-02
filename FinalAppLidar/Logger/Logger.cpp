@@ -66,7 +66,6 @@ void Logger::StartLoggin()
 
 void Logger::recordData()
 {
-	grabar++;
 	try
 	{
 		if (buff) {
@@ -111,7 +110,6 @@ void Logger::recordData()
 
 void Logger::addToBuffer(List<Punto3D^>^ pointlist, String^ gps_in)
 {
-	guardar++;
 	pts->AddRange(pointlist);
 	gps = gps_in;
 }

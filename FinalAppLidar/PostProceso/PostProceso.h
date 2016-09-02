@@ -1,5 +1,6 @@
 #pragma once
 #include "../Parametros/Parametros.h"
+#include <locale.h>
 namespace FinalAppLidar {
 
 	using namespace System;
@@ -108,7 +109,7 @@ namespace FinalAppLidar {
 				 this->button2->Name = L"button2";
 				 this->button2->Size = System::Drawing::Size(76, 39);
 				 this->button2->TabIndex = 8;
-				 this->button2->Text = L"button2";
+				 this->button2->Text = L"bin -> txt";
 				 this->button2->UseVisualStyleBackColor = true;
 				 this->button2->Click += gcnew System::EventHandler(this, &PostProceso::button2_Click_1);
 				 // 
@@ -128,7 +129,7 @@ namespace FinalAppLidar {
 
 			 }
 			 void Splitter() {
-
+				 setlocale(LC_NUMERIC, "es_ES");
 				 BinaryReader^ file_in = gcnew BinaryReader(File::OpenRead(path_in));
 				 StreamWriter^ file_out = File::CreateText(path_out + "log.csv");
 				 double x, y, z, az, ds, an;
@@ -136,17 +137,16 @@ namespace FinalAppLidar {
 				 try
 				 {
 				 file_out->WriteLine("Frame,Azimuth,X,Y,Z,Distancia,Intensidad,Angulo");
-					 //Por algún motivo se añaden exponentes extraños y enormes
+					 //Por algún motivo se añaden exponentes extraños
 					 while (file_in->PeekChar() != -1) {
-						 frame = file_in->ReadInt64();
+						 frame = file_in->ReadInt32();
 						 az = file_in->ReadDouble();
 						 x = file_in->ReadDouble();
 						 y = file_in->ReadDouble();
 						 z = file_in->ReadDouble();
 						 ds = file_in->ReadDouble();
 						 an = file_in->ReadDouble();
-						 file_out->WriteLine(frame.ToString()+","+az.ToString("F5")+","+x.ToString("F5")+","+y.ToString("F5")+","+z.ToString("F5")+","+ds.ToString("F3")+","+an.ToString("F0"));
-
+						 file_out->WriteLine(frame.ToString()+","+az.ToString()+","+x.ToString()+","+y.ToString()+","+z.ToString()+","+ds.ToString()+","+an.ToString());
 					 }
 				 }
 				 catch (Exception^)
